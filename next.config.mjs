@@ -5,6 +5,7 @@ const withNextIntl = createNextIntlPlugin("./i18n.ts");
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  output: "standalone",
   images: {
     // domains: ['cdn.jsdelivr.net', 'upload.wikimedia.org'], //make it 'your-domain.com'
     remotePatterns: [
@@ -33,7 +34,6 @@ const nextConfig = {
     defaultLocale: "default",
     localeDetection: true,
   }, */
-  output: "standalone",
 };
 
 export default withNextIntl(nextConfig);

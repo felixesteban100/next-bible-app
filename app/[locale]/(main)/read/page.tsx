@@ -2,12 +2,13 @@
 import SearchBibleReference from "@/components/SearchBibleReference";
 import { collectionBook, collectionChapter, collectionVersion } from "@/db/mongodb/mongodb";
 import { extractBibleBook, extractBibleVerses, getChapterNumber, translateRouteString } from "@/lib/queriesUtils";
-import { getLocale, getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { /* getLocale, */ getTranslations, } from "next-intl/server";
 import NavigatePassages from "@/components/NavigatePassages";
 import BookInfo from "@/components/BookInfo";
 import ReadFullChapterButton from "@/components/ReadFullChapterButton";
 import VerseOfTheDay_staticData from "@/components/VerseOfTheDay";
 import VersesDisplayer from "@/components/VersesDisplayer";
+import { unstable_setRequestLocale } from 'next-intl/server';
 
 export default async function page({
     searchParams: { search, version, fontSizeNumber },

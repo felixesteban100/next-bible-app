@@ -4,13 +4,15 @@ import { Link } from 'next-view-transitions'
 import SignedIn from "@/components/auth/SignedIn";
 import SignedOut from "@/components/auth/SignedOut";
 import { cn } from "@/lib/utils";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 // add a history
 // add the ability to hightlight
 // add the ability to navigate though the passage by making all the other verses blury and the one selected with full opacity by using the arrows up and down
 
-export default async function Home() {
+export default async function Home({ params: { locale } }: { params: { locale: string } }) {
+  unstable_setRequestLocale(locale)
+
   const t = await getTranslations();
 
   const titleArr = t("homePageHeroTitle").split(" ")

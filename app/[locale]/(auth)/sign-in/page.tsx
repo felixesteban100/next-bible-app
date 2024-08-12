@@ -11,10 +11,12 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { BookOpen } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
 import { Link } from "next-view-transitions"
 
-export default async function page() {
+export default async function page({ params: { locale } }: { params: { locale: string } }) {
+    unstable_setRequestLocale(locale);
+
     const t = await getTranslations()
 
     return (
