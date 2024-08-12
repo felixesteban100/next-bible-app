@@ -1,0 +1,140 @@
+{
+  "spanish": "Español",
+  "english": "Ingles",
+
+  "light": "claro",
+  "dark": "oscuro",
+  "system": "systema",
+
+  "navbar_home": "Inicio",
+  "read": "Leer",
+  "study_tools": "Herramientas de estudio",
+  "plan": "Plan",
+
+  "signIn": "Iniciar sesion",
+
+  "navbar_sheet_title": "Rutas de páginas",
+  "navbar_sheet_description": "Puedes seleccionar la página a la que quieres ir aquí ♦",
+
+  "homePageHeroDescription": "El camino para conocer la informacion de los personajes biblicos",
+  "homePageHeroTitle": "Conoce la biblia.",
+  "readNow": "Leer ahora",
+
+  "NotFoundPage": {
+    "title": "no encontrado page"
+  },
+
+  "VerseOfTheDay": "Versiculo del dia",
+
+  "chapter_error": "Error de capitulo",
+
+  "enterPassage": "Ingrese el pasaje",
+  "selectVersion": "Seleccione la version",
+
+  "Not_existent_reference": "No existe esa referencia",
+  "Search_for_a_passage": "Busca un pasaje",
+
+  "Bible_book_list": "Lista de libros de la biblia",
+
+  "Font_size": "Tamaño de fuente",
+
+  "version": "version",
+
+  "chapters": "Capitulos",
+
+  "returnToMainPage": "Regresar a la pagina de inicio",
+
+  "xs": "extra pequeño",
+  "sm": "pequeño",
+  "md": "mediano",
+  "lg": "grande",
+
+  "Read full chapter": "Leer capitulo completo",
+  "Read first chapter": "Leer primer capitulo",
+  "Read chapter info": "Leer infomacion del capitulo",
+
+  "Old Testament": "Antiguo Testamento",
+  "New Testament": "Nuevo Testamento",
+
+  "initials": "Iniciales",
+  "name": "Nombre",
+  "date_written": "Fecha escrito",
+  "type_of_written": "Tipo de escrito",
+  "written_by": "Escrito por",
+  "description": "Descripcion",
+
+  "signedOutDescription": "Inicia sesion para explorar",
+  "signedInDescription": "Ya has iniciado sesion",
+
+  "signIn_withGoogle": "Iniciar sesion con Google",
+  "signOut_ofGoogle": "Cerrar sesion de Google",
+
+  "book_names": {
+    "1": "Génesis",
+    "2": "Éxodo",
+    "3": "Levítico",
+    "4": "Números",
+    "5": "Deuteronomio",
+    "6": "Josué",
+    "7": "Jueces",
+    "8": "Rut",
+    "9": "1 Samuel",
+    "10": "2 Samuel",
+    "11": "1 Reyes",
+    "12": "2 Reyes",
+    "13": "1 Crónicas",
+    "14": "2 Crónicas",
+    "15": "Esdras",
+    "16": "Nehemías",
+    "17": "Ester",
+    "18": "Job",
+    "19": "Salmos",
+    "20": "Proverbios",
+    "21": "Eclesiastés",
+    "22": "Cantares",
+    "23": "Isaías",
+    "24": "Jeremías",
+    "25": "Lamentaciones",
+    "26": "Ezequiel",
+    "27": "Daniel",
+    "28": "Oseas",
+    "29": "Joel",
+    "30": "Amós",
+    "31": "Abdías",
+    "32": "Jonás",
+    "33": "Miqueas",
+    "34": "Nahúm",
+    "35": "Habacuc",
+    "36": "Sofonías",
+    "37": "Hageo",
+    "38": "Zacarías",
+    "39": "Malaquías",
+    "40": "Mateo",
+    "41": "Marcos",
+    "42": "Lucas",
+    "43": "Juan",
+    "44": "Hechos",
+    "45": "Romanos",
+    "46": "1 Corintios",
+    "47": "2 Corintios",
+    "48": "Gálatas",
+    "49": "Efesios",
+    "50": "Filipenses",
+    "51": "Colosenses",
+    "52": "1 Tesalonicenses",
+    "53": "2 Tesalonicenses",
+    "54": "1 Timoteo",
+    "55": "2 Timoteo",
+    "56": "Tito",
+    "57": "Filemón",
+    "58": "Hebreos",
+    "59": "Santiago",
+    "60": "1 Pedro",
+    "61": "2 Pedro",
+    "62": "1 Juan",
+    "63": "2 Juan",
+    "64": "3 Juan",
+    "65": "Judas",
+    "66": "Apocalipsis"
+  }
+}
