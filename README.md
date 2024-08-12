@@ -37,6 +37,6 @@ Tailwind
 
 Shadcn/ui
 
-Clerk
+~~Clerk~~  NextAuth.js
 
 Mongodb
