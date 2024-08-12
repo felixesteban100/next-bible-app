@@ -2,7 +2,7 @@
 import SearchBibleReference from "@/components/SearchBibleReference";
 import { collectionBook, collectionChapter, collectionVersion } from "@/db/mongodb/mongodb";
 import { extractBibleBook, extractBibleVerses, getChapterNumber, translateRouteString } from "@/lib/queriesUtils";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getLocale, getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import NavigatePassages from "@/components/NavigatePassages";
 import BookInfo from "@/components/BookInfo";
 import ReadFullChapterButton from "@/components/ReadFullChapterButton";
@@ -10,16 +10,22 @@ import VerseOfTheDay_staticData from "@/components/VerseOfTheDay";
 import VersesDisplayer from "@/components/VersesDisplayer";
 
 export default async function page({
-    searchParams: { search, version, fontSizeNumber }
+    searchParams: { search, version, fontSizeNumber },
+    params: { locale },
 }: {
     searchParams: {
         search?: string
         version?: string
         fontSizeNumber?: string
-    }
+    },
+    params: { locale: string }
 }) {
-    const [language, t, versions] = await Promise.all([
-        getLocale(),
+    unstable_setRequestLocale(locale);
+
+    const language = locale
+
+    const [/* language, */ t, versions] = await Promise.all([
+        // getLocale(),
         getTranslations(),
         collectionVersion.find({}).toArray()
     ])
