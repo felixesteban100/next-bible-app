@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form"
 import { usePathname, useRouter } from "@/lib/navigation"
 import { useSearchParams } from "next/navigation"
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
     Popover,
     PopoverClose,
@@ -42,6 +42,8 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
 
 type SearchBibleReferenceProps = {
     versions: Version[];
@@ -49,10 +51,11 @@ type SearchBibleReferenceProps = {
     next_chapter: string;
     versionParam: string
     searchParam: string
-    fontSizeParam: string
+    fontSizeParam: string;
+    continousLineParam: boolean
 }
 
-function SearchBibleReference({ versions, previous_chapter, next_chapter, versionParam, searchParam, fontSizeParam }: SearchBibleReferenceProps) {
+function SearchBibleReference({ versions, previous_chapter, next_chapter, versionParam, searchParam, fontSizeParam, continousLineParam }: SearchBibleReferenceProps) {
     const linkClasses = "text-foreground hover:text-primary p-1"
 
     const searchParams = useSearchParams()
@@ -91,6 +94,11 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
 
     function changeFontSize(value: number) {
         params.set('fontSizeNumber', value.toString())
+        push(`${pathname}?${params.toString()}`)
+    }
+
+    function changeContinousLine(value: boolean) {
+        params.set('continousLine', value.toString())
         push(`${pathname}?${params.toString()}`)
     }
 
@@ -194,6 +202,11 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="flex flex-col gap-2 justify-center items-center w-fit p-2">
+                            <div className="flex items-center space-x-2">
+                                <Switch id="continuous_line" checked={continousLineParam} onCheckedChange={(c) => changeContinousLine(c)} />
+                                <Label htmlFor="continuous_line">{t("continuous_line")}</Label>
+                            </div>
+
                             <Button variant={'outline'} className={`${fontSizeParam === '0' && "text-primary"} mt-5 p-1 capitalize w-full`} onClick={() => changeFontSize(0)}>
                                 {t("xs")}
                             </Button>
@@ -205,6 +218,9 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
                             </Button>
                             <Button variant={'outline'} className={`${fontSizeParam === '3' && "text-primary"} mt-5 p-1 capitalize w-full`} onClick={() => changeFontSize(3)}>
                                 {t("lg")}
+                            </Button>
+                            <Button variant={'outline'} className={`${fontSizeParam === '4' && "text-primary"} mt-5 p-1 capitalize w-full`} onClick={() => changeFontSize(4)}>
+                                {t("xl")}
                             </Button>
                         </PopoverContent>
                     </Popover>

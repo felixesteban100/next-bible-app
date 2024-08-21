@@ -32,11 +32,13 @@ export default async function Home({ params: { locale } }: { params: { locale: s
       className="flex flex-col gap-5"
     >
       <div className="flex flex-col items-center justify-center h-[40rem] ">
-        <p className="text-foreground text-base mb-10">
+        {/* text-base */}
+        <p className="text-foreground mb-10">
           {t("homePageHeroDescription")}
         </p>
         <TypewriterEffectSmooth words={words} className="hidden lg:flex" />
-        <p className="block lg:hidden">{words.map(c => (<span key={c.text} className={cn(c.className, "text-5xl font-semibold")}>{c.text} </span>))}</p>
+        {/* text-5xl */}
+        <p className="block lg:hidden">{words.map(c => (<span key={c.text} className={cn(c.className, " font-semibold")}>{c.text} </span>))}</p>
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 mt-10">
           <SignedIn>
             <Button>

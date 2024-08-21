@@ -44,10 +44,13 @@
 
   "returnToMainPage": "Return to home Page",
 
+  "continuous_line": "Continuous line",
+
   "xs": "extra small",
   "sm": "small",
   "md": "medium",
   "lg": "large",
+  "xl": "extra-large",
 
   "Read full chapter": "Read full chapter",
   "Read first chapter": "Read first chapter",

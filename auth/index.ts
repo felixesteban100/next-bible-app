@@ -10,7 +10,8 @@ export const authOptions = {
     ],
     pages: {
         signIn: "/(en|es)/sign-in",
-    }
+    },
+    trustHost: true
 }
 
 export const { signIn, signOut, auth, handlers/* : { GET, POST } */ } = NextAuth(authOptions)

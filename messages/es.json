@@ -44,10 +44,13 @@
 
   "returnToMainPage": "Regresar a la pagina de inicio",
 
+  "continuous_line": "Linea continua",
+
   "xs": "extra pequeño",
   "sm": "pequeño",
   "md": "mediano",
   "lg": "grande",
+  "xl": "extra-grande",
 
   "Read full chapter": "Leer capitulo completo",
   "Read first chapter": "Leer primer capitulo",

@@ -41,7 +41,7 @@ export function extractBibleBook(reference: string, version: string): number | n
         }
 
         // Optionally handle the case where the book is not found in the specified version
-        console.log(`Book (${match[1]}) not found in ${version}`);
+        // console.log(`Book (${match[1]}) not found in ${version}`);
         return null;
     } else {
         return null;

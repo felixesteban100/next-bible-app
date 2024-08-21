@@ -11,7 +11,7 @@ import { SignIn } from "./sign-in"
 export default async function UserInfo() {
     const session = await auth()
 
-    if (!session?.user) return null
+    if (!session?.user) return <p>Error with user info</p>
 
     return (
         <DropdownMenu>

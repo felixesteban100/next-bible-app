@@ -7,10 +7,11 @@ import { useSearchParams, useRouter } from "next/navigation";
 
 type ReadFullChapterButton = {
     chapter: Chapter;
-    version: string
+    version: string;
+    selectedFontSize: { text: string, firstVerse: string }
 }
 
-export default function ReadFullChapterButton({ chapter, version }: ReadFullChapterButton) {
+export default function ReadFullChapterButton({ chapter, version, selectedFontSize }: ReadFullChapterButton) {
     const t = useTranslations()
 
     const searchParams = useSearchParams()
@@ -24,7 +25,7 @@ export default function ReadFullChapterButton({ chapter, version }: ReadFullChap
     }
 
     return (
-        <Button variant={'link'} className="mt-5 p-1" onClick={() => goToFirstChapter()}>
+        <Button variant={'link'} className={`mt-5 p-1 ${selectedFontSize.text}`} onClick={() => goToFirstChapter()}>
             {t("Read full chapter")}
         </Button>
     )

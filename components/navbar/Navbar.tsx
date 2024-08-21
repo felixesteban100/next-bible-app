@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+
 import { ModeToggle } from "../ModeToggle";
 import { LanguageToggle } from "../LanguageToggle";
 import { useTranslations } from "next-intl"
@@ -21,15 +21,15 @@ export default function Navbar() {
     const t = useTranslations()
 
     return (
-        <nav className="flex items-center justify-between w-[90vw] md:w-[80vw] max-w-[1700px] min-h-[4rem] mx-auto gap-5">
-            <div className="hidden md:flex gap-5 items-center">
+        <nav className="flex items-center justify-between w-[90vw] md:w-[80vw] max-w-[1700px] min-h-[4rem] mx-auto gap-5 py-5">
+            <div className={`hidden md:flex gap-5 items-center`}>
                 <ButtonForNavbarLink
                     href="/"
                     variant={'ghost'}
                     size={'icon'}
                     aditionalClassNames="flex items-center"
                 >
-                    <BookOpen size={40} />
+                    <BookOpen className="h-full w-auto" />
                 </ButtonForNavbarLink>
 
                 <ButtonForNavbarLink
@@ -114,9 +114,9 @@ export default function Navbar() {
             <div className="flex gap-5">
                 <SignedOut>
                     <ButtonForNavbarLink
-                        href={'/study_tools'}
+                        href={'/sign-in'}
                         variant={"default"}
-                        aditionalClassNames="w-full text-sm text-primary-foreground font-semibold"
+                        aditionalClassNames={`text-sm w-full text-primary-foreground font-semibold`}
                     >
                         {t("signIn")}
                     </ButtonForNavbarLink>

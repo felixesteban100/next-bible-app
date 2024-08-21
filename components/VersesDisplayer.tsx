@@ -1,24 +1,67 @@
+"use client"
+
+import { useRouter } from "next/navigation"
+import { useKeyPress } from '@/hooks/useKeyPress'
+import useHash from '@/hooks/useHash'
 
 type VersesDisplayerProps = {
-    chapter: Chapter | null,
+    chapter: Chapter,
     selectedFontSize: {
         firstVerse: string,
         text: string
     },
     verses: number[],
-    error_message: string
 }
 
-export default function VersesDisplayer({ chapter, selectedFontSize, verses, error_message }: VersesDisplayerProps) {
-    if (!chapter) return <div>{error_message}</div>
+export default function VersesDisplayer({ chapter, selectedFontSize, verses }: VersesDisplayerProps) {
+    const { push } = useRouter()
+
+    const hash = useHash()
+    const verseSelected = parseInt(hash ? hash.split("#")[1] : "0")
+
+    const firstVerse = verses[0] ?? 1
+    const lastVerse = verses[verses.length - 1] ?? chapter.verses_content.length
+
+
+    useKeyPress(() => {
+        if (verseSelected === 0) push(`#${firstVerse}`)
+        const newVerseToSelect = verseSelected - 1
+        if (newVerseToSelect < firstVerse) {
+            push(`#${lastVerse}`)
+        } else {
+            push(`#${newVerseToSelect}`)
+        }
+    }, ["ArrowUp"]);
+
+    useKeyPress(() => {
+        if (verseSelected === 0) push(`#${lastVerse}`)
+        const newVerseToSelect = verseSelected + 1
+        if (newVerseToSelect > lastVerse) {
+            push(`#${firstVerse}`)
+        } else {
+            push(`#${newVerseToSelect}`)
+        }
+    }, ["ArrowDown"]);
 
     return (
-        <div>
+        <>
             {
                 chapter.verses_content.map((c, i) => {
                     const verseNumber = i + 1
+                    const isSelected = verseSelected === verseNumber
                     const verseJSX = (
-                        <p key={chapter.verses_routes_string[i]} className={`${selectedFontSize.text} leading-relaxed`}>
+                        <span
+                            id={`${verseNumber}`}
+                            onClick={() => {
+                                if (isSelected) {
+                                    push(`#0`)
+                                } else {
+                                    push(`#${verseNumber}`)
+                                }
+                            }}
+                            key={chapter.verses_routes_string[i]}
+                            className={`${selectedFontSize.text} leading-relaxed ${isSelected ? "underline" : ""} hover:underline decoration-dashed`}
+                        >
                             <span
                                 className={`${verseNumber === 1 && `${selectedFontSize.firstVerse} font-bold`}`}
                             >
@@ -29,14 +72,15 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, err
                             </span>
                             {" "}
                             {chapter.route_object.book_id === 19 && verseNumber === 1 ? `${c.slice(1)}` : c}
-                        </p>
+                        </span>
                     )
+
                     if (verses.length === 0) return (verseJSX)
                     if (!verses.includes(i + 1)) return null
                     return (verseJSX)
                 })
             }
-        </div>
+        </>
     )
 
 }

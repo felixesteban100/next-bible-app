@@ -22,7 +22,7 @@ export default function ButtonForNavbarLink({ href, variant, size, children, adi
             <Button
                 variant={variant ?? "ghost"}
                 size={size ?? "default"}
-                className={cn(`text-xl ${pathname === href ? "text-primary font-bold" : "text-secondary-foreground font-thin"}`, aditionalClassNames)}
+                className={cn(` text-xl ${pathname === href ? "text-primary font-bold" : "text-secondary-foreground font-thin"}`, aditionalClassNames)}
             >
                 {children}
             </Button>

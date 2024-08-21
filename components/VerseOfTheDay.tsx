@@ -25,7 +25,7 @@ export default async function VerseOfTheDay({ version, selectedFontSize }: { ver
 
     return (
         <div className="space-y-6">
-            <p className="font-bold">{t("VerseOfTheDay")}</p>
+            <p className={`font-bold ${selectedFontSize.text}`}>{t("VerseOfTheDay")}</p>
             <div className={`${selectedFontSize.text}`}>
                 <p className="font-bold">{translateRouteString(chapter.route_string, version)}:{todays_verse.verses} ({version})</p>
                 <VersesDisplayer
@@ -35,7 +35,7 @@ export default async function VerseOfTheDay({ version, selectedFontSize }: { ver
                     error_message={t("chapter_error")}
                 />
             </div>
-            <ReadFullChapterButton chapter={chapter} version={version} />
+            <ReadFullChapterButton chapter={chapter} version={version} selectedFontSize={selectedFontSize} />
         </div>
     )
 }

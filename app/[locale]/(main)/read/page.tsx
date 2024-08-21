@@ -2,7 +2,7 @@
 import SearchBibleReference from "@/components/SearchBibleReference";
 import { collectionBook, collectionChapter, collectionVersion } from "@/db/mongodb/mongodb";
 import { extractBibleBook, extractBibleVerses, getChapterNumber, translateRouteString } from "@/lib/queriesUtils";
-import { /* getLocale, */ getTranslations, } from "next-intl/server";
+import { getTranslations, } from "next-intl/server";
 import NavigatePassages from "@/components/NavigatePassages";
 import BookInfo from "@/components/BookInfo";
 import ReadFullChapterButton from "@/components/ReadFullChapterButton";
@@ -10,14 +10,17 @@ import VerseOfTheDay_staticData from "@/components/VerseOfTheDay";
 import VersesDisplayer from "@/components/VersesDisplayer";
 import { unstable_setRequestLocale } from 'next-intl/server';
 
+// ['text-xl', "text-3xl", 'text-2xl', "text-4xl", "text-5xl", "text-6xl", "text-8xl"]
+
 export default async function page({
-    searchParams: { search, version, fontSizeNumber },
+    searchParams: { search, version, fontSizeNumber, continousLine },
     params: { locale },
 }: {
     searchParams: {
         search?: string
         version?: string
-        fontSizeNumber?: string
+        fontSizeNumber?: string;
+        continousLine?: string;
     },
     params: { locale: string }
 }) {
@@ -25,8 +28,7 @@ export default async function page({
 
     const language = locale
 
-    const [/* language, */ t, versions] = await Promise.all([
-        // getLocale(),
+    const [t, versions] = await Promise.all([
         getTranslations(),
         collectionVersion.find({}).toArray()
     ])
@@ -34,6 +36,7 @@ export default async function page({
     const searchValue = search ?? ""
     const versionValue = version ? version : language === "en" ? "KJV" : language === "es" ? "RV1960" : ""
     const fontSizeValue = fontSizeNumber ?? "1"
+    const continousLineValue = continousLine === "true"
 
     const route_string_to_query_chapter = `${versionValue}-${extractBibleBook(searchValue, versionValue)}-${getChapterNumber(searchValue)}`
     const route_string_to_query_book = `${versionValue}-${extractBibleBook(searchValue, versionValue)}`
@@ -64,6 +67,7 @@ export default async function page({
         { text: 'text-2xl', firstVerse: "text-4xl" },
         { text: 'text-3xl', firstVerse: "text-5xl" },
         { text: 'text-4xl', firstVerse: "text-6xl" },
+        { text: 'text-6xl', firstVerse: "text-8xl" },
     ]
 
     const selectedFontSize = fontSize[parseInt(fontSizeValue)]
@@ -77,15 +81,15 @@ export default async function page({
                 versionParam={versionValue}
                 searchParam={searchValue}
                 fontSizeParam={fontSizeValue}
+                continousLineParam={continousLineValue}
             />
 
-            <div className="text-xl flex flex-col gap-2">
+            <div className={continousLineValue ? "space-x-4" : "flex flex-col gap-2"}>
                 {chapter ?
                     <VersesDisplayer
                         chapter={chapter}
                         selectedFontSize={selectedFontSize}
                         verses={verses}
-                        error_message={t("chapter_error")}
                     />
                     : bookInfo && getChapterNumber(searchValue) === 0 ?
                         (<BookInfo bookInfo={bookInfo} selectedFontSize={selectedFontSize} />)
@@ -97,8 +101,9 @@ export default async function page({
             </div>
 
             {(verses.length > 0 && chapter && version) &&
-                <ReadFullChapterButton chapter={chapter} version={version} />
+                <ReadFullChapterButton chapter={chapter} version={version} selectedFontSize={selectedFontSize} />
             }
+
 
             <NavigatePassages
                 next_chapter={next_chapter}
