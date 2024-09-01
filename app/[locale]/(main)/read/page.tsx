@@ -84,7 +84,7 @@ export default async function page({
     return (
         <div className={`p-2 flex flex-col ${selectedFontSize.gap_between_elements}`}>
             <SearchBibleReference
-                versions={versions}
+                versions={JSON.parse(JSON.stringify(versions))}
                 previous_chapter={previous_chapter}
                 next_chapter={next_chapter}
                 versionParam={versionValue}
@@ -104,13 +104,13 @@ export default async function page({
                     // className={`${chapter.route_object.chapter_id % 2 === 0 ? "animate-slide-from-left" : "animate-slide-left"}`}
                     >
                         <VersesDisplayer
-                            chapter={chapter}
+                            chapter={JSON.parse(JSON.stringify(chapter))}
                             selectedFontSize={selectedFontSize}
                             verses={verses}
                         />
                     </div>
                     : bookInfo && getChapterNumber(searchValue) === 0 ?
-                        (<BookInfo bookInfo={bookInfo} selectedFontSize={selectedFontSize} />)
+                        (<BookInfo bookInfo={JSON.parse(JSON.stringify(bookInfo))} selectedFontSize={selectedFontSize} />)
                         : search && version ?
                             <p>{t("Not_existent_reference")} ({search} ({version}))</p>
                             :
@@ -119,7 +119,7 @@ export default async function page({
             </div>
 
             {(verses.length > 0 && chapter && version) &&
-                <ReadFullChapterButton chapter={chapter} version={version} selectedFontSize={selectedFontSize} />
+                <ReadFullChapterButton chapter={JSON.parse(JSON.stringify(chapter))} version={version} selectedFontSize={selectedFontSize} />
             }
 
             <NavigatePassages

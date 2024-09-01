@@ -1,9 +1,9 @@
 
 export const fontSize: SelectedFontSize[] = [
-    { text: 'text-xl', firstVerse: "text-3xl", icon: "h-[2rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "lg:flex-row flex-col" },
-    { text: 'text-2xl', firstVerse: "text-4xl", icon: "h-[2rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "lg:flex-row flex-col" },
-    { text: 'text-3xl', firstVerse: "text-5xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "lg:flex-row flex-col" },
-    { text: 'text-4xl', firstVerse: "text-6xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-10", aligmentForFlexElements: "lg:flex-row flex-col" },
+    { text: 'text-xl', firstVerse: "text-3xl", icon: "h-[2rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
+    { text: 'text-2xl', firstVerse: "text-4xl", icon: "h-[2rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
+    { text: 'text-3xl', firstVerse: "text-5xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
+    { text: 'text-4xl', firstVerse: "text-6xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-10", aligmentForFlexElements: "flex-row" },
     // { text: 'text-6xl', firstVerse: "text-8xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-16", aligmentForFlexElements: "lg:flex-row flex-col" },
 ]
 

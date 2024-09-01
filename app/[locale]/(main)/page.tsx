@@ -7,10 +7,11 @@ import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
 // 🔃 add a history
-// 🔃 add the ability to hightlight
+// 🔃 add the ability to hightlight and saved the highlighted
 // ✅ add the ability to navigate though the passage by making all the other verses blury and the one selected with full opacity by using the arrows up and down
 // ✅ make the each verse smoothly animate using viewTransitionAPI when continues line switch is being pressed back and forth
-// 🔃 make the chapter go right when next chapter is pressed and go left when previous chapter is pressed
+// 🔃 make the chapter go right when next chapter is pressed and go left when previous chapter is pressed (animation)
+// 🔃 make navbar and navigation hide in fullscreen mode
 
 export default async function Home({ params: { locale } }: { params: { locale: string } }) {
   unstable_setRequestLocale(locale)

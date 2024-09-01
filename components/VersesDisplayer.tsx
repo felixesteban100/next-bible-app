@@ -1,10 +1,10 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
 import { useKeyPress } from '@/hooks/useKeyPress'
 import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { usePathname, useRouter } from "@/lib/navigation"
-// import { useTransitionRouter } from 'next-view-transitions'
+import { useTransitionRouter } from 'next-view-transitions'
 
 type VersesDisplayerProps = {
     chapter: Chapter,
@@ -13,22 +13,26 @@ type VersesDisplayerProps = {
 }
 
 export default function VersesDisplayer({ chapter, selectedFontSize, verses }: VersesDisplayerProps) {
-    // const searchParams = useSearchParams()
-    // const { replace } = useRouter()/* useTransitionRouter() */
-    // const params = new URLSearchParams(searchParams)
-    // const pathname = usePathname()
-
-    // const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
-
-    /* function setVerseToHighlight(verse: number) {
-        params.set('verseToHighlight', `${verse}`)
-        replace(`${pathname}?${params.toString()}`, { scroll: false })
-    } */
-
-    const [verseSelected, setVerseToHighlight] = useState(0)
+    const searchParams = useSearchParams()
+    const { replace } = useRouter()/* useTransitionRouter() */
+    const params = new URLSearchParams(searchParams)
+    const pathname = usePathname()
 
     const firstVerse = verses[0] ?? 1
     const lastVerse = verses[verses.length - 1] ?? chapter.verses_content.length
+
+    const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
+
+    function setVerseToHighlight(verse: number) {
+        params.set('verseToHighlight', `${verse}`)
+        replace(`${pathname}?${params.toString()}`, { scroll: false })
+    }
+
+    /* const [verseSelected, setVerseToHighlight] = useState(0)
+
+    useEffect(() => {
+        setVerseToHighlight(0)
+    }, [chapter]) */
 
     useEffect(() => {
         const currentVerse = document.getElementById(`${verseSelected}`)

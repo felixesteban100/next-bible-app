@@ -21,7 +21,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                     push(`/read?${params.toString()}`)
                 }} type="button" variant={'link'} className={`${linkClasses} ${textSize}`}>
                     <ChevronLeft className={iconSize} />
-                    {previous_chapter}
+                    <span className="hidden lg:block">{previous_chapter}</span>
                 </Button>
                 :
                 <div />
@@ -31,7 +31,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                     params.set("search", next_chapter)
                     push(`/read?${params.toString()}`)
                 }} type="button" variant={'link'} className={`${linkClasses} ${textSize}`}>
-                    {next_chapter}
+                    <span className="hidden lg:block">{next_chapter}</span>
                     <ChevronRight className={iconSize} />
                 </Button>
                 :

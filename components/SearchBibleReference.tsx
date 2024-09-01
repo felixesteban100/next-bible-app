@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { ChevronDown, Search } from "lucide-react";
+import { AArrowUp, Book, ChevronDown, Search } from "lucide-react";
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -118,7 +118,7 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     // className="flex flex-col lg:flex-row justify-center items-end lg:items-start gap-2 w-full"
-                    className="w-full flex flex-col lg:grid lg:grid-cols-9 grid-flow-row gap-5 items-end "
+                    className="w-full flex flex-col lg:grid lg:grid-cols-9 grid-flow-row gap-5 items-end"
                 >
                     <FormField
                         control={form.control}
@@ -164,7 +164,8 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button type="button" variant={'link'} className={`${linkClasses} flex items-center ${textSize} h-fit`}>
-                                {t("Bible_book_list")}
+                                <span className="hidden lg:block">{t("Bible_book_list")}</span>
+                                <Book className={`${iconSize} block lg:hidden`} />
                                 <ChevronDown className={iconSize} />
                             </Button>
                         </PopoverTrigger>
@@ -223,7 +224,8 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button type="button" variant={'link'} className={`${linkClasses} flex items-center ${textSize} h-fit`}>
-                                {t("Font_size")}
+                                <span className="hidden lg:block">{t("Font_size")}</span>
+                                <AArrowUp className={`${iconSize} block lg:hidden`} />
                                 <ChevronDown className={iconSize} />
                             </Button>
                         </PopoverTrigger>
