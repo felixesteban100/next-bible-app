@@ -54,7 +54,7 @@ type SearchBibleReferenceProps = {
     searchParam: string
     fontSizeParam: string;
     continousLineParam: boolean;
-    selectedFontSize: { text: string, firstVerse: string, icon: string, gap_between_elements: string, aligmentForFlexElements: string }
+    selectedFontSize: SelectedFontSize
 }
 
 "gap-10"

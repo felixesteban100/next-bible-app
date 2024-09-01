@@ -79,7 +79,7 @@ export default async function page({
     const next_chapter = translateRouteString(nextChapter?.route_string ?? "", versionValue)
 
 
-    const selectedFontSize = fontSize[parseInt(fontSizeValue)]
+    const selectedFontSize: SelectedFontSize = fontSize[parseInt(fontSizeValue)]
 
     return (
         <div className={`p-2 flex flex-col ${selectedFontSize.gap_between_elements}`}>

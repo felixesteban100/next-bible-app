@@ -8,7 +8,7 @@ import { usePathname, useRouter } from "@/lib/navigation"
 
 type VersesDisplayerProps = {
     chapter: Chapter,
-    selectedFontSize: { text: string, firstVerse: string, icon: string, gap_between_elements: string },
+    selectedFontSize: SelectedFontSize,
     verses: number[],
 }
 

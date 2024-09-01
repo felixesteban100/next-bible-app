@@ -39,4 +39,7 @@ declare global {
         language: string,
         books_routes_string: string[]
     }
+
+
+    declare type SelectedFontSize = { text: string, firstVerse: string, icon: string, gap_between_elements: string, aligmentForFlexElements: string }
 }

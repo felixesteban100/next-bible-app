@@ -5,7 +5,7 @@ import ReadFullChapterButton from "./ReadFullChapterButton";
 import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_ROUTE_STRING } from "@/lib/constants";
 import VersesDisplayer from "./VersesDisplayer";
 
-export default async function VerseOfTheDay({ version, selectedFontSize }: { version: string, selectedFontSize: { text: string, firstVerse: string } }) {
+export default async function VerseOfTheDay({ version, selectedFontSize }: { version: string, selectedFontSize: SelectedFontSize }) {
     const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(DAILY_VERSES_ROUTE_STRING)
 
     const [t, chapter] = await Promise.all([

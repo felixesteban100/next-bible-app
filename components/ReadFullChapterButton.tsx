@@ -9,7 +9,7 @@ import { useTransitionRouter } from "next-view-transitions";
 type ReadFullChapterButton = {
     chapter: Chapter;
     version: string;
-    selectedFontSize: { text: string, firstVerse: string }
+    selectedFontSize: SelectedFontSize
 }
 
 export default function ReadFullChapterButton({ chapter, version, selectedFontSize }: ReadFullChapterButton) {
