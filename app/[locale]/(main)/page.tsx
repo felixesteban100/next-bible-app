@@ -13,7 +13,7 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 // 🔃 make the chapter go right when next chapter is pressed and go left when previous chapter is pressed
 
 export default async function Home({ params: { locale } }: { params: { locale: string } }) {
-  // unstable_setRequestLocale(locale)
+  unstable_setRequestLocale(locale)
 
   const t = await getTranslations();
 

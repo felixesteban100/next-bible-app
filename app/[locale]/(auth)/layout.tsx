@@ -15,7 +15,7 @@ export default function layout({
     children: React.ReactNode;
     params: { locale: string }
 }>) {
-    // unstable_setRequestLocale(locale);
+    unstable_setRequestLocale(locale);
 
     return (
         <div
