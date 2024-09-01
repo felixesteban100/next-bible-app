@@ -9,8 +9,24 @@ import ReadFullChapterButton from "@/components/ReadFullChapterButton";
 import VerseOfTheDay_staticData from "@/components/VerseOfTheDay";
 import VersesDisplayer from "@/components/VersesDisplayer";
 import { unstable_setRequestLocale } from 'next-intl/server';
+import type { Metadata } from 'next'
+import { fontSize } from "@/lib/constants";
+
+type Props = {
+    searchParams: { [key: string]: string | undefined }
+}
+
+export async function generateMetadata(
+    { searchParams }: Props,
+): Promise<Metadata> {
+    return {
+        title: `${searchParams.search ?? ""} ${searchParams.version ?? "Read"}`
+    }
+}
 
 // ['text-xl', "text-3xl", 'text-2xl', "text-4xl", "text-5xl", "text-6xl", "text-8xl"]
+
+
 
 export default async function page({
     searchParams: { search, version, fontSizeNumber, continousLine },
@@ -62,18 +78,11 @@ export default async function page({
     const previous_chapter = translateRouteString(previousChapter?.route_string ?? "", versionValue)
     const next_chapter = translateRouteString(nextChapter?.route_string ?? "", versionValue)
 
-    const fontSize = [
-        { text: 'text-xl', firstVerse: "text-3xl" },
-        { text: 'text-2xl', firstVerse: "text-4xl" },
-        { text: 'text-3xl', firstVerse: "text-5xl" },
-        { text: 'text-4xl', firstVerse: "text-6xl" },
-        { text: 'text-6xl', firstVerse: "text-8xl" },
-    ]
 
     const selectedFontSize = fontSize[parseInt(fontSizeValue)]
 
     return (
-        <div className="p-2 space-y-6">
+        <div className={`p-2 flex flex-col ${selectedFontSize.gap_between_elements}`}>
             <SearchBibleReference
                 versions={versions}
                 previous_chapter={previous_chapter}
@@ -82,15 +91,24 @@ export default async function page({
                 searchParam={searchValue}
                 fontSizeParam={fontSizeValue}
                 continousLineParam={continousLineValue}
+                selectedFontSize={selectedFontSize}
             />
 
-            <div className={continousLineValue ? "space-x-4" : "flex flex-col gap-2"}>
+            <div>
                 {chapter ?
-                    <VersesDisplayer
-                        chapter={chapter}
-                        selectedFontSize={selectedFontSize}
-                        verses={verses}
-                    />
+                    <div
+                        // style={{ viewTransitionName: `${pastChapterId > chapter.route_object.chapter_id ? "slide-left": "slide-right"}` }}
+                        // style={{ viewTransitionName: 'ok' }}
+                        // data-chapter={`${chapter.route_string}`}
+                        className={continousLineValue ? "space-x-4" : "flex flex-col gap-2"}
+                    // className={`${chapter.route_object.chapter_id % 2 === 0 ? "animate-slide-from-left" : "animate-slide-left"}`}
+                    >
+                        <VersesDisplayer
+                            chapter={chapter}
+                            selectedFontSize={selectedFontSize}
+                            verses={verses}
+                        />
+                    </div>
                     : bookInfo && getChapterNumber(searchValue) === 0 ?
                         (<BookInfo bookInfo={bookInfo} selectedFontSize={selectedFontSize} />)
                         : search && version ?
@@ -104,10 +122,13 @@ export default async function page({
                 <ReadFullChapterButton chapter={chapter} version={version} selectedFontSize={selectedFontSize} />
             }
 
-
             <NavigatePassages
                 next_chapter={next_chapter}
                 previous_chapter={previous_chapter}
+                textSize={selectedFontSize.text}
+                iconSize={selectedFontSize.icon}
+                gapForElements={selectedFontSize.gap_between_elements}
+                alignmentForFlexElements={selectedFontSize.aligmentForFlexElements}
             />
         </div>
     )

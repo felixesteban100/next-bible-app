@@ -17,11 +17,12 @@ import SignedOut from "../auth/SignedOut";
 import UserInfo from "../auth/UserInfo";
 import ButtonForNavbarLink from "./ButtonForNavbarLink";
 
+"h-[3rem] w-auto"
+
 export default function Navbar() {
     const t = useTranslations()
-
     return (
-        <nav className="flex items-center justify-between w-[90vw] md:w-[80vw] max-w-[1700px] min-h-[4rem] mx-auto gap-5 py-5">
+        <nav className="flex items-center justify-between w-[90vw] lg:w-[80vw] max-w-[1700px] min-h-[4rem] mx-auto gap-5 py-5">
             <div className={`hidden md:flex gap-5 items-center`}>
                 <ButtonForNavbarLink
                     href="/"
@@ -53,7 +54,7 @@ export default function Navbar() {
                     {t("study_tools")}
                 </ButtonForNavbarLink>
             </div>
-            <div className="flex md:hidden gap-5">
+            <div className="flex lg:hidden gap-5">
                 <Sheet>
                     <SheetTrigger>
                         <BookOpen size={40} />

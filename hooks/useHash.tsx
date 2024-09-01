@@ -3,6 +3,8 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+/* i guess this is not going to be needed anymore  */
+
 const getHash = () =>
     typeof window !== "undefined" ? window.location.hash : undefined;
 

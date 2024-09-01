@@ -3,16 +3,20 @@
 import { useEffect } from "react";
 
 export function useKeyPress(callback: () => void, keyCodes: string[]): void {
-    const handler = ({ code }: KeyboardEvent) => {
-        if (keyCodes.includes(code)) {
-            callback();
-        }
-    };
-
     useEffect(() => {
-        window.addEventListener("keydown", handler);
+        window.addEventListener("keydown", (e: KeyboardEvent) => {
+            if (keyCodes.includes(e.code)) {
+                e.preventDefault()
+                callback();
+            }
+        });
         return () => {
-            window.removeEventListener("keydown", handler);
+            window.removeEventListener("keydown", (e: KeyboardEvent) => {
+                if (keyCodes.includes(e.code)) {
+                    e.preventDefault()
+                    callback();
+                }
+            });
         };
     });
 }

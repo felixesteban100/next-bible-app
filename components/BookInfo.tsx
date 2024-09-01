@@ -3,7 +3,8 @@
 import { translateRouteString } from "@/lib/queriesUtils";
 import { Button } from "./ui/button";
 import { useTranslations } from "next-intl";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 type BookInfoProps = {
     bookInfo: Book;
@@ -14,7 +15,7 @@ export default function BookInfo({ bookInfo, selectedFontSize }: BookInfoProps) 
     const t = useTranslations()
 
     const searchParams = useSearchParams()
-    const { push } = useRouter()
+    const { push } = useTransitionRouter()
     const params = new URLSearchParams(searchParams)
 
     function goToChapter(search: string) {
@@ -43,6 +44,8 @@ export default function BookInfo({ bookInfo, selectedFontSize }: BookInfoProps) 
                     })}
                 </div>
             </div>
+
+
         </div>
     )
 }

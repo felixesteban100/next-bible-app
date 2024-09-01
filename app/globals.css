@@ -70,4 +70,69 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  ::view-transition-group(*) {
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+  }
+
+  /* [data-verse^="KJV-"], [data-verse^="RV1960-"] */
+
+  /* ::view-transition-group(KJV-4-9-4) {
+    animation-duration: 10s;
+    animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+    animation-fill-mode: both;
+  } */
+
+  /* to apply when right button is pressed */
+  /* ::view-transition-new(slide-right):only-child {
+    animation: 2s cubic-bezier(0.4, 0, 0.2, 1) both translate-in-left;
+  }
+  ::view-transition-old(slide-right):only-child {
+    animation: 2s cubic-bezier(0.4, 0, 0.2, 1) both translate-out-right;
+  } */
+
+  /* to apply when left button is pressed */
+  /* ::view-transition-new(slide-left):only-child {
+    animation: 2s cubic-bezier(0.4, 0, 0.2, 1) both translate-in-right;
+  }
+  ::view-transition-old(slide-left):only-child {
+    animation: 2s cubic-bezier(0.4, 0, 0.2, 1) both translate-out-left;
+  } */
+
+  @keyframes translate-in-right {
+    from {
+      transform: translateX(-100vw);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+
+  @keyframes translate-in-left {
+    from {
+      transform: translateX(100vw);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+
+  @keyframes translate-out-left {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(100vw);
+    }
+  }
+
+  @keyframes translate-out-right {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-100vw);
+    }
+  }
 }

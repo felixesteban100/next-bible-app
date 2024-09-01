@@ -2,23 +2,25 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 
-export default function NavigatePassages({ previous_chapter, next_chapter }: { previous_chapter: string, next_chapter: string }) {
+export default function NavigatePassages({ previous_chapter, next_chapter, textSize, iconSize, gapForElements, alignmentForFlexElements }: { previous_chapter: string, next_chapter: string, textSize: string, iconSize: string, gapForElements: string, alignmentForFlexElements: string }) {
     const linkClasses = "text-foreground hover:text-primary p-1"
     const searchParams = useSearchParams()
-    const { push } = useRouter()
+    const { push } = useTransitionRouter()
     const params = new URLSearchParams(searchParams)
+    params.set("verseToHighlight", "0")
 
     return (
-        <div className="flex flex-row justify-between items-center w-full">
+        <div className={`flex ${alignmentForFlexElements} justify-between items-center w-full ${gapForElements}`}>
             {previous_chapter !== "" ?
                 <Button onClick={() => {
                     params.set("search", previous_chapter)
                     push(`/read?${params.toString()}`)
-                }} type="button" variant={'link'} className={linkClasses}>
-                    <ChevronLeft />
+                }} type="button" variant={'link'} className={`${linkClasses} ${textSize}`}>
+                    <ChevronLeft className={iconSize} />
                     {previous_chapter}
                 </Button>
                 :
@@ -28,9 +30,9 @@ export default function NavigatePassages({ previous_chapter, next_chapter }: { p
                 <Button onClick={() => {
                     params.set("search", next_chapter)
                     push(`/read?${params.toString()}`)
-                }} type="button" variant={'link'} className={linkClasses}>
+                }} type="button" variant={'link'} className={`${linkClasses} ${textSize}`}>
                     {next_chapter}
-                    <ChevronRight />
+                    <ChevronRight className={iconSize} />
                 </Button>
                 :
                 <div />

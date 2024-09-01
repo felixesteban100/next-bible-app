@@ -3,7 +3,8 @@
 import { translateRouteString } from "@/lib/queriesUtils";
 import { Button } from "./ui/button";
 import { useTranslations } from "next-intl";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 type ReadFullChapterButton = {
     chapter: Chapter;
@@ -15,7 +16,7 @@ export default function ReadFullChapterButton({ chapter, version, selectedFontSi
     const t = useTranslations()
 
     const searchParams = useSearchParams()
-    const { replace } = useRouter()
+    const { replace } = useTransitionRouter()
     const params = new URLSearchParams(searchParams)
 
     function goToFirstChapter() {

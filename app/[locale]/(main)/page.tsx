@@ -6,9 +6,11 @@ import SignedOut from "@/components/auth/SignedOut";
 import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
-// add a history
-// add the ability to hightlight
-// add the ability to navigate though the passage by making all the other verses blury and the one selected with full opacity by using the arrows up and down
+// 🔃 add a history
+// 🔃 add the ability to hightlight
+// ✅ add the ability to navigate though the passage by making all the other verses blury and the one selected with full opacity by using the arrows up and down
+// ✅ make the each verse smoothly animate using viewTransitionAPI when continues line switch is being pressed back and forth
+// 🔃 make the chapter go right when next chapter is pressed and go left when previous chapter is pressed
 
 export default async function Home({ params: { locale } }: { params: { locale: string } }) {
   unstable_setRequestLocale(locale)
@@ -37,8 +39,7 @@ export default async function Home({ params: { locale } }: { params: { locale: s
           {t("homePageHeroDescription")}
         </p>
         <TypewriterEffectSmooth words={words} className="hidden lg:flex" />
-        {/* text-5xl */}
-        <p className="block lg:hidden">{words.map(c => (<span key={c.text} className={cn(c.className, " font-semibold")}>{c.text} </span>))}</p>
+        <p className="text-5xl block lg:hidden text-center">{words.map(c => (<span key={c.text} className={cn(c.className, " font-semibold")}>{c.text} </span>))}</p>
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 mt-10">
           <SignedIn>
             <Button>

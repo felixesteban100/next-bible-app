@@ -32,7 +32,6 @@ export default async function VerseOfTheDay({ version, selectedFontSize }: { ver
                     chapter={chapter}
                     selectedFontSize={selectedFontSize}
                     verses={todays_verse.verses}
-                    error_message={t("chapter_error")}
                 />
             </div>
             <ReadFullChapterButton chapter={chapter} version={version} selectedFontSize={selectedFontSize} />
