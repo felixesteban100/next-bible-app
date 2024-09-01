@@ -40,7 +40,7 @@ export default async function page({
     },
     params: { locale: string }
 }) {
-    unstable_setRequestLocale(locale);
+    // unstable_setRequestLocale(locale);
 
     const language = locale
 
