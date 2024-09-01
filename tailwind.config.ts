@@ -1,3 +1,4 @@
+import { plugin } from "postcss";
 import type { Config } from "tailwindcss"
 
 const config = {
@@ -77,7 +78,12 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    /* plugin(function ({ addVariant }) {
+      addVariant('fullscreen', '&:fullscreen');
+    }) */
+  ],
 } satisfies Config
 
 export default config

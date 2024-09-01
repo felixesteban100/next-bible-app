@@ -113,7 +113,7 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
     }
 
     return (
-        <div className={`flex flex-col ${gapForElements}`}>
+        <div className={`flex flex-col ${gapForElements} hide_onFullScreen`}>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}

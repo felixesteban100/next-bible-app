@@ -8,7 +8,7 @@ import { useTransitionRouter } from "next-view-transitions";
 
 type BookInfoProps = {
     bookInfo: Book;
-    selectedFontSize: { text: string, firstVerse: string }
+    selectedFontSize: SelectedFontSize
 }
 
 export default function BookInfo({ bookInfo, selectedFontSize }: BookInfoProps) {

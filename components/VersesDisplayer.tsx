@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation"
 import { useKeyPress } from '@/hooks/useKeyPress'
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { usePathname, useRouter } from "@/lib/navigation"
 // import { useTransitionRouter } from 'next-view-transitions'
 
@@ -13,12 +13,19 @@ type VersesDisplayerProps = {
 }
 
 export default function VersesDisplayer({ chapter, selectedFontSize, verses }: VersesDisplayerProps) {
-    const searchParams = useSearchParams()
-    const { replace } = useRouter()/* useTransitionRouter() */
-    const params = new URLSearchParams(searchParams)
-    const pathname = usePathname()
+    // const searchParams = useSearchParams()
+    // const { replace } = useRouter()/* useTransitionRouter() */
+    // const params = new URLSearchParams(searchParams)
+    // const pathname = usePathname()
 
-    const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
+    // const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
+
+    /* function setVerseToHighlight(verse: number) {
+        params.set('verseToHighlight', `${verse}`)
+        replace(`${pathname}?${params.toString()}`, { scroll: false })
+    } */
+
+    const [verseSelected, setVerseToHighlight] = useState(0)
 
     const firstVerse = verses[0] ?? 1
     const lastVerse = verses[verses.length - 1] ?? chapter.verses_content.length
@@ -35,10 +42,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
 
     }, [verseSelected])
 
-    function setVerseToHighlight(verse: number) {
-        params.set('verseToHighlight', `${verse}`)
-        replace(`${pathname}?${params.toString()}`, { scroll: false })
-    }
+
 
 
     useKeyPress(() => {

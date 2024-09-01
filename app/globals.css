@@ -60,6 +60,10 @@
 }
 
 @layer base {
+  :root[sizemode="fullscreen"] .hide_onFullScreen {
+    @apply hidden;
+  }
+
   html {
     scroll-behavior: smooth;
   }
