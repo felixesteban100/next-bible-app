@@ -5,7 +5,7 @@ import Image from "next/image"
 import SignedIn from "./SignedIn"
 import SignedOut from "./SignedOut"
 
-export async function SignIn() {
+export async function SignIn({ redirectTo }: { redirectTo?: string }) {
     const t = await getTranslations()
     return (
         <>
@@ -36,6 +36,9 @@ export async function SignIn() {
                             className="h-5 w-5"
                         />
                     </Button>
+                    {redirectTo &&
+                        <input type="hidden" value={redirectTo} name="redirectTo" />
+                    }
                 </form>
             </SignedOut>
         </>

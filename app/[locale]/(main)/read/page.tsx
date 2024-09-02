@@ -11,6 +11,7 @@ import VersesDisplayer from "@/components/VersesDisplayer";
 import { unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next'
 import { fontSize } from "@/lib/constants";
+import Navbar from "@/components/navbar/Navbar";
 
 type Props = {
     searchParams: { [key: string]: string | undefined }
@@ -89,56 +90,60 @@ export default async function page({
     const selectedFontSize: SelectedFontSize = fontSize[parseInt(fontSizeValue)]
 
     return (
-        <div className={` flex flex-col ${selectedFontSize.gap_between_elements} p-2`}>
+        <>
+            {/* sticky top-0 z-50  */}
+            {verseToHighlightValue === 0 ? <Navbar /> : null}
+            <main className="w-[90vw] md:w-[83vw] mx-auto overflow-hidden max-w-[1700px] pt-5 pb-10">
+                <div className={` flex flex-col ${selectedFontSize.gap_between_elements} p-2`}>
+                    {verseToHighlightValue === 0 ? <SearchBibleReference
+                        versions={JSON.parse(JSON.stringify(versions))}
+                        previous_chapter={previous_chapter}
+                        next_chapter={next_chapter}
+                        versionParam={versionValue}
+                        searchParam={searchValue}
+                        fontSizeParam={fontSizeValue}
+                        continousLineParam={continousLineValue}
+                        selectedFontSize={selectedFontSize}
+                    /> : null}
 
+                    <div>
+                        {chapter ?
+                            <div
+                                // style={{ viewTransitionName: `${pastChapterId > chapter.route_object.chapter_id ? "slide-left": "slide-right"}` }}
+                                // data-chapter={`${chapter.route_string}`}
+                                className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} mb-32`}
+                            // className={`${chapter.route_object.chapter_id % 2 === 0 ? "animate-slide-from-left" : "animate-slide-left"}`}
+                            >
 
-            {verseToHighlightValue === 0 ? <SearchBibleReference
-                versions={JSON.parse(JSON.stringify(versions))}
-                previous_chapter={previous_chapter}
-                next_chapter={next_chapter}
-                versionParam={versionValue}
-                searchParam={searchValue}
-                fontSizeParam={fontSizeValue}
-                continousLineParam={continousLineValue}
-                selectedFontSize={selectedFontSize}
-            /> : null}
-
-            <div>
-                {chapter ?
-                    <div
-                        // style={{ viewTransitionName: `${pastChapterId > chapter.route_object.chapter_id ? "slide-left": "slide-right"}` }}
-                        // data-chapter={`${chapter.route_string}`}
-                        className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} mb-32`}
-                    // className={`${chapter.route_object.chapter_id % 2 === 0 ? "animate-slide-from-left" : "animate-slide-left"}`}
-                    >
-
-                        <VersesDisplayer
-                            chapter={JSON.parse(JSON.stringify(chapter))}
-                            selectedFontSize={selectedFontSize}
-                            verses={verses}
-                        />
+                                <VersesDisplayer
+                                    chapter={JSON.parse(JSON.stringify(chapter))}
+                                    selectedFontSize={selectedFontSize}
+                                    verses={verses}
+                                />
+                            </div>
+                            : bookInfo && getChapterNumber(searchValue) === 0 ?
+                                (<BookInfo bookInfo={JSON.parse(JSON.stringify(bookInfo))} selectedFontSize={selectedFontSize} />)
+                                : search && version ?
+                                    <p>{t("Not_existent_reference")} ({search} ({version}))</p>
+                                    :
+                                    <VerseOfTheDay_staticData version={versionValue} selectedFontSize={selectedFontSize} />
+                        }
                     </div>
-                    : bookInfo && getChapterNumber(searchValue) === 0 ?
-                        (<BookInfo bookInfo={JSON.parse(JSON.stringify(bookInfo))} selectedFontSize={selectedFontSize} />)
-                        : search && version ?
-                            <p>{t("Not_existent_reference")} ({search} ({version}))</p>
-                            :
-                            <VerseOfTheDay_staticData version={versionValue} selectedFontSize={selectedFontSize} />
-                }
-            </div>
 
-            {(verses.length > 0 && chapter && version) &&
-                <ReadFullChapterButton chapter={JSON.parse(JSON.stringify(chapter))} version={version} selectedFontSize={selectedFontSize} />
-            }
+                    {(verses.length > 0 && chapter && version) &&
+                        <ReadFullChapterButton chapter={JSON.parse(JSON.stringify(chapter))} version={version} selectedFontSize={selectedFontSize} />
+                    }
 
-            {verseToHighlightValue === 0 ? <NavigatePassages
-                next_chapter={next_chapter}
-                previous_chapter={previous_chapter}
-                textSize={selectedFontSize.text}
-                iconSize={selectedFontSize.icon}
-                gapForElements={selectedFontSize.gap_between_elements}
-                alignmentForFlexElements={selectedFontSize.aligmentForFlexElements}
-            /> : null}
-        </div>
+                    {verseToHighlightValue === 0 ? <NavigatePassages
+                        next_chapter={next_chapter}
+                        previous_chapter={previous_chapter}
+                        textSize={selectedFontSize.text}
+                        iconSize={selectedFontSize.icon}
+                        gapForElements={selectedFontSize.gap_between_elements}
+                        alignmentForFlexElements={selectedFontSize.aligmentForFlexElements}
+                    /> : null}
+                </div>
+            </main>
+        </>
     )
 }

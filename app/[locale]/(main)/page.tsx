@@ -31,29 +31,30 @@ export default async function Home({ params: { locale } }: { params: { locale: s
   })
 
   return (
-    <main
-      className="flex flex-col gap-5"
-    >
-      <div className="flex flex-col items-center justify-center h-[40rem] ">
-        {/* text-base */}
-        <p className="text-foreground mb-10">
-          {t("homePageHeroDescription")}
-        </p>
-        <TypewriterEffectSmooth words={words} className="hidden lg:flex" />
-        <p className="text-5xl block lg:hidden text-center">{words.map(c => (<span key={c.text} className={cn(c.className, " font-semibold")}>{c.text} </span>))}</p>
-        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 mt-10">
-          <SignedIn>
-            <Button>
-              <Link href={`/read`}>{t("readNow")}</Link>
-            </Button>
-          </SignedIn>
-          <SignedOut>
-            <Button>
-              <Link href={`/sign-in`}>{t("signIn")}</Link>
-            </Button>
-          </SignedOut>
-        </div>
+    /* <main
+      className="flex flex-col gap-5 w-full h-full items-center"
+    > */
+    /* h-[40rem] */
+    <div className="flex flex-col items-center justify-center h-[90vh] w-full">
+      {/* text-base */}
+      <p className="text-foreground mb-10">
+        {t("homePageHeroDescription")}
+      </p>
+      <TypewriterEffectSmooth words={words} className="hidden lg:flex" />
+      <p className="text-5xl block lg:hidden text-center">{words.map(c => (<span key={c.text} className={cn(c.className, " font-semibold")}>{c.text} </span>))}</p>
+      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 mt-10">
+        {/* <SignedIn> */}
+        <Button>
+          <Link href={`/read`}>{t("readNow")}</Link>
+        </Button>
+        {/* </SignedIn> */}
+        <SignedOut>
+          <Button variant={"secondary"}>
+            <Link href={`/sign-in`}>{t("signIn")}</Link>
+          </Button>
+        </SignedOut>
       </div>
-    </main>
+    </div>
+    // </main>
   );
 }

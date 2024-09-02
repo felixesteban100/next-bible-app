@@ -14,7 +14,7 @@ import { BookOpen } from "lucide-react"
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
 import { Link } from "next-view-transitions"
 
-export default async function page({ params: { locale } }: { params: { locale: string } }) {
+export default async function page({ params: { locale }, searchParams: { lastHref } }: { params: { locale: string }, searchParams: { lastHref?: string } }) {
     unstable_setRequestLocale(locale);
 
     const t = await getTranslations()
@@ -33,7 +33,7 @@ export default async function page({ params: { locale } }: { params: { locale: s
             </CardHeader>
             {/* md:flex-row */}
             <CardContent className="flex flex-col  justify-center items-center gap-5">
-                <SignIn />
+                <SignIn redirectTo={lastHref} />
                 <Link href={"/"}>
                     <Button variant={'link'} className="text-foreground">
                         {t("returnToMainPage")}

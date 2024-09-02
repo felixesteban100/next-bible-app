@@ -10,13 +10,15 @@ import {
     SheetTitle,
     SheetDescription
 } from "@/components/ui/sheet"
-import { BookOpen } from "lucide-react";
+import { BookOpen, User } from "lucide-react";
 import SignedIn from "../auth/SignedIn";
 import SignedOut from "../auth/SignedOut";
 import UserInfo from "../auth/UserInfo";
 import ButtonForNavbarLink from "./ButtonForNavbarLink";
 import { useSearchParams } from "next/navigation";
 import { usePathname } from "@/lib/navigation";
+import { Button } from "../ui/button";
+import { Link } from "next-view-transitions";
 
 "h-[3rem] w-auto"
 
@@ -33,7 +35,6 @@ export default function Navbar() {
 
     return (
         <div className="bg-secondary/70 backdrop-blur-md p-2 h-fit">
-
             <nav className="flex items-center justify-between w-[90vw] lg:w-[83vw] max-w-[1700px] min-h-[4rem] mx-auto gap-5 py-5">
                 {/* hidden md:flex */}
                 <div className={`flex justify-between gap-10 items-center`}>
@@ -127,13 +128,20 @@ export default function Navbar() {
 
                 <div className="flex gap-5">
                     <SignedOut>
-                        <ButtonForNavbarLink
+                        {/* <ButtonForNavbarLink
                             href={'/sign-in'}
                             variant={"default"}
-                            aditionalClassNames={`text-sm w-full text-primary-foreground font-semibold`}
+                            aditionalClassNames={`rounded-full`}
                         >
-                            {t("signIn")}
-                        </ButtonForNavbarLink>
+                            <User />
+                        </ButtonForNavbarLink> */}
+                        <Link href="/sign-in?lastHref=/read">
+                            <Button
+                                variant={"default"}
+                                className="rounded-full" size={'icon'} >
+                                <User />
+                            </Button>
+                        </Link>
                     </SignedOut>
                     <SignedIn>
                         <UserInfo />
@@ -143,6 +151,5 @@ export default function Navbar() {
                 </div>
             </nav>
         </div>
-
     )
 }
