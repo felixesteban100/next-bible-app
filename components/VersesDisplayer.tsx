@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { usePathname, useRouter } from "@/lib/navigation"
 import { useTransitionRouter } from 'next-view-transitions'
+import { Button } from './ui/button'
 
 type VersesDisplayerProps = {
     chapter: Chapter,
@@ -47,8 +48,6 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
     }, [verseSelected])
 
 
-
-
     useKeyPress(() => {
         if (verseSelected === 0) setVerseToHighlight(firstVerse)
         const newVerseToSelect = verseSelected - 1
@@ -70,7 +69,9 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
     }, ["ArrowDown"]);
 
     return (
+
         <>
+
             {
                 chapter.verses_content.map((c, i) => {
                     const verseNumber = i + 1
@@ -113,6 +114,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
             }
 
         </>
+
     )
 
 }

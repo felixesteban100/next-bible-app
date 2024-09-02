@@ -24,12 +24,16 @@ export async function generateMetadata(
     }
 }
 
+// in order for tailwind classes to work from afar
+"h-[5rem]"
+"h-[4rem]"
 // ['text-xl', "text-3xl", 'text-2xl', "text-4xl", "text-5xl", "text-6xl", "text-8xl"]
+// in order for tailwind classes to work from afar
 
 
 
 export default async function page({
-    searchParams: { search, version, fontSizeNumber, continousLine },
+    searchParams: { search, version, fontSizeNumber, continousLine, verseToHighlight },
     params: { locale },
 }: {
     searchParams: {
@@ -37,12 +41,15 @@ export default async function page({
         version?: string
         fontSizeNumber?: string;
         continousLine?: string;
+        verseToHighlight?: string;
     },
     params: { locale: string }
 }) {
     unstable_setRequestLocale(locale);
 
     const language = locale
+
+    const verseToHighlightValue = parseInt(verseToHighlight ?? "0")
 
     const [t, versions] = await Promise.all([
         getTranslations(),
@@ -82,8 +89,10 @@ export default async function page({
     const selectedFontSize: SelectedFontSize = fontSize[parseInt(fontSizeValue)]
 
     return (
-        <div className={`p-2 flex flex-col ${selectedFontSize.gap_between_elements}`}>
-            <SearchBibleReference
+        <div className={` flex flex-col ${selectedFontSize.gap_between_elements} p-2`}>
+
+
+            {verseToHighlightValue === 0 ? <SearchBibleReference
                 versions={JSON.parse(JSON.stringify(versions))}
                 previous_chapter={previous_chapter}
                 next_chapter={next_chapter}
@@ -92,17 +101,17 @@ export default async function page({
                 fontSizeParam={fontSizeValue}
                 continousLineParam={continousLineValue}
                 selectedFontSize={selectedFontSize}
-            />
+            /> : null}
 
             <div>
                 {chapter ?
                     <div
                         // style={{ viewTransitionName: `${pastChapterId > chapter.route_object.chapter_id ? "slide-left": "slide-right"}` }}
-                        // style={{ viewTransitionName: 'ok' }}
                         // data-chapter={`${chapter.route_string}`}
-                        className={continousLineValue ? "space-x-4" : "flex flex-col gap-2"}
+                        className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} mb-32`}
                     // className={`${chapter.route_object.chapter_id % 2 === 0 ? "animate-slide-from-left" : "animate-slide-left"}`}
                     >
+
                         <VersesDisplayer
                             chapter={JSON.parse(JSON.stringify(chapter))}
                             selectedFontSize={selectedFontSize}
@@ -122,14 +131,14 @@ export default async function page({
                 <ReadFullChapterButton chapter={JSON.parse(JSON.stringify(chapter))} version={version} selectedFontSize={selectedFontSize} />
             }
 
-            <NavigatePassages
+            {verseToHighlightValue === 0 ? <NavigatePassages
                 next_chapter={next_chapter}
                 previous_chapter={previous_chapter}
                 textSize={selectedFontSize.text}
                 iconSize={selectedFontSize.icon}
                 gapForElements={selectedFontSize.gap_between_elements}
                 alignmentForFlexElements={selectedFontSize.aligmentForFlexElements}
-            />
+            /> : null}
         </div>
     )
 }

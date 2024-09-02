@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { AArrowUp, Book, ChevronDown, Search } from "lucide-react";
+import { AArrowUp, Book, ChevronDown, Search, Text } from "lucide-react";
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -66,6 +66,7 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
     const gapForElements = selectedFontSize.gap_between_elements
     const alignmentForFlexElements = selectedFontSize.aligmentForFlexElements
 
+
     const { push } = useTransitionRouter()
     const searchParams = useSearchParams()
     const params = new URLSearchParams(searchParams)
@@ -113,7 +114,7 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
     }
 
     return (
-        <div className={`flex flex-col ${gapForElements} hide_onFullScreen`}>
+        <div className={`flex flex-col ${gapForElements}`}>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -164,8 +165,9 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button type="button" variant={'link'} className={`${linkClasses} flex items-center ${textSize} h-fit`}>
-                                <span className="hidden lg:block">{t("Bible_book_list")}</span>
-                                <Book className={`${iconSize} block lg:hidden`} />
+                                {/* <span className="hidden lg:block">{t("Bible_book_list")}</span> */}
+                                {/* <Book className={`${iconSize} block lg:hidden`} /> */}
+                                <Book className={`${iconSize} `} />
                                 <ChevronDown className={iconSize} />
                             </Button>
                         </PopoverTrigger>
@@ -224,8 +226,9 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button type="button" variant={'link'} className={`${linkClasses} flex items-center ${textSize} h-fit`}>
-                                <span className="hidden lg:block">{t("Font_size")}</span>
-                                <AArrowUp className={`${iconSize} block lg:hidden`} />
+                                {/* <span className="hidden lg:block">{t("Font_size")}</span> */}
+                                {/* <AArrowUp className={`${iconSize} block lg:hidden`} /> */}
+                                <Text className={`${iconSize}`} />
                                 <ChevronDown className={iconSize} />
                             </Button>
                         </PopoverTrigger>
@@ -255,14 +258,14 @@ function SearchBibleReference({ versions, previous_chapter, next_chapter, versio
                 </div>
             </Form>
 
-            <NavigatePassages
+            {/* <NavigatePassages
                 next_chapter={next_chapter}
                 previous_chapter={previous_chapter}
                 textSize={textSize}
                 iconSize={iconSize}
                 gapForElements={gapForElements}
                 alignmentForFlexElements={alignmentForFlexElements}
-            />
+            /> */}
         </div>
     )
 }

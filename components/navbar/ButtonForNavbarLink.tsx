@@ -30,7 +30,8 @@ export default function ButtonForNavbarLink({ href, variant, size, children, adi
             <Button
                 variant={variant ?? "ghost"}
                 size={size ?? "default"}
-                className={cn(`${selectedFontSize.text} ${selectedFontSize.icon} ${pathname === href ? "text-primary font-bold" : "text-secondary-foreground font-thin"}`, aditionalClassNames)}
+
+                className={cn(`${selectedFontSize.text} ${selectedFontSize.icon} ${pathname === href ? "text-primary font-bold" : "text-secondary-foreground " /* font-thin */}`, aditionalClassNames)}
             >
                 {children}
             </Button>
