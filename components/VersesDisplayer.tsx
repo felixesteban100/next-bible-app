@@ -69,9 +69,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
     }, ["ArrowDown"]);
 
     return (
-
         <>
-
             {
                 chapter.verses_content.map((c, i) => {
                     const verseNumber = i + 1
@@ -79,7 +77,6 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
                     if (verses.length !== 0 && !verses.includes(i + 1)) return null
                     const verseRouteString = chapter.verses_routes_string[i]
                     // console.log(verseRouteString)
-
                     return (
                         <span
                             id={`${verseNumber}`}
@@ -112,7 +109,6 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
                     )
                 })
             }
-
         </>
 
     )

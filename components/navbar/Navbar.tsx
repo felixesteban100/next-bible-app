@@ -1,24 +1,25 @@
 import { ModeToggle } from "../ModeToggle";
 import { LanguageToggle } from "../LanguageToggle";
 import { useTranslations } from "next-intl"
-import {
-    Sheet,
-    SheetContent,
-    SheetTrigger,
-    SheetClose,
-    SheetHeader,
-    SheetTitle,
-    SheetDescription
-} from "@/components/ui/sheet"
+// import {
+//     Sheet,
+//     SheetContent,
+//     SheetTrigger,
+//     SheetClose,
+//     SheetHeader,
+//     SheetTitle,
+//     SheetDescription
+// } from "@/components/ui/sheet"
 import { BookOpen, User } from "lucide-react";
 import SignedIn from "../auth/SignedIn";
 import SignedOut from "../auth/SignedOut";
 import UserInfo from "../auth/UserInfo";
 import ButtonForNavbarLink from "./ButtonForNavbarLink";
-import { useSearchParams } from "next/navigation";
-import { usePathname } from "@/lib/navigation";
+// import { useSearchParams } from "next/navigation";
+// import { usePathname } from "@/lib/navigation";
 import { Button } from "../ui/button";
 import { Link } from "next-view-transitions";
+import VerseSizeSelector from "../VerseSizeSelector";
 
 "h-[3rem] w-auto"
 
@@ -126,20 +127,15 @@ export default function Navbar() {
                     </Sheet>
                 </div> */}
 
-                <div className="flex gap-5">
+                <div className="flex gap-5 items-center">
                     <SignedOut>
-                        {/* <ButtonForNavbarLink
-                            href={'/sign-in'}
-                            variant={"default"}
-                            aditionalClassNames={`rounded-full`}
-                        >
-                            <User />
-                        </ButtonForNavbarLink> */}
                         <Link href="/sign-in?lastHref=/read">
                             <Button
-                                variant={"default"}
-                                className="rounded-full" size={'icon'} >
-                                <User />
+                                variant={"outline"}
+                                className="rounded-full h-[3.5rem] w-[3.5rem]"
+                                size={'icon'}
+                            >
+                                <User className="h-[2rem] w-[2rem]" />
                             </Button>
                         </Link>
                     </SignedOut>
@@ -148,6 +144,7 @@ export default function Navbar() {
                     </SignedIn>
                     <ModeToggle />
                     <LanguageToggle />
+                    <VerseSizeSelector />
                 </div>
             </nav>
         </div>

@@ -41,17 +41,17 @@ export function LanguageToggle() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button disabled={isPending} variant="outline" size="icon" className="rounded-full">
-                    <Languages className="h-[1.2rem] w-[1.2rem]" />
+                <Button disabled={isPending} variant="outline" size="icon" className="rounded-full h-[3.5rem] w-[3.5rem]">
+                    <Languages className="h-[2rem] w-[2rem]" />
                     <span className="sr-only">Toggle theme</span>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => onLanguageClick("es")}>
+                <DropdownMenuItem onClick={() => onLanguageClick("es")} className="text-xl">
                     {t("spanish")}
                     {language === "es" ? <Check className={checkClasses} /> : null}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onLanguageClick("en")}>
+                <DropdownMenuItem onClick={() => onLanguageClick("en")} className="text-xl">
                     {t("english")}
                     {language === "en" ? <Check className={checkClasses} /> : null}
                 </DropdownMenuItem>

@@ -15,10 +15,10 @@ export default async function UserInfo() {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="rounded-full">
+            <DropdownMenuTrigger className="rounded-full h-[3.5rem] w-[3.5rem]">
                 <Image
                     src={session.user.image!}
-                    className="rounded-full h-8 w-8"
+                    className="rounded-full h-full w-full"
                     alt="user_image"
                     width={500}
                     height={500}
@@ -34,8 +34,8 @@ export default async function UserInfo() {
                         height={500}
                     />
                     <div>
-                        <p className="font-bold">{session.user.name}</p>
-                        <p>{session.user.email}</p>
+                        <p className="font-bold text-2xl">{session.user.name}</p>
+                        <p className="text-xl">{session.user.email}</p>
                     </div>
                 </div>
                 <DropdownMenuSeparator />

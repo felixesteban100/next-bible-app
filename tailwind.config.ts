@@ -1,4 +1,3 @@
-import { plugin } from "postcss";
 import type { Config } from "tailwindcss"
 
 const config = {
@@ -19,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      transitionProperty: {
+        'height': 'height',
+      },
       fontSize: {
         '8xl': "5rem"
       },
@@ -80,9 +82,6 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    /* plugin(function ({ addVariant }) {
-      addVariant('fullscreen', '&:fullscreen');
-    }) */
   ],
 } satisfies Config
 

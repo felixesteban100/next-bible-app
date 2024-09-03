@@ -28,10 +28,13 @@ export async function generateMetadata(
 // in order for tailwind classes to work from afar
 "h-[5rem]"
 "h-[4rem]"
-// ['text-xl', "text-3xl", 'text-2xl', "text-4xl", "text-5xl", "text-6xl", "text-8xl"]
+/* export const fontSize: SelectedFontSize[] = [
+    { text: 'text-xl', firstVerse: "text-3xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
+    { text: 'text-2xl', firstVerse: "text-4xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
+    { text: 'text-3xl', firstVerse: "text-5xl", icon: "h-[4rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
+    { text: 'text-4xl', firstVerse: "text-6xl", icon: "h-[4rem] w-auto", gap_between_elements: "gap-10", aligmentForFlexElements: "flex-row" },
+] */
 // in order for tailwind classes to work from afar
-
-
 
 export default async function page({
     searchParams: { search, version, fontSizeNumber, continousLine, verseToHighlight },
@@ -86,35 +89,47 @@ export default async function page({
     const previous_chapter = translateRouteString(previousChapter?.route_string ?? "", versionValue)
     const next_chapter = translateRouteString(nextChapter?.route_string ?? "", versionValue)
 
-
     const selectedFontSize: SelectedFontSize = fontSize[parseInt(fontSizeValue)]
+
+    function classForHideElement(animation: string, direction: string) {
+        switch (animation) {
+            case "fade":
+                return `${verseToHighlightValue === 0 ? "opacity-1" : `opacity-0`} transition-all duration-700 block`
+
+            case "translateY":
+                return direction === "up" ?
+                    `${verseToHighlightValue === 0 ? "translate-y-0" : `-translate-y-96 h-0`} transition-all duration-700`
+                    : direction === "down" ?
+                        `${verseToHighlightValue === 0 ? "translate-y-0" : `translate-y-96 h-0`} transition-all duration-700`
+                        : ""
+
+            default: return ""
+        }
+    }
 
     return (
         <>
-            {/* sticky top-0 z-50  */}
-            {verseToHighlightValue === 0 ? <Navbar /> : null}
-            <main className="w-[90vw] md:w-[83vw] mx-auto overflow-hidden max-w-[1700px] pt-5 pb-10">
-                <div className={` flex flex-col ${selectedFontSize.gap_between_elements} p-2`}>
-                    {verseToHighlightValue === 0 ? <SearchBibleReference
+            <div
+                className={`${classForHideElement("translateY", "up")}`}
+            >
+                <Navbar />
+            </div>
+
+            <main className={`w-[90vw] md:w-[83vw] mx-auto overflow-hidden max-w-[1700px] pt-5 pb-10 p-2 flex flex-col ${selectedFontSize.gap_between_elements}`}>
+                <div className={`${classForHideElement("translateY", "up")}`}>
+                    <SearchBibleReference
                         versions={JSON.parse(JSON.stringify(versions))}
-                        previous_chapter={previous_chapter}
-                        next_chapter={next_chapter}
                         versionParam={versionValue}
                         searchParam={searchValue}
-                        fontSizeParam={fontSizeValue}
-                        continousLineParam={continousLineValue}
                         selectedFontSize={selectedFontSize}
-                    /> : null}
-
+                    />
+                </div>
+                <div className={`flex flex-col ${selectedFontSize.gap_between_elements} `}>
                     <div>
                         {chapter ?
                             <div
-                                // style={{ viewTransitionName: `${pastChapterId > chapter.route_object.chapter_id ? "slide-left": "slide-right"}` }}
-                                // data-chapter={`${chapter.route_string}`}
                                 className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} mb-32`}
-                            // className={`${chapter.route_object.chapter_id % 2 === 0 ? "animate-slide-from-left" : "animate-slide-left"}`}
                             >
-
                                 <VersesDisplayer
                                     chapter={JSON.parse(JSON.stringify(chapter))}
                                     selectedFontSize={selectedFontSize}
@@ -129,19 +144,19 @@ export default async function page({
                                     <VerseOfTheDay_staticData version={versionValue} selectedFontSize={selectedFontSize} />
                         }
                     </div>
-
                     {(verses.length > 0 && chapter && version) &&
                         <ReadFullChapterButton chapter={JSON.parse(JSON.stringify(chapter))} version={version} selectedFontSize={selectedFontSize} />
                     }
-
-                    {verseToHighlightValue === 0 ? <NavigatePassages
-                        next_chapter={next_chapter}
-                        previous_chapter={previous_chapter}
-                        textSize={selectedFontSize.text}
-                        iconSize={selectedFontSize.icon}
-                        gapForElements={selectedFontSize.gap_between_elements}
-                        alignmentForFlexElements={selectedFontSize.aligmentForFlexElements}
-                    /> : null}
+                    <div className={`${classForHideElement("fade", "")}`}>
+                        <NavigatePassages
+                            next_chapter={next_chapter}
+                            previous_chapter={previous_chapter}
+                            textSize={selectedFontSize.text}
+                            iconSize={selectedFontSize.icon}
+                            gapForElements={selectedFontSize.gap_between_elements}
+                            alignmentForFlexElements={selectedFontSize.aligmentForFlexElements}
+                        />
+                    </div>
                 </div>
             </main>
         </>

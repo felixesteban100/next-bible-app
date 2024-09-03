@@ -11,7 +11,7 @@ export async function SignIn({ redirectTo }: { redirectTo?: string }) {
         <>
             <SignedIn>
                 <form action={signOutAction}>
-                    <Button type="submit" variant={'outline'} className="gap-2">
+                    <Button type="submit" variant={'outline'} className="gap-2 text-2xl p-8">
                         {t("signOut_ofGoogle")}
                         <Image
                             src={"https://www.svgrepo.com/show/303108/google-icon-logo.svg"}

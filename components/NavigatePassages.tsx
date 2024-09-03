@@ -17,14 +17,13 @@ type NavigatePassageProps = {
 
 
 export default function NavigatePassages({ previous_chapter, next_chapter, textSize, iconSize, gapForElements, alignmentForFlexElements }: NavigatePassageProps) {
-    // const linkClasses = "text-foreground hover:text-primary p-1"
     const searchParams = useSearchParams()
     const { push } = useTransitionRouter()
     const params = new URLSearchParams(searchParams)
     params.set("verseToHighlight", "0")
 
     return (
-        <div className={`flex ${alignmentForFlexElements} justify-start ${gapForElements} fixed bottom-10 h-fit `}>
+        <div className={`flex ${alignmentForFlexElements} justify-start ${gapForElements} fixed bottom-0 h-fit mb-10 `}>
             {previous_chapter !== "" ?
                 <Button
                     onClick={() => {
