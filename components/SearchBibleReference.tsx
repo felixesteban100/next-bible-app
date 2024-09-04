@@ -128,7 +128,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                             <Button
                                                                                 onClick={() => {
                                                                                     onSubmit({
-                                                                                        search: `${value} 0`,
+                                                                                        search: `${value}`,
                                                                                         version: form.getValues("version") ?? versionParam,
                                                                                     })
                                                                                 }}
