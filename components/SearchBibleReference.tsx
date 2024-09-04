@@ -97,7 +97,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
 
 
     return (
-        <div className={`flex flex-col ${gapForElements}`}>
+        <div className={`flex flex-col ${gapForElements} p-2`}>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -110,63 +110,61 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                         render={({ field }) => (
                             <FormItem className="w-full h-full col-span-4">
                                 <FormControl>
-                                    <div>
-                                        <Popover>
-                                            <PopoverTrigger className={`${textSize} h-full w-full`}>
-                                                <Input placeholder={t("enterPassage")} className={`${textSize} h-full py-[1rem]`} {...field} />
-                                            </PopoverTrigger>
-                                            <PopoverContent className="w-[80vw] max-w-[40rem]">
-                                                <p className={`${textSize} h-fit p-5`}>{t("Bible_book_list")} ({form.getValues("version") ?? versionParam})</p>
-                                                <ScrollArea className="h-[400px] rounded-md p-4">
-                                                    <Accordion type="single" collapsible>
-                                                        {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value]) => {
-                                                            return (
-                                                                <AccordionItem key={key} value={key}>
-                                                                    <AccordionTrigger className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary"} ${textSize} h-fit p-5`}>{value}</AccordionTrigger>
-                                                                    <AccordionContent>
-                                                                        <div className="flex flex-col">
-                                                                            <PopoverClose>
-                                                                                <Button
-                                                                                    onClick={() => {
-                                                                                        onSubmit({
-                                                                                            search: `${value} 0`,
-                                                                                            version: form.getValues("version") ?? versionParam,
-                                                                                        })
-                                                                                    }}
-                                                                                    key={key}
-                                                                                    type="button"
-                                                                                    variant={'ghost'}
-                                                                                    className={`${textSize} h-fit p-5`}
-                                                                                >
-                                                                                    {t("Read chapter info")}
-                                                                                </Button>
-                                                                            </PopoverClose>
-                                                                            <PopoverClose>
-                                                                                <Button
-                                                                                    onClick={() => {
-                                                                                        onSubmit({
-                                                                                            search: `${value} 1`,
-                                                                                            version: form.getValues("version") ?? versionParam,
-                                                                                        })
-                                                                                    }}
-                                                                                    key={key}
-                                                                                    type="button"
-                                                                                    variant={'ghost'}
-                                                                                    className={`${textSize} h-fit p-5`}
-                                                                                >
-                                                                                    {t("Read first chapter")}
-                                                                                </Button>
-                                                                            </PopoverClose>
-                                                                        </div>
-                                                                    </AccordionContent>
-                                                                </AccordionItem>
-                                                            )
-                                                        })}
-                                                    </Accordion>
-                                                </ScrollArea>
-                                            </PopoverContent>
-                                        </Popover>
-                                    </div>
+                                    <Popover>
+                                        <PopoverTrigger className={`${textSize} h-full w-full`}>
+                                            <Input placeholder={t("enterPassage")} className={`${textSize} h-full py-[0.5rem]`} autoComplete="off" {...field} />
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-[80vw] max-w-[40rem]">
+                                            <p className={`${textSize} h-fit p-5`}>{t("Bible_book_list")} ({form.getValues("version") ?? versionParam})</p>
+                                            <ScrollArea className="h-[400px] rounded-md p-4">
+                                                <Accordion type="single" collapsible>
+                                                    {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value]) => {
+                                                        return (
+                                                            <AccordionItem key={key} value={key}>
+                                                                <AccordionTrigger className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary"} ${textSize} h-fit p-5`}>{value}</AccordionTrigger>
+                                                                <AccordionContent>
+                                                                    <div className="flex flex-col">
+                                                                        <PopoverClose>
+                                                                            <Button
+                                                                                onClick={() => {
+                                                                                    onSubmit({
+                                                                                        search: `${value} 0`,
+                                                                                        version: form.getValues("version") ?? versionParam,
+                                                                                    })
+                                                                                }}
+                                                                                key={key}
+                                                                                type="button"
+                                                                                variant={'ghost'}
+                                                                                className={`${textSize} h-fit p-5`}
+                                                                            >
+                                                                                {t("Read chapter info")}
+                                                                            </Button>
+                                                                        </PopoverClose>
+                                                                        <PopoverClose>
+                                                                            <Button
+                                                                                onClick={() => {
+                                                                                    onSubmit({
+                                                                                        search: `${value} 1`,
+                                                                                        version: form.getValues("version") ?? versionParam,
+                                                                                    })
+                                                                                }}
+                                                                                key={key}
+                                                                                type="button"
+                                                                                variant={'ghost'}
+                                                                                className={`${textSize} h-fit p-5`}
+                                                                            >
+                                                                                {t("Read first chapter")}
+                                                                            </Button>
+                                                                        </PopoverClose>
+                                                                    </div>
+                                                                </AccordionContent>
+                                                            </AccordionItem>
+                                                        )
+                                                    })}
+                                                </Accordion>
+                                            </ScrollArea>
+                                        </PopoverContent>
+                                    </Popover>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

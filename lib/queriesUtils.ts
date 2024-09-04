@@ -132,3 +132,10 @@ export function translateRouteString(routeString: string, version: string): stri
     // Return the formatted string
     return `${bookName} ${chapterNumber}`;
 }
+
+export function getDailyItem<T>(array: T[]): T {
+    const today = new Date().toDateString(); // Get the current date as a string
+    const hash = Array.from(today).reduce((acc, char) => acc + char.charCodeAt(0), 0); // Simple hash based on date string
+    const index = hash % array.length; // Ensure index is within array bounds
+    return array[index];
+};

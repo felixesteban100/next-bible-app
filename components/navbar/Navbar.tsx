@@ -20,6 +20,7 @@ import ButtonForNavbarLink from "./ButtonForNavbarLink";
 import { Button } from "../ui/button";
 import { Link } from "next-view-transitions";
 import VerseSizeSelector from "../VerseSizeSelector";
+import { pageMarginAndWidth } from "@/lib/constants";
 
 "h-[3rem] w-auto"
 
@@ -36,7 +37,7 @@ export default function Navbar() {
 
     return (
         <div className="bg-secondary/70 backdrop-blur-md p-2 h-fit">
-            <nav className="flex items-center justify-between w-[90vw] lg:w-[83vw] max-w-[1700px] min-h-[4rem] mx-auto gap-5 py-5">
+            <nav className={`flex items-center justify-between ${pageMarginAndWidth} min-h-[4rem] gap-5 py-5`}>
                 {/* hidden md:flex */}
                 <div className={`flex justify-between gap-10 items-center`}>
                     <ButtonForNavbarLink
