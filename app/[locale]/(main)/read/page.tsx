@@ -11,6 +11,7 @@ import { unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next'
 import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_ROUTE_STRING, fontSize, pageMarginAndWidth } from "@/lib/constants";
 import Navbar from "@/components/navbar/Navbar";
+import { bibleBooks, bibleBooksNumberOfChapters } from "@/lib/bibleBooks";
 
 type Props = {
     searchParams: { [key: string]: string | undefined }

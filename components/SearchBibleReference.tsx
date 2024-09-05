@@ -33,7 +33,7 @@ import {
 import { useEffect } from "react";
 
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { bibleBooks } from "@/lib/bibleBooks";
+import { bibleBooks, bibleBooksNumberOfChapters } from "@/lib/bibleBooks";
 
 import {
     Accordion,
@@ -137,25 +137,33 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                                 variant={'ghost'}
                                                                                 className={`${textSize} h-fit p-5`}
                                                                             >
-                                                                                {t("Read chapter info")}
+                                                                                {t("Read book info")}
                                                                             </Button>
                                                                         </PopoverClose>
-                                                                        <PopoverClose>
-                                                                            <Button
-                                                                                onClick={() => {
-                                                                                    onSubmit({
-                                                                                        search: `${value} 1`,
-                                                                                        version: form.getValues("version") ?? versionParam,
-                                                                                    })
-                                                                                }}
-                                                                                key={key}
-                                                                                type="button"
-                                                                                variant={'ghost'}
-                                                                                className={`${textSize} h-fit p-5`}
-                                                                            >
-                                                                                {t("Read first chapter")}
-                                                                            </Button>
-                                                                        </PopoverClose>
+                                                                        <div>
+                                                                            {Array.from(Array(bibleBooksNumberOfChapters[versionParam][value]), (_, i) => {
+                                                                                const chapterNumber = i + 1
+
+                                                                                return (
+                                                                                    <PopoverClose key={`${value}-${chapterNumber}-chapter`}>
+                                                                                        <Button
+                                                                                            onClick={() => {
+                                                                                                onSubmit({
+                                                                                                    search: `${value} ${chapterNumber}`,
+                                                                                                    version: form.getValues("version") ?? versionParam,
+                                                                                                })
+                                                                                            }}
+                                                                                            key={key}
+                                                                                            type="button"
+                                                                                            variant={'ghost'}
+                                                                                            className={`${textSize} h-fit p-5`}
+                                                                                        >
+                                                                                            {chapterNumber}
+                                                                                        </Button>
+                                                                                    </PopoverClose>
+                                                                                )
+                                                                            })}
+                                                                        </div>
                                                                     </div>
                                                                 </AccordionContent>
                                                             </AccordionItem>
