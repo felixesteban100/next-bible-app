@@ -43,6 +43,7 @@ import {
 } from "@/components/ui/accordion"
 
 import { useTransitionRouter } from "next-view-transitions";
+import { getChapterNumber } from "@/lib/queriesUtils";
 
 type SearchBibleReferenceProps = {
     versions: Version[];
@@ -141,7 +142,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                             </Button>
                                                                         </PopoverClose>
                                                                         <div>
-                                                                            {Array.from(Array(bibleBooksNumberOfChapters[versionParam][value]), (_, i) => {
+                                                                            {Array.from(Array(bibleBooksNumberOfChapters[form.getValues("version")][value]), (_, i) => {
                                                                                 const chapterNumber = i + 1
 
                                                                                 return (
@@ -156,7 +157,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                                             key={key}
                                                                                             type="button"
                                                                                             variant={'ghost'}
-                                                                                            className={`${textSize} h-fit p-5`}
+                                                                                            className={`${textSize} ${(getChapterNumber(searchParam.toLowerCase()) === chapterNumber && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary" : ""} h-fit p-5`}
                                                                                         >
                                                                                             {chapterNumber}
                                                                                         </Button>
