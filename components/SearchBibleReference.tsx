@@ -136,7 +136,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                                 key={key}
                                                                                 type="button"
                                                                                 variant={'ghost'}
-                                                                                className={`${textSize} h-fit p-5`}
+                                                                                className={`${textSize} ${((getChapterNumber(searchParam.toLowerCase()) === 0 || getChapterNumber(searchParam.toLowerCase()) === null || getChapterNumber(searchParam.toLowerCase()) === undefined) && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary" : ""} h-fit p-5`}
                                                                             >
                                                                                 {t("Read book info")}
                                                                             </Button>
