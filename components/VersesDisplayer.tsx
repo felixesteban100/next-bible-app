@@ -1,19 +1,20 @@
 "use client"
 
 import { useKeyPress } from '@/hooks/useKeyPress'
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { usePathname, useRouter } from "@/lib/navigation"
-import { useTransitionRouter } from 'next-view-transitions'
-import { Button } from './ui/button'
+// import { useTransitionRouter } from 'next-view-transitions'
 
 type VersesDisplayerProps = {
     chapter: Chapter,
     selectedFontSize: SelectedFontSize,
     verses: number[],
+    hightlightVerses: boolean;
+    wordToHightlight: string
 }
 
-export default function VersesDisplayer({ chapter, selectedFontSize, verses }: VersesDisplayerProps) {
+export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight }: VersesDisplayerProps) {
     const searchParams = useSearchParams()
     const { replace } = useRouter()/* useTransitionRouter() */
     const params = new URLSearchParams(searchParams)
@@ -68,19 +69,36 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
         }
     }, ["ArrowDown"]);
 
+    function getHighlightedText(text: string, highlight: string) {
+        // Split on highlight term and include term into parts, ignore case
+        const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+        return <span> {parts.map((part, i) => {
+            console.log(part)
+
+            return (
+                <span key={i} className={part.toLowerCase() === highlight.toLowerCase() ? "font-bold bg-primary text-primary-foreground" : ""}>
+                    {part}
+                </span>
+            )
+        })
+        } </span>;
+    }
+
     return (
         <>
             {
                 chapter.verses_content.map((c, i) => {
                     const verseNumber = i + 1
                     const isSelected = verseSelected === verseNumber
-                    if (verses.length !== 0 && !verses.includes(i + 1)) return null
+                    if (verses.length !== 0 && !verses.includes(i)) return null
                     const verseRouteString = chapter.verses_routes_string[i]
                     // console.log(verseRouteString)
                     return (
                         <span
                             id={`${verseNumber}`}
                             onClick={() => {
+                                if (!hightlightVerses) return
+
                                 if (isSelected) {
                                     setVerseToHighlight(0)
                                 } else {
@@ -93,18 +111,23 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses }: V
                             key={verseRouteString}
                             // "underline"
                             // "bg-primary text-primary-foreground"
-                            className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== 0 ? (isSelected ? "text-foreground" : "text-foreground/15") : ""} hover:underline decoration-dashed `}
+                            className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== 0 ? (isSelected ? "text-foreground" : "text-foreground/15") : ""} ${hightlightVerses ? "hover:underline decoration-dashed" : ""} `}
                         >
                             <span
-                                className={`${verseNumber === 1 && `${selectedFontSize.firstVerse} font-bold`}`}
+                                className={`${hightlightVerses && verseNumber === 1 && `${selectedFontSize.firstVerse} font-bold`}`}
                             >
-                                {chapter.route_object.book_id === 19 && verseNumber === 1 ? chapter.verses_content[0][0]
-                                    : verseNumber === 1 ? chapter.route_object.chapter_id
-                                        : verseNumber
+                                {!hightlightVerses ? verseNumber
+                                    : chapter.route_object.book_id === 19 && verseNumber === 1 ? chapter.verses_content[0][0]
+                                        : verseNumber === 1 ? chapter.route_object.chapter_id
+                                            : verseNumber
                                 }
                             </span>
                             {" "}
-                            {chapter.route_object.book_id === 19 && verseNumber === 1 ? `${c.slice(1)}` : c}
+                            {!hightlightVerses ?
+                                getHighlightedText(c, wordToHightlight) :
+                                chapter.route_object.book_id === 19 && verseNumber === 1 ? `${c.slice(1)}` : c
+                            }
+
                         </span>
                     )
                 })

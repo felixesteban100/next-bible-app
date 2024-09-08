@@ -49,12 +49,13 @@ type SearchBibleReferenceProps = {
     versions: Version[];
     versionParam: string
     searchParam: string
-    selectedFontSize: SelectedFontSize
+    selectedFontSize: SelectedFontSize;
+    omitVerseToHightlight?: boolean
 }
 
 "gap-10"
 
-function SearchBibleReference({ versions, versionParam, searchParam, selectedFontSize }: SearchBibleReferenceProps) {
+function SearchBibleReference({ versions, versionParam, searchParam, selectedFontSize, omitVerseToHightlight }: SearchBibleReferenceProps) {
     const textSize = selectedFontSize.text
     const iconSize = selectedFontSize.icon
     const gapForElements = selectedFontSize.gap_between_elements
@@ -84,7 +85,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     }, [searchParam, versionParam, form])
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        params.set("verseToHighlight", "0")
+        if (omitVerseToHightlight) params.set("verseToHighlight", "0")
 
         params.delete('search')
         if (values.search !== "") params.set('search', values.search)
@@ -111,69 +112,72 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                         render={({ field }) => (
                             <FormItem className="w-full h-full col-span-4">
                                 <FormControl>
-                                    <Popover>
-                                        <PopoverTrigger className={`${textSize} h-full w-full`}>
-                                            <Input placeholder={t("enterPassage")} className={`${textSize} h-full py-[0.5rem]`} autoComplete="off" {...field} />
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-[80vw] max-w-[40rem]">
-                                            <p className={`${textSize} h-fit p-5`}>{t("Bible_book_list")} ({form.getValues("version") ?? versionParam})</p>
-                                            <ScrollArea className="h-[400px] rounded-md p-4">
-                                                <Accordion type="single" collapsible>
-                                                    {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value]) => {
-                                                        return (
-                                                            <AccordionItem key={key} value={key}>
-                                                                <AccordionTrigger className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary"} ${textSize} h-fit p-5`}>{value}</AccordionTrigger>
-                                                                <AccordionContent>
-                                                                    <div className="flex flex-col">
-                                                                        <PopoverClose>
-                                                                            <Button
-                                                                                onClick={() => {
-                                                                                    onSubmit({
-                                                                                        search: `${value}`,
-                                                                                        version: form.getValues("version") ?? versionParam,
-                                                                                    })
-                                                                                }}
-                                                                                key={key}
-                                                                                type="button"
-                                                                                variant={'ghost'}
-                                                                                className={`${textSize} ${((getChapterNumber(searchParam.toLowerCase()) === 0 || getChapterNumber(searchParam.toLowerCase()) === null || getChapterNumber(searchParam.toLowerCase()) === undefined) && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary" : ""} h-fit p-5`}
-                                                                            >
-                                                                                {t("Read book info")}
-                                                                            </Button>
-                                                                        </PopoverClose>
-                                                                        <div>
-                                                                            {Array.from(Array(bibleBooksNumberOfChapters[form.getValues("version")][value]), (_, i) => {
-                                                                                const chapterNumber = i + 1
+                                    {pathname === "/search" ?
+                                        <Input placeholder={t("enterWord")} className={`${textSize} h-full py-[0.5rem]`} autoComplete="off" {...field} />
+                                        :
+                                        <Popover>
+                                            <PopoverTrigger className={`${textSize} h-full w-full`}>
+                                                <Input placeholder={t("enterPassage")} className={`${textSize} h-full py-[0.5rem]`} autoComplete="off" {...field} />
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-[80vw] max-w-[40rem]">
+                                                <p className={`${textSize} h-fit p-5`}>{t("Bible_book_list")} ({form.getValues("version") ?? versionParam})</p>
+                                                <ScrollArea className="h-[400px] rounded-md p-4">
+                                                    <Accordion type="single" collapsible>
+                                                        {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value]) => {
+                                                            return (
+                                                                <AccordionItem key={key} value={key}>
+                                                                    <AccordionTrigger className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary"} ${textSize} h-fit p-5`}>{value}</AccordionTrigger>
+                                                                    <AccordionContent>
+                                                                        <div className="flex flex-col">
+                                                                            <PopoverClose>
+                                                                                <Button
+                                                                                    onClick={() => {
+                                                                                        onSubmit({
+                                                                                            search: `${value}`,
+                                                                                            version: form.getValues("version") ?? versionParam,
+                                                                                        })
+                                                                                    }}
+                                                                                    key={key}
+                                                                                    type="button"
+                                                                                    variant={'ghost'}
+                                                                                    className={`${textSize} ${((getChapterNumber(searchParam.toLowerCase()) === 0 || getChapterNumber(searchParam.toLowerCase()) === null || getChapterNumber(searchParam.toLowerCase()) === undefined) && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary" : ""} h-fit p-5`}
+                                                                                >
+                                                                                    {t("Read book info")}
+                                                                                </Button>
+                                                                            </PopoverClose>
+                                                                            <div>
+                                                                                {Array.from(Array(bibleBooksNumberOfChapters[form.getValues("version")][value]), (_, i) => {
+                                                                                    const chapterNumber = i + 1
 
-                                                                                return (
-                                                                                    <PopoverClose key={`${value}-${chapterNumber}-chapter`}>
-                                                                                        <Button
-                                                                                            onClick={() => {
-                                                                                                onSubmit({
-                                                                                                    search: `${value} ${chapterNumber}`,
-                                                                                                    version: form.getValues("version") ?? versionParam,
-                                                                                                })
-                                                                                            }}
-                                                                                            key={key}
-                                                                                            type="button"
-                                                                                            variant={'ghost'}
-                                                                                            className={`${textSize} ${(getChapterNumber(searchParam.toLowerCase()) === chapterNumber && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary" : ""} h-fit p-5`}
-                                                                                        >
-                                                                                            {chapterNumber}
-                                                                                        </Button>
-                                                                                    </PopoverClose>
-                                                                                )
-                                                                            })}
+                                                                                    return (
+                                                                                        <PopoverClose key={`${value}-${chapterNumber}-chapter`}>
+                                                                                            <Button
+                                                                                                onClick={() => {
+                                                                                                    onSubmit({
+                                                                                                        search: `${value} ${chapterNumber}`,
+                                                                                                        version: form.getValues("version") ?? versionParam,
+                                                                                                    })
+                                                                                                }}
+                                                                                                key={key}
+                                                                                                type="button"
+                                                                                                variant={'ghost'}
+                                                                                                className={`${textSize} ${(getChapterNumber(searchParam.toLowerCase()) === chapterNumber && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary" : ""} h-fit p-5`}
+                                                                                            >
+                                                                                                {chapterNumber}
+                                                                                            </Button>
+                                                                                        </PopoverClose>
+                                                                                    )
+                                                                                })}
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </AccordionContent>
-                                                            </AccordionItem>
-                                                        )
-                                                    })}
-                                                </Accordion>
-                                            </ScrollArea>
-                                        </PopoverContent>
-                                    </Popover>
+                                                                    </AccordionContent>
+                                                                </AccordionItem>
+                                                            )
+                                                        })}
+                                                    </Accordion>
+                                                </ScrollArea>
+                                            </PopoverContent>
+                                        </Popover>}
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

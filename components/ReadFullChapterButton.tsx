@@ -28,7 +28,8 @@ export default function ReadFullChapterButton({ chapter, version, selectedFontSi
     }
 
     return (
-        <Button variant={'link'} className={`mt-5 p-1 ${selectedFontSize.text}`} onClick={() => goToFirstChapter()}>
+        /* mt-5  p-1*/
+        <Button variant={'link'} className={`p-0  ${selectedFontSize.text}`} onClick={() => goToFirstChapter()}>
             {t("Read full chapter")}
         </Button>
     )

@@ -10,6 +10,7 @@
   "read": "Read",
   "study_tools": "Study tools",
   "plan": "Plan",
+  "search": "Search",
 
   "signIn": "Sign In",
 
@@ -29,6 +30,7 @@
   "chapter_error": "Chapter error",
 
   "enterPassage": "Enter Passage",
+  "enterWord": "Enter Word",
   "selectVersion": "Select Version",
 
   "Not_existent_reference": "Not existent reference",

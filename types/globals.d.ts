@@ -30,6 +30,7 @@ declare global {
         verses_routes_string: string[],
         verses_content: string[]
         footnotes: { verse_route_string: string, content: string }[]
+        matchingIndices?: number[]
     }
     declare type Version = {
         initials: string,

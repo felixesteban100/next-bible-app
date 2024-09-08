@@ -10,6 +10,7 @@
   "read": "Leer",
   "study_tools": "Herramientas de estudio",
   "plan": "Plan",
+  "search": "Buscar",
 
   "signIn": "Iniciar sesion",
 
@@ -29,6 +30,7 @@
   "chapter_error": "Error de capitulo",
 
   "enterPassage": "Ingrese el pasaje",
+  "enterWord": "Ingrese palabra",
   "selectVersion": "Seleccione la version",
 
   "Not_existent_reference": "No existe esa referencia",

@@ -47,6 +47,9 @@ export default async function Home({ params: { locale } }: { params: { locale: s
         <Button>
           <Link href={`/read`}>{t("readNow")}</Link>
         </Button>
+        <Button variant="outline">
+          <Link href={`/search`}>{t("search")}</Link>
+        </Button>
         {/* </SignedIn> */}
         <SignedOut>
           <Button variant={"secondary"}>
