@@ -18,12 +18,14 @@ export default async function page({ params: { locale }, searchParams: { search,
 
     const selectedFontSize = fontSize[parseInt(fontSizeNumber ?? "0")]
 
+    const regexForSearch = new RegExp(`\\b${search}(?=[\\s.,!?;:]|[a-zA-Z]|$)`, "i")
+
     const [chapters, versions] = await Promise.all([
         collectionChapter.aggregate<Chapter>([
             {
                 $match: {
                     verses_content: {
-                        $elemMatch: { $regex: new RegExp(`\\b${search}(?=\\s|$|[.,!?;:])`, "i") } // Match full words with word boundaries
+                        $elemMatch: { $regex: regexForSearch } // Match full words with word boundaries
                     },
                     "route_object.version_initials": versionValue
                 }
@@ -44,7 +46,7 @@ export default async function page({ params: { locale }, searchParams: { search,
                                     {
                                         $regexFind: {
                                             input: { $arrayElemAt: ["$verses_content", "$$this"] }, // Access each verse by index
-                                            regex: new RegExp(`\\b${search}(?=\\s|$|[.,!?;:])`, "i") // Ensure word boundary
+                                            regex: regexForSearch // Ensure word boundary
                                         }
                                     },
                                     { $concatArrays: ["$$value", ["$$this"]] }, // Append the index if match found
@@ -81,10 +83,14 @@ export default async function page({ params: { locale }, searchParams: { search,
                     <div className='space-y-8'>
                         <div className='flex flex-col gap-2'>
                             <p className={`${selectedFontSize.text}`}>Results (chapters): {chapters.length}</p>
-                            <p className={`${selectedFontSize.text}`}>Results (verses): {chapters.reduce((acc, c) => {
-                                if (c.matchingIndices) acc.push(...c.matchingIndices)
-                                return acc
-                            }, new Array()).length}</p>
+                            <p
+                                className={`${selectedFontSize.text}`}
+                            >
+                                Results (verses): {chapters.reduce((acc, c) => {
+                                    if (c.matchingIndices) acc.push(...c.matchingIndices)
+                                    return acc
+                                }, new Array()).length}
+                            </p>
                         </div>
 
                         <div className={`flex flex-col ${selectedFontSize.gap_between_elements}`}>

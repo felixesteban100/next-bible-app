@@ -1,16 +1,16 @@
 import { ModeToggle } from "../ModeToggle";
 import { LanguageToggle } from "../LanguageToggle";
 import { useTranslations } from "next-intl"
-// import {
-//     Sheet,
-//     SheetContent,
-//     SheetTrigger,
-//     SheetClose,
-//     SheetHeader,
-//     SheetTitle,
-//     SheetDescription
-// } from "@/components/ui/sheet"
-import { BookOpen, User } from "lucide-react";
+import {
+    Sheet,
+    SheetContent,
+    SheetTrigger,
+    SheetClose,
+    SheetHeader,
+    SheetTitle,
+    SheetDescription
+} from "@/components/ui/sheet"
+import { BookOpen, ListStart, Search, User } from "lucide-react";
 import SignedIn from "../auth/SignedIn";
 import SignedOut from "../auth/SignedOut";
 import UserInfo from "../auth/UserInfo";
@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className="bg-secondary/70 backdrop-blur-md p-2 h-fit">
             <nav className={`flex items-center justify-between ${pageMarginAndWidth} min-h-[4rem] gap-5 py-5`}>
                 {/* hidden md:flex */}
-                <div className={`flex justify-between gap-10 items-center`}>
+                {/* <div className={`flex justify-between gap-10 items-center`}>
                     <ButtonForNavbarLink
                         href="/"
                         variant={'ghost'}
@@ -49,7 +49,7 @@ export default function Navbar() {
                         <BookOpen className="h-full w-auto" />
                     </ButtonForNavbarLink>
 
-                    {/* <ButtonForNavbarLink
+                    <ButtonForNavbarLink
                         href={'/read'}
                         variant={'ghost'}
                     >
@@ -68,12 +68,12 @@ export default function Navbar() {
                         variant={'ghost'}
                     >
                         {t("study_tools")}
-                    </ButtonForNavbarLink> */}
-                </div>
-                {/* <div className="flex lg:hidden gap-5">
+                    </ButtonForNavbarLink>
+                </div> */}
+                <div className="flex justify-between gap-10 items-center">
                     <Sheet>
-                        <SheetTrigger>
-                            <BookOpen size={40} />
+                        <SheetTrigger className={`h-[4rem]`}>
+                            <BookOpen className="h-full w-auto" />
                         </SheetTrigger>
                         <SheetContent side={'left'}>
                             <SheetHeader>
@@ -87,9 +87,9 @@ export default function Navbar() {
                                     <ButtonForNavbarLink
                                         href={'/'}
                                         variant={'ghost'}
-                                        aditionalClassNames="w-full text-2xl"
+                                        aditionalClassNames="w-full text-2xl flex gap-2"
                                     >
-                                        {t("navbar_home")}
+                                        <ListStart className="h-full w-auto" />{t("navbar_home")}
                                     </ButtonForNavbarLink>
                                 </SheetClose>
 
@@ -97,36 +97,46 @@ export default function Navbar() {
                                     <ButtonForNavbarLink
                                         href={'/read'}
                                         variant={'ghost'}
-                                        aditionalClassNames="w-full text-2xl"
+                                        aditionalClassNames="w-full text-2xl flex gap-2"
                                     >
-                                        {t("read")}
+                                        <BookOpen className="h-full w-auto" />{t("read")}
                                     </ButtonForNavbarLink>
                                 </SheetClose>
 
                                 <SheetClose asChild>
                                     <ButtonForNavbarLink
-                                        href={'/plan'}
+                                        href={'/search'}
                                         variant={'ghost'}
-                                        aditionalClassNames="w-full text-2xl"
+                                        aditionalClassNames="w-full text-2xl flex gap-2"
                                     >
-                                        {t("plan")}
+                                        <Search className="h-full w-auto" />{t("search")}
                                     </ButtonForNavbarLink>
                                 </SheetClose>
 
 
-                                <SheetClose asChild>
+                                {/* <SheetClose asChild>
                                     <ButtonForNavbarLink
                                         href={'/study_tools'}
                                         variant={'ghost'}
-                                        aditionalClassNames="w-full text-2xl"
+                                        aditionalClassNames="w-full text-2xl flex gap-2"
                                     >
-                                        {t("study_tools")}
+                                        <BookOpen className="h-full w-auto" />{t("study_tools")}
                                     </ButtonForNavbarLink>
-                                </SheetClose>
+                                </SheetClose> */}
+
+                                {/* <SheetClose asChild>
+                                    <ButtonForNavbarLink
+                                        href={'/plan'}
+                                        variant={'ghost'}
+                                        aditionalClassNames="w-full text-2xl flex gap-2"
+                                    >
+                                        <BookOpen className="h-full w-auto" />{t("plan")}
+                                    </ButtonForNavbarLink>
+                                </SheetClose> */}
                             </div>
                         </SheetContent>
                     </Sheet>
-                </div> */}
+                </div>
 
                 <div className="flex gap-5 items-center">
                     <SignedOut>

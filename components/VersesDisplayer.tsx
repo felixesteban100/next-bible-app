@@ -72,16 +72,17 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
     function getHighlightedText(text: string, highlight: string) {
         // Split on highlight term and include term into parts, ignore case
         const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
-        return <span> {parts.map((part, i) => {
-            console.log(part)
-
-            return (
-                <span key={i} className={part.toLowerCase() === highlight.toLowerCase() ? "font-bold bg-primary text-primary-foreground" : ""}>
-                    {part}
-                </span>
-            )
-        })
-        } </span>;
+        return (
+            <span>
+                {parts.map((part, i) => {
+                    return (
+                        <span key={i} className={part.toLowerCase() === highlight.toLowerCase() ? "font-bold bg-primary text-primary-foreground" : ""}>
+                            {part}
+                        </span>
+                    )
+                })}
+            </span>
+        );
     }
 
     return (
