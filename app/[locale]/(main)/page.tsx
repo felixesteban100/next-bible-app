@@ -6,6 +6,7 @@ import SignedOut from "@/components/auth/SignedOut";
 import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
+// 🔃 make the links and buttons using useRouter to work on iphone/IOS/safari devices
 // 🔃 add a history
 // 🔃 add the ability to hightlight and saved the highlighted
 // ✅ add the ability to navigate though the passage by making all the other verses blury and the one selected with full opacity by using the arrows up and down

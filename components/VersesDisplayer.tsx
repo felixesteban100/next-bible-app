@@ -49,6 +49,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
     }, [verseSelected])
 
 
+    /* this is struggling to load fast sometimes */
     useKeyPress(() => {
         if (verseSelected === 0) setVerseToHighlight(firstVerse)
         const newVerseToSelect = verseSelected - 1
@@ -68,6 +69,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
             setVerseToHighlight(newVerseToSelect)
         }
     }, ["ArrowDown"]);
+    /* this is struggling to load fast sometimes */
 
     function getHighlightedText(text: string, highlight: string) {
         // Split on highlight term and include term into parts, ignore case

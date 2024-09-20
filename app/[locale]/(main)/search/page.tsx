@@ -4,10 +4,24 @@ import SearchBibleReference from '@/components/SearchBibleReference';
 import SearchWordsInBibleInput from '@/components/SearchWordsInBibleInput';
 import VersesDisplayer from '@/components/VersesDisplayer';
 
-import { collectionChapter, collectionVersion } from '@/db/mongodb/mongodb';
+import { collectionBook, collectionChapter, collectionVersion } from '@/db/mongodb/mongodb';
 import { bibleBooks } from '@/lib/bibleBooks';
 import { fontSize, pageMarginAndWidth } from '@/lib/constants';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import type { Metadata } from 'next'
+
+
+type Props = {
+    searchParams: { [key: string]: string | undefined }
+}
+
+export async function generateMetadata(
+    { searchParams }: Props,
+): Promise<Metadata> {
+    return {
+        title: `${`"${searchParams.search}"` ?? ""} ${searchParams.version ?? "Search"}`
+    }
+}
 
 export default async function page({ params: { locale }, searchParams: { search, version, fontSizeNumber, continousLine } }: { params: { locale: string }, searchParams: { search: string, version: string, fontSizeNumber: string, continousLine: string } }) {
     unstable_setRequestLocale(locale)

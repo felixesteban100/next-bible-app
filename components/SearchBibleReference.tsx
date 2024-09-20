@@ -202,7 +202,6 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
 
                     <Button className={`${textSize} h-full col-span-1 w-[5rem] lg:w-full`} type="submit"><Search className={iconSize} /></Button>
                 </form>
-
             </Form>
         </div>
     )
