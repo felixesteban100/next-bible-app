@@ -36,7 +36,7 @@ export default async function Home({ params: { locale } }: { params: { locale: s
       className="flex flex-col gap-5 w-full h-full items-center"
     > */
     /* h-[40rem] */
-    <div className="flex flex-col items-center justify-center h-[90vh] w-full">
+    <div className="flex flex-col items-center justify-center h-[70vh] w-full">
       {/* text-base */}
       <p className="text-foreground mb-10">
         {t("homePageHeroDescription")}

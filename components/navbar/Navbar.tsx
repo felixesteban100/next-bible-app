@@ -1,3 +1,5 @@
+"use client"
+
 import { ModeToggle } from "../ModeToggle";
 import { LanguageToggle } from "../LanguageToggle";
 import { useTranslations } from "next-intl"
@@ -10,111 +12,73 @@ import {
     SheetTitle,
     SheetDescription
 } from "@/components/ui/sheet"
-import { BookOpen, ListStart, Search, User } from "lucide-react";
-import SignedIn from "../auth/SignedIn";
-import SignedOut from "../auth/SignedOut";
-import UserInfo from "../auth/UserInfo";
+import { BookOpen, ListStart, Search } from "lucide-react";
 import ButtonForNavbarLink from "./ButtonForNavbarLink";
-// import { useSearchParams } from "next/navigation";
-// import { usePathname } from "@/lib/navigation";
-import { Button } from "../ui/button";
-import { Link } from "next-view-transitions";
+import { useSearchParams } from "next/navigation";
 import VerseSizeSelector from "../VerseSizeSelector";
 import { pageMarginAndWidth } from "@/lib/constants";
+import { ReactNode, Suspense } from "react";
+import NavbarSkeleton from "./NavbarSkeleton";
 
 "h-[3rem] w-auto"
 
-export default function Navbar() {
+export default function Navbar({ children }: { children?: ReactNode }) {
     const t = useTranslations()
 
-    // const searchParams = useSearchParams()
-    // const params = new URLSearchParams(searchParams)
-    // const pathname = usePathname()
-    // const verseToHighlightValue = parseInt(searchParams.get("verseToHighlight") ?? "0")
-    // console.log(verseToHighlightValue)
-
-    // if (verseToHighlightValue !== 0) return <div />
+    const searchParams = useSearchParams()
+    const params = new URLSearchParams(searchParams)
+    const verseToHighlightValue = parseInt(params.get("verseToHighlight") ?? "0")
 
     return (
-        <div className="bg-secondary/70 backdrop-blur-md p-2 h-fit">
-            <nav className={`flex items-center justify-between ${pageMarginAndWidth} min-h-[4rem] gap-5 py-5`}>
-                {/* hidden md:flex */}
-                {/* <div className={`flex justify-between gap-10 items-center`}>
-                    <ButtonForNavbarLink
-                        href="/"
-                        variant={'ghost'}
-                        size={'icon'}
-                        aditionalClassNames="flex items-center"
-                    >
-                        <BookOpen className="h-full w-auto" />
-                    </ButtonForNavbarLink>
+        <Suspense fallback={<NavbarSkeleton />}>
+            <div
+                className={`${verseToHighlightValue === 0 ? "translate-y-0" : `-translate-y-96 h-0`} transition-all duration-700`}
+            >
+                <div className="bg-secondary/70 backdrop-blur-md p-2 h-fit">
+                    <nav className={`flex items-center justify-between ${pageMarginAndWidth} min-h-[4rem] gap-5 py-5`}>
+                        <div className="flex justify-between gap-10 items-center">
+                            <Sheet>
+                                <SheetTrigger className={`h-[4rem]`}>
+                                    <BookOpen className="h-full w-auto" />
+                                </SheetTrigger>
+                                <SheetContent side={'left'}>
+                                    <SheetHeader>
+                                        <SheetTitle>{t("navbar_sheet_title")}</SheetTitle>
+                                        <SheetDescription>
+                                            {t("navbar_sheet_description")}
+                                        </SheetDescription>
+                                    </SheetHeader>
+                                    <div className="flex flex-col my-10 mx-auto gap-5">
+                                        <ButtonForNavbarLink
+                                            href={'/'}
+                                            variant={'ghost'}
+                                            aditionalClassNames="w-full"
+                                        >
+                                            <SheetClose className="w-full text-2xl flex gap-2 justify-center items-center">
+                                                <ListStart className="h-full w-auto" />{t("navbar_home")}
+                                            </SheetClose>
+                                        </ButtonForNavbarLink>
 
-                    <ButtonForNavbarLink
-                        href={'/read'}
-                        variant={'ghost'}
-                    >
-                        {t("read")}
-                    </ButtonForNavbarLink>
+                                        <ButtonForNavbarLink
+                                            href={'/read'}
+                                            variant={'ghost'}
+                                            aditionalClassNames="w-full"
+                                        >
+                                            <SheetClose className="w-full text-2xl flex gap-2 justify-center items-center">
+                                                <BookOpen className="h-full w-auto" />{t("read")}
+                                            </SheetClose>
+                                        </ButtonForNavbarLink>
 
-                    <ButtonForNavbarLink
-                        href={'/plan'}
-                        variant={'ghost'}
-                    >
-                        {t("plan")}
-                    </ButtonForNavbarLink>
-
-                    <ButtonForNavbarLink
-                        href={'/study_tools'}
-                        variant={'ghost'}
-                    >
-                        {t("study_tools")}
-                    </ButtonForNavbarLink>
-                </div> */}
-                <div className="flex justify-between gap-10 items-center">
-                    <Sheet>
-                        <SheetTrigger className={`h-[4rem]`}>
-                            <BookOpen className="h-full w-auto" />
-                        </SheetTrigger>
-                        <SheetContent side={'left'}>
-                            <SheetHeader>
-                                <SheetTitle>{t("navbar_sheet_title")}</SheetTitle>
-                                <SheetDescription>
-                                    {t("navbar_sheet_description")}
-                                </SheetDescription>
-                            </SheetHeader>
-                            <div className="flex flex-col my-10 mx-auto gap-5">
-                                <SheetClose asChild>
-                                    <ButtonForNavbarLink
-                                        href={'/'}
-                                        variant={'ghost'}
-                                        aditionalClassNames="w-full text-2xl flex gap-2"
-                                    >
-                                        <ListStart className="h-full w-auto" />{t("navbar_home")}
-                                    </ButtonForNavbarLink>
-                                </SheetClose>
-
-                                <SheetClose asChild>
-                                    <ButtonForNavbarLink
-                                        href={'/read'}
-                                        variant={'ghost'}
-                                        aditionalClassNames="w-full text-2xl flex gap-2"
-                                    >
-                                        <BookOpen className="h-full w-auto" />{t("read")}
-                                    </ButtonForNavbarLink>
-                                </SheetClose>
-
-                                <SheetClose asChild>
-                                    <ButtonForNavbarLink
-                                        href={'/search'}
-                                        variant={'ghost'}
-                                        aditionalClassNames="w-full text-2xl flex gap-2"
-                                    >
-                                        <Search className="h-full w-auto" />{t("search")}
-                                    </ButtonForNavbarLink>
-                                </SheetClose>
-
-
-                                {/* <SheetClose asChild>
+                                        <ButtonForNavbarLink
+                                            href={'/search'}
+                                            variant={'ghost'}
+                                            aditionalClassNames="w-full text-2xl flex gap-2"
+                                        >
+                                            <SheetClose className="w-full text-2xl flex gap-2 justify-center items-center">
+                                                <Search className="h-full w-auto" />{t("search")}
+                                            </SheetClose>
+                                        </ButtonForNavbarLink>
+                                        {/* <SheetClose asChild>
                                     <ButtonForNavbarLink
                                         href={'/study_tools'}
                                         variant={'ghost'}
@@ -124,7 +88,7 @@ export default function Navbar() {
                                     </ButtonForNavbarLink>
                                 </SheetClose> */}
 
-                                {/* <SheetClose asChild>
+                                        {/* <SheetClose asChild>
                                     <ButtonForNavbarLink
                                         href={'/plan'}
                                         variant={'ghost'}
@@ -133,31 +97,20 @@ export default function Navbar() {
                                         <BookOpen className="h-full w-auto" />{t("plan")}
                                     </ButtonForNavbarLink>
                                 </SheetClose> */}
-                            </div>
-                        </SheetContent>
-                    </Sheet>
-                </div>
+                                    </div>
+                                </SheetContent>
+                            </Sheet>
+                        </div>
 
-                <div className="flex gap-5 items-center">
-                    <SignedOut>
-                        <Link href="/sign-in?lastHref=/read">
-                            <Button
-                                variant={"outline"}
-                                className="rounded-full h-[3.5rem] w-[3.5rem]"
-                                size={'icon'}
-                            >
-                                <User className="h-[2rem] w-[2rem]" />
-                            </Button>
-                        </Link>
-                    </SignedOut>
-                    <SignedIn>
-                        <UserInfo />
-                    </SignedIn>
-                    <ModeToggle />
-                    <LanguageToggle />
-                    <VerseSizeSelector />
+                        <div className="flex gap-5 items-center">
+                            {children}
+                            <ModeToggle />
+                            <LanguageToggle />
+                            <VerseSizeSelector />
+                        </div>
+                    </nav>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </Suspense>
     )
 }

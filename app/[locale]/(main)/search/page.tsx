@@ -19,7 +19,7 @@ export async function generateMetadata(
     { searchParams }: Props,
 ): Promise<Metadata> {
     return {
-        title: `${`"${searchParams.search}"` ?? ""} ${searchParams.version ?? "Search"}`
+        title: `${searchParams.search ?? ""} ${searchParams.version ?? "Search"}`
     }
 }
 
@@ -77,8 +77,6 @@ export default async function page({ params: { locale }, searchParams: { search,
 
     return (
         <div>
-            <Navbar />
-
             {/* <SearchWordsInBibleInput selectedFontSize={selectedFontSize} search={search} /> */}
 
             <div

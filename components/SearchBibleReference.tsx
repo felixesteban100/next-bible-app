@@ -123,10 +123,10 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                 <p className={`${textSize} h-fit p-5`}>{t("Bible_book_list")} ({form.getValues("version") ?? versionParam})</p>
                                                 <ScrollArea className="h-[400px] rounded-md p-4">
                                                     <Accordion type="single" collapsible>
-                                                        {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value]) => {
+                                                        {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value], index) => {
                                                             return (
                                                                 <AccordionItem key={key} value={key}>
-                                                                    <AccordionTrigger className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary"} ${textSize} h-fit p-5`}>{value}</AccordionTrigger>
+                                                                    <AccordionTrigger className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary underline font-bold"} ${textSize} h-fit p-5`}>{index + 1} - {value}</AccordionTrigger>
                                                                     <AccordionContent className="flex flex-col gap-5">
                                                                         <PopoverClose
                                                                             onClick={() => {
@@ -137,7 +137,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                             }}
                                                                             key={key}
                                                                             type="button"
-                                                                            className={`${textSize} ${((getChapterNumber(searchParam.toLowerCase()) === 0 || getChapterNumber(searchParam.toLowerCase()) === null || getChapterNumber(searchParam.toLowerCase()) === undefined) && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary border-[0.2px] border-primary rounded-lg" : "border-[0.2px] border-foreground rounded-lg"} h-fit p-5`}
+                                                                            className={`${textSize} ${((getChapterNumber(searchParam.toLowerCase()) === 0 || getChapterNumber(searchParam.toLowerCase()) === null || getChapterNumber(searchParam.toLowerCase()) === undefined) && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary border-[0.2px] border-primary rounded-lg underline font-bold" : "border-[0.2px] border-foreground rounded-lg"} h-fit p-5`}
                                                                         >
                                                                             {t("Read book info")}
                                                                         </PopoverClose>
