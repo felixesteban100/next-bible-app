@@ -87,6 +87,7 @@ export default async function page({ params: { locale }, searchParams: { search,
                     versionParam={versionValue}
                     searchParam={searchValue}
                     selectedFontSize={selectedFontSize}
+                    selectedBookNumber={0}
                 />
             </div>
 
