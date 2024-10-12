@@ -45,17 +45,19 @@ import {
 import { useTransitionRouter } from "next-view-transitions";
 import { getChapterNumber } from "@/lib/queriesUtils";
 
+
 type SearchBibleReferenceProps = {
     versions: Version[];
     versionParam: string
     searchParam: string
     selectedFontSize: SelectedFontSize;
-    omitVerseToHightlight?: boolean
+    omitVerseToHightlight?: boolean;
+    selectedBookNumber: number;
 }
 
 "gap-10"
 
-function SearchBibleReference({ versions, versionParam, searchParam, selectedFontSize, omitVerseToHightlight }: SearchBibleReferenceProps) {
+function SearchBibleReference({ versions, versionParam, searchParam, selectedFontSize, omitVerseToHightlight, selectedBookNumber }: SearchBibleReferenceProps) {
     const textSize = selectedFontSize.text
     const iconSize = selectedFontSize.icon
     const gapForElements = selectedFontSize.gap_between_elements
@@ -96,6 +98,25 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
         push(`${pathname}?${params.toString()}`)
     }
 
+    function translateBookName(bookNumber: number) {
+        return bibleBooks[form.getValues('version') as "KJV" | "RV1960"][bookNumber]
+    }
+
+
+    function removeFirstWord(inputString: string): string {
+        // Split the string into words
+        const words: string[] = inputString.split(' ');
+
+        // Check if there are more than one word
+        if (words.length > 1) {
+            // Join the words back together, excluding the first word
+            return words.slice(1).join(' ');
+        } else {
+            // If there's only one word, return an empty string
+            return '';
+        }
+    }
+
 
 
     return (
@@ -126,7 +147,12 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                         {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value], index) => {
                                                             return (
                                                                 <AccordionItem key={key} value={key}>
-                                                                    <AccordionTrigger className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary underline font-bold"} ${textSize} h-fit p-5`}>{index + 1} - {value}</AccordionTrigger>
+                                                                    <AccordionTrigger
+                                                                        // className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary underline font-bold"} ${textSize} h-fit p-5`}
+                                                                        className={`${form.getValues("search").toLowerCase().includes(value.toLowerCase()) && "text-primary underline font-bold"} ${textSize} h-fit p-5`}
+                                                                    >
+                                                                        {index + 1} - {value}
+                                                                    </AccordionTrigger>
                                                                     <AccordionContent className="flex flex-col gap-5">
                                                                         <PopoverClose
                                                                             onClick={() => {
@@ -181,7 +207,11 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                         name="version"
                         render={({ field }) => (
                             <FormItem className="w-full h-full col-span-4">
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <Select onValueChange={(e) => {
+                                    field.onChange(e)
+                                    console.log()
+                                    form.setValue("search", `${translateBookName(selectedBookNumber)} ${removeFirstWord(searchParam)}`)
+                                }} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger className={`${textSize} h-full py-[0.5rem]`}>
                                             <SelectValue placeholder={t("selectVersion")} />

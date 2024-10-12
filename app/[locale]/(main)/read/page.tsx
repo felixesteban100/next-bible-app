@@ -10,7 +10,6 @@ import VersesDisplayer from "@/components/VersesDisplayer";
 import { unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next'
 import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_ROUTE_STRING, fontSize, pageMarginAndWidth } from "@/lib/constants";
-import { bibleBooks, bibleBooksNumberOfChapters } from "@/lib/bibleBooks";
 
 
 type Props = {
@@ -105,6 +104,7 @@ export default async function page({
                         searchParam={searchValue}
                         selectedFontSize={selectedFontSize}
                         omitVerseToHightlight={true}
+                        selectedBookNumber={extractBibleBook(searchValue, versionValue)!}
                     />
                 </div>
             </div>
