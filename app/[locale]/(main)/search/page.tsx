@@ -4,7 +4,7 @@ import SearchBibleReference from '@/components/SearchBibleReference';
 import SearchWordsInBibleInput from '@/components/SearchWordsInBibleInput';
 import VersesDisplayer from '@/components/VersesDisplayer';
 
-import { collectionBook, collectionChapter, collectionVersion } from '@/db/mongodb/mongodb';
+import { collectionChapter, collectionVersion } from '@/db/mongodb/mongodb';
 import { bibleBooks } from '@/lib/bibleBooks';
 import { fontSize, pageMarginAndWidth } from '@/lib/constants';
 import { unstable_setRequestLocale } from 'next-intl/server';

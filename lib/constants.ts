@@ -469,3 +469,98 @@ export const DAILY_VERSES_ROUTE_STRING: DAILY_VERSE_ROUTE_STRING[] = [
     { "route_string": "45-15", "verses": [5] },
     { "route_string": "19-9", "verses": [18] }
 ]
+
+export const DAILY_VERSES_AGAINS_SIN_ROUTE_STRING: DAILY_VERSE_ROUTE_STRING[] = [
+    { "route_string": "1-4", "verses": [7] },  // Genesis 4:7
+    { "route_string": "1-39", "verses": [9] },  // Genesis 39:9
+    { "route_string": "3-18", "verses": [22] },  // Leviticus 18:22
+    { "route_string": "3-19", "verses": [29] },  // Leviticus 19:29
+    { "route_string": "3-20", "verses": [10] },  // Leviticus 20:10
+    { "route_string": "3-20", "verses": [13] },  // Leviticus 20:13
+    { "route_string": "3-20", "verses": [15] },  // Leviticus 20:15
+    { "route_string": "5-22", "verses": [22] },  // Deuteronomy 22:22
+    { "route_string": "18-31", "verses": [1] },  // Job 31:1
+    { "route_string": "18-31", "verses": [9] },  // Job 31:9
+    { "route_string": "19-1", "verses": [1] },  // Psalm 1:1
+    { "route_string": "19-19", "verses": [9] },  // Psalm 19:9
+    { "route_string": "19-51", "verses": [10] },  // Psalm 51:10
+    { "route_string": "19-97", "verses": [104] },  // Psalm 97:10
+    { "route_string": "19-101", "verses": [3] },  // Psalm 101:3
+    { "route_string": "19-119", "verses": [11] },  // Psalm 119:11
+    { "route_string": "19-119", "verses": [37] },  // Psalm 119:37
+    { "route_string": "19-119", "verses": [133] },  // Psalm 119:133
+    { "route_string": "19-119", "verses": [163] },  // Psalm 119:163
+    { "route_string": "20-4", "verses": [23] },  // Proverbs 4:23
+    { "route_string": "20-5", "verses": [3 - 4] },  // Proverbs 5:3-4
+    { "route_string": "20-5", "verses": [8 - 9] },  // Proverbs 5:8-9
+    { "route_string": "20-6", "verses": [16 - 19] },  // Proverbs 6:16-19
+    { "route_string": "20-6", "verses": [25] },  // Proverbs 6:25
+    { "route_string": "20-6", "verses": [32] },  // Proverbs 6:32
+    { "route_string": "20-7", "verses": [21 - 23] },  // Proverbs 7:21-23
+    { "route_string": "20-9", "verses": [13 - 18] },  // Proverbs 9:13-18
+    { "route_string": "20-23", "verses": [31 - 32] },  // Proverbs 23:31-32
+    { "route_string": "20-28", "verses": [13] },  // Proverbs 28:13
+    { "route_string": "21-7", "verses": [26] },  // Ecclesiastes 7:26
+    { "route_string": "23-5", "verses": [20] },  // Isaiah 5:20
+    { "route_string": "23-55", "verses": [7] },  // Isaiah 55:7
+    { "route_string": "23-64", "verses": [6] },  // Isaiah 64:6
+    { "route_string": "24-17", "verses": [9] },  // Jeremiah 17:9
+    { "route_string": "24-23", "verses": [14] },  // Jeremiah 23:14
+    { "route_string": "26-18", "verses": [30] },  // Ezekiel 18:30
+    { "route_string": "28-4", "verses": [12] },  // Hosea 4:12
+    { "route_string": "28-7", "verses": [4] },  // Hosea 7:4
+    { "route_string": "28-9", "verses": [9] },  // Hosea 9:9
+    { "route_string": "28-14", "verses": [9] },  // Hosea 14:9
+    { "route_string": "40-5", "verses": [8] },  // Matthew 5:8
+    { "route_string": "40-5", "verses": [27 - 28] },  // Matthew 5:27-28
+    { "route_string": "40-6", "verses": [13] },  // Matthew 6:13
+    { "route_string": "40-6", "verses": [24] },  // Matthew 6:24
+    { "route_string": "40-7", "verses": [21 - 23] },  // Matthew 7:21-23
+    { "route_string": "40-15", "verses": [19] },  // Matthew 15:19
+    { "route_string": "40-26", "verses": [41] },  // Matthew 26:41
+    { "route_string": "41-7", "verses": [21 - 23] },  // Mark 7:21-23
+    { "route_string": "41-9", "verses": [43 - 48] },  // Mark 9:43-48
+    { "route_string": "42-12", "verses": [15] },  // Luke 12:15
+    { "route_string": "42-16", "verses": [13] },  // Luke 16:13
+    { "route_string": "43-3", "verses": [19 - 20] },  // John 3:19-20
+    { "route_string": "43-8", "verses": [11] },  // John 8:11
+    { "route_string": "43-8", "verses": [34] },  // John 8:34
+    { "route_string": "43-14", "verses": [15] },  // John 14:15
+    { "route_string": "44-2", "verses": [38] },  // Acts 2:38
+    { "route_string": "44-3", "verses": [19] },  // Acts 3:19
+    { "route_string": "44-17", "verses": [30] },  // Acts 17:30
+    { "route_string": "45-1", "verses": [24 - 27] },  // Romans 1:24-27
+    { "route_string": "45-3", "verses": [23] },  // Romans 3:23
+    { "route_string": "45-6", "verses": [12 - 13] },  // Romans 6:12-13
+    { "route_string": "45-6", "verses": [23] },  // Romans 6:23
+    { "route_string": "45-8", "verses": [1 - 2] },  // Romans 8:1-2
+    { "route_string": "45-12", "verses": [1 - 2] },  // Romans 12:1-2
+    { "route_string": "45-13", "verses": [12 - 14] },  // Romans 13:12-14
+    { "route_string": "46-5", "verses": [1 - 2] },  // 1 Corinthians 5:1-2
+    { "route_string": "46-6", "verses": [9 - 10] },  // 1 Corinthians 6:9-10
+    { "route_string": "46-6", "verses": [18 - 20] },  // 1 Corinthians 6:18-20
+    { "route_string": "46-10", "verses": [13] },  // 1 Corinthians 10:13
+    { "route_string": "47-5", "verses": [17] },  // 2 Corinthians 5:17
+    { "route_string": "48-5", "verses": [16] },  // Galatians 5:16
+    { "route_string": "48-5", "verses": [19 - 21] },  // Galatians 5:19-21
+    { "route_string": "49-4", "verses": [22 - 24] },  // Ephesians 4:22-24
+    { "route_string": "49-5", "verses": [3 - 5] },  // Ephesians 5:3-5
+    { "route_string": "50-4", "verses": [8] },  // Philippians 4:8
+    { "route_string": "51-3", "verses": [5 - 7] },  // Colossians 3:5-7
+    { "route_string": "52-4", "verses": [3 - 5] },  // 1 Thessalonians 4:3-5
+    { "route_string": "53-2", "verses": [11 - 12] },  // 2 Thessalonians 2:11-12
+    { "route_string": "54-6", "verses": [9 - 10] },  // 1 Timothy 6:9-10
+    { "route_string": "55-2", "verses": [22] },  // 2 Timothy 2:22
+    { "route_string": "56-2", "verses": [11 - 12] },  // Titus 2:11-12
+    { "route_string": "58-13", "verses": [4] },  // Hebrews 13:4
+    { "route_string": "59-1", "verses": [14 - 15] },  // James 1:14-15
+    { "route_string": "59-4", "verses": [7] },  // James 4:7
+    { "route_string": "60-2", "verses": [11] },  // 1 Peter 2:11
+    { "route_string": "60-4", "verses": [3] },  // 1 Peter 4:3
+    { "route_string": "60-5", "verses": [8 - 9] },  // 1 Peter 5:8-9
+    { "route_string": "62-1", "verses": [8 - 9] },  // 1 John 1:8-9
+    { "route_string": "62-2", "verses": [15 - 17] },  // 1 John 2:15-17
+    { "route_string": "62-3", "verses": [4 - 6] },  // 1 John 3:4-6
+    { "route_string": "62-3", "verses": [8] },  // 1 John 3:8
+    { "route_string": "66-21", "verses": [8] }   // Revelation 21:8
+]

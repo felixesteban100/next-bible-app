@@ -9,7 +9,9 @@ import ReadFullChapterButton from "@/components/ReadFullChapterButton";
 import VersesDisplayer from "@/components/VersesDisplayer";
 import { unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next'
-import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_ROUTE_STRING, fontSize, pageMarginAndWidth } from "@/lib/constants";
+import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_AGAINS_SIN_ROUTE_STRING, DAILY_VERSES_ROUTE_STRING, fontSize, pageMarginAndWidth } from "@/lib/constants";
+import { Link } from "next-view-transitions";
+import { Button } from "@/components/ui/button";
 
 
 type Props = {
@@ -35,7 +37,7 @@ export async function generateMetadata(
 // in order for tailwind classes to work from afar
 
 export default async function page({
-    searchParams: { search, version, fontSizeNumber, continousLine, verseToHighlight },
+    searchParams: { search, version, fontSizeNumber, continousLine, verseToHighlight, dailyVerseType },
     params: { locale },
 }: {
     searchParams: {
@@ -44,6 +46,7 @@ export default async function page({
         fontSizeNumber?: string;
         continousLine?: string;
         verseToHighlight?: string;
+        dailyVerseType?: string
     },
     params: { locale: string }
 }) {
@@ -53,6 +56,7 @@ export default async function page({
 
     const verseToHighlightValue = parseInt(verseToHighlight ?? "0")
 
+    const dailyVerseTypeValue = dailyVerseType ?? ""
     const searchValue = search ?? ""
     const versionValue = version ? version : language === "en" ? "KJV" : language === "es" ? "RV1960" : ""
     const fontSizeValue = fontSizeNumber ?? "1"
@@ -61,7 +65,8 @@ export default async function page({
     const route_string_to_query_chapter = `${versionValue}-${extractBibleBook(searchValue, versionValue)}-${getChapterNumber(searchValue)}`
     const route_string_to_query_book = `${versionValue}-${extractBibleBook(searchValue, versionValue)}`
 
-    const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(DAILY_VERSES_ROUTE_STRING)
+    // const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(DAILY_VERSES_ROUTE_STRING)
+    const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(dailyVerseTypeValue === "sin" ? DAILY_VERSES_AGAINS_SIN_ROUTE_STRING : DAILY_VERSES_ROUTE_STRING)
 
     const useVerseOfToday = search === undefined
 
@@ -124,14 +129,18 @@ export default async function page({
                                 wordToHightlight=""
                             />
                         </div>
-                        {(verses.length > 0 && chapter && versionValue) &&
-                            <ReadFullChapterButton
-                                chapter={JSON.parse(JSON.stringify(chapter))}
-                                version={versionValue}
-                                verses={verses}
-                                selectedFontSize={selectedFontSize}
-                            />
-                        }
+                        <div className="w-full flex justify-between">
+                            {(verses.length > 0 && chapter && versionValue) &&
+                                <ReadFullChapterButton
+                                    chapter={JSON.parse(JSON.stringify(chapter))}
+                                    version={versionValue}
+                                    verses={verses}
+                                    selectedFontSize={selectedFontSize}
+                                />
+                            }
+                            {useVerseOfToday && <Link href={`/read?dailyVerseType=${dailyVerseTypeValue === "sin" ? "" : "sin"}`}>
+                                <Button variant={'link'} className={selectedFontSize.text}>{t(dailyVerseTypeValue === "sin" ? "Get verse of general topics" : "Get verse against sin")}</Button></Link>}
+                        </div>
                     </div>
                     : bookInfo && (getChapterNumber(searchValue) === 0 || getChapterNumber(searchValue) == null) ?
                         <BookInfo
