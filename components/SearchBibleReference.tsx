@@ -99,7 +99,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     }
 
     function translateBookName(bookNumber: number) {
-        return bibleBooks[form.getValues('version') as "KJV" | "RV1960"][bookNumber]
+        return bibleBooks[form.getValues('version') as "KJV" | "RV1960"][bookNumber] ?? ""
     }
 
 
@@ -209,8 +209,8 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                             <FormItem className="w-full h-full col-span-4">
                                 <Select onValueChange={(e) => {
                                     field.onChange(e)
-                                    console.log()
-                                    form.setValue("search", `${translateBookName(selectedBookNumber)} ${removeFirstWord(searchParam)}`)
+                                    const newSearch = `${translateBookName(selectedBookNumber)} ${removeFirstWord(searchParam)}`
+                                    if (selectedBookNumber !== null) form.setValue("search", newSearch)
                                 }} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger className={`${textSize} h-full py-[0.5rem]`}>
