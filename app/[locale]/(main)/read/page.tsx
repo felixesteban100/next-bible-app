@@ -68,6 +68,8 @@ export default async function page({
     // const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(DAILY_VERSES_ROUTE_STRING)
     const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(dailyVerseTypeValue === "sin" ? DAILY_VERSES_AGAINS_SIN_ROUTE_STRING : DAILY_VERSES_ROUTE_STRING)
 
+    console.log(todays_verse)
+
     const useVerseOfToday = search === undefined
 
     const [t, versions, bookInfo, chapter] = await Promise.all([
