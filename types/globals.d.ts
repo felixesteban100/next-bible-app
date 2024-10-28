@@ -18,7 +18,8 @@ declare global {
         initials: string,
         written_by: string,
         date_written: string,
-        type_of_written: string
+        type_of_written: string,
+        // characters: string[]
     }
     declare type Chapter = {
         route_string: string // format: `${VERSION_INITIALS}-${BOOK_ID}-${CHAPTER_ID}`

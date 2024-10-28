@@ -1,11 +1,12 @@
 import { TypewriterEffectSmooth } from "@/components/typewriter-effect";
 import { Button } from "@/components/ui/button";
 import { Link } from 'next-view-transitions'
-import SignedIn from "@/components/auth/SignedIn";
+// import SignedIn from "@/components/auth/SignedIn";
 import SignedOut from "@/components/auth/SignedOut";
 import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
+// 🔃add the characters that appear in each book to the db
 // 🔃 make the links and buttons using useRouter to work on iphone/IOS/safari devices
 // 🔃 add a history
 // 🔃 add the ability to hightlight and saved the highlighted

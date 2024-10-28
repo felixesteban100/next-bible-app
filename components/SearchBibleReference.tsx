@@ -99,7 +99,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     }
 
     function translateBookName(bookNumber: number) {
-        return bibleBooks[form.getValues('version') as "KJV" | "RV1960"][bookNumber] ?? ""
+        return bibleBooks[form.getValues('version') as "KJV" | "RV1960" | "NKJV"][bookNumber] ?? ""
     }
 
 

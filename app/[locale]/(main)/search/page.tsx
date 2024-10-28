@@ -112,7 +112,7 @@ export default async function page({ params: { locale }, searchParams: { search,
 
                                 return (
                                     <div key={chapter.route_string} >
-                                        <h2 className={`font-bold ${selectedFontSize.text}`}>{bibleBooks[versionValue as 'KJV' | 'RV1960'][chapter.route_object.book_id]} {chapter.route_object.chapter_id}</h2>
+                                        <h2 className={`font-bold ${selectedFontSize.text}`}>{bibleBooks[versionValue as 'KJV' | 'RV1960' | 'NKJV'][chapter.route_object.book_id]} {chapter.route_object.chapter_id}</h2>
                                         <div
                                             className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} `}
                                         >
