@@ -103,20 +103,24 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     }
 
 
-    function removeFirstWord(inputString: string): string {
-        // Split the string into words
-        const words: string[] = inputString.split(' ');
+    // function removeFirstWord(inputString: string): string {
+    //     // Split the string into words
+    //     const words: string[] = inputString.split(' ');
 
-        // Check if there are more than one word
-        if (words.length > 1) {
-            // Join the words back together, excluding the first word
-            return words.slice(1).join(' ');
-        } else {
-            // If there's only one word, return an empty string
-            return '';
-        }
+    //     // Check if there are more than one word
+    //     if (words.length > 1) {
+    //         // Join the words back together, excluding the first word
+    //         return words.slice(1).join(' ');
+    //     } else {
+    //         // If there's only one word, return an empty string
+    //         return '';
+    //     }
+    // }
+
+    function extractNumbersFromReference(reference: string): string {
+        const numbersOnly = reference.match(/(\d+(:\d+)?(-\d+)?)/);
+        return numbersOnly ? numbersOnly[0] : "";
     }
-
 
 
     return (
@@ -209,7 +213,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                             <FormItem className="w-full h-full col-span-4">
                                 <Select onValueChange={(e) => {
                                     field.onChange(e)
-                                    const newSearch = `${translateBookName(selectedBookNumber)} ${removeFirstWord(searchParam)}`
+                                    const newSearch = `${translateBookName(selectedBookNumber)} ${extractNumbersFromReference(searchParam)}`
                                     if (selectedBookNumber !== null) form.setValue("search", newSearch)
                                 }} defaultValue={field.value}>
                                     <FormControl>
