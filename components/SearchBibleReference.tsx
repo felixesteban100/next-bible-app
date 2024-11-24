@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Search } from "lucide-react";
+import { ArrowDown, Search } from "lucide-react";
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -30,7 +30,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { bibleBooks, bibleBooksNumberOfChapters } from "@/lib/bibleBooks";
@@ -82,9 +82,24 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
         },
     })
 
+    const divRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         form.reset({ search: searchParam, version: versionParam })
     }, [searchParam, versionParam, form])
+
+    useEffect(() => {
+        if (divRef.current) {
+            divRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [])
+
+
+    function scroolInto() {
+        if (divRef.current) {
+            divRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         if (omitVerseToHightlight) params.set("verseToHighlight", "0")
@@ -133,13 +148,6 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     }
 
 
-    console.log("1 Corinthians 2:8", extractNumbersFromReference("1 Corinthians 2:8"));  // Output: 2:8
-    console.log("Jude 1", extractNumbersFromReference("Jude 1"));            // Output: 1
-    console.log("Romans 8:1-5", extractNumbersFromReference("Romans 8:1-5"));      // Output: 8:1-5
-    console.log("Genesis 3", extractNumbersFromReference("Genesis 3"));         // Output: 3
-    console.log("Psalm 23:1", extractNumbersFromReference("Psalm 23:1"));        // Output: 23:1
-    console.log("2 Chronicles 2:8", extractNumbersFromReference("2 Chronicles 2:8"));  // Output: 2:8
-
     return (
         <div className={`flex flex-col ${gapForElements} p-2`}>
             <Form {...form}>
@@ -162,15 +170,21 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                 <Input placeholder={t("enterPassage")} className={`${textSize} h-full py-[0.5rem]`} autoComplete="off" {...field} />
                                             </PopoverTrigger>
                                             <PopoverContent className="w-[80vw] max-w-[40rem]">
-                                                <p className={`${textSize} h-fit p-5`}>{t("Bible_book_list")} ({form.getValues("version") ?? versionParam})</p>
+                                                <div className="flex gap-2 justify-center items-center">
+                                                    <p className={`${textSize} h-fit p-5`}>{t("Bible_book_list")} ({form.getValues("version") ?? versionParam})</p>
+                                                    <Button onClick={() => scroolInto()}>
+                                                        <ArrowDown />
+                                                    </Button>
+                                                </div>
                                                 <ScrollArea className="h-[400px] rounded-md p-4">
-                                                    <Accordion type="single" collapsible>
+                                                    <Accordion type="single" collapsible defaultValue={translateBookName(selectedBookNumber)}>
                                                         {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value], index) => {
+                                                            const condition = form.getValues("search").toLowerCase().includes(value.toLowerCase())
                                                             return (
-                                                                <AccordionItem key={key} value={key}>
+                                                                <AccordionItem value={value} ref={condition ? divRef : null} key={key}>
                                                                     <AccordionTrigger
                                                                         // className={`${searchParam.toLowerCase().includes(value.toLowerCase()) && "text-primary underline font-bold"} ${textSize} h-fit p-5`}
-                                                                        className={`${form.getValues("search").toLowerCase().includes(value.toLowerCase()) && "text-primary underline font-bold"} ${textSize} h-fit p-5`}
+                                                                        className={`${condition && "text-primary underline font-bold"} ${textSize} h-fit p-5`}
                                                                     >
                                                                         {index + 1} - {value}
                                                                     </AccordionTrigger>
@@ -230,7 +244,6 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                             <FormItem className="w-full h-full col-span-4">
                                 <Select onValueChange={(e) => {
                                     field.onChange(e)
-                                    console.log(extractNumbersFromReference(searchParam))
                                     const newSearch = `${translateBookName(selectedBookNumber)} ${extractNumbersFromReference(searchParam)}`
                                     if (selectedBookNumber !== null) form.setValue("search", newSearch)
                                 }} defaultValue={field.value}>
