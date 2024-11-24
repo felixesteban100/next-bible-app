@@ -118,10 +118,27 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     // }
 
     function extractNumbersFromReference(reference: string): string {
-        const numbersOnly = reference.match(/(\d+(:\d+)?(-\d+)?)/);
-        return numbersOnly ? numbersOnly[0] : "";
+        // Matches the format where book name is followed by chapter and verse(s)
+        const regex = /\b(?:\d\s)?[A-Za-z\s]+(\d+)(?::(\d+(?:-\d+)?))?/;
+
+        const match = reference.match(regex);
+
+        if (match) {
+            const chapter = match[1];
+            const verses = match[2] || ""; // Optional group for verses or verse range
+            return verses ? `${chapter}:${verses}` : chapter;
+        }
+
+        return ""; // Return empty string if no match
     }
 
+
+    console.log("1 Corinthians 2:8", extractNumbersFromReference("1 Corinthians 2:8"));  // Output: 2:8
+    console.log("Jude 1", extractNumbersFromReference("Jude 1"));            // Output: 1
+    console.log("Romans 8:1-5", extractNumbersFromReference("Romans 8:1-5"));      // Output: 8:1-5
+    console.log("Genesis 3", extractNumbersFromReference("Genesis 3"));         // Output: 3
+    console.log("Psalm 23:1", extractNumbersFromReference("Psalm 23:1"));        // Output: 23:1
+    console.log("2 Chronicles 2:8", extractNumbersFromReference("2 Chronicles 2:8"));  // Output: 2:8
 
     return (
         <div className={`flex flex-col ${gapForElements} p-2`}>
@@ -213,6 +230,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                             <FormItem className="w-full h-full col-span-4">
                                 <Select onValueChange={(e) => {
                                     field.onChange(e)
+                                    console.log(extractNumbersFromReference(searchParam))
                                     const newSearch = `${translateBookName(selectedBookNumber)} ${extractNumbersFromReference(searchParam)}`
                                     if (selectedBookNumber !== null) form.setValue("search", newSearch)
                                 }} defaultValue={field.value}>
