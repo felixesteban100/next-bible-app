@@ -138,7 +138,8 @@ export const bibleBooks: { [key: string]: { [key: number]: string } } = {
         64: "3 Juan",
         65: "Judas",
         66: "Apocalipsis"
-    }
+    },
+    "ESV": englishBibleBooks
 }
 
 const englishBibleVersionsBooksNumberOfChapters = {
@@ -280,5 +281,6 @@ export const bibleBooksNumberOfChapters: { [key: string]: { [key: string]: numbe
         "3 Juan": 1,
         "Judas": 1,
         "Apocalipsis": 22
-    }
+    },
+    ESV: englishBibleVersionsBooksNumberOfChapters
 }
