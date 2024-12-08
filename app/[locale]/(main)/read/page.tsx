@@ -117,7 +117,7 @@ export default async function page({
             <main className={`${pageMarginAndWidth} pb-10 p-2 flex flex-col ${selectedFontSize.gap_between_elements}`}>
                 {chapter ?
                     <div className="flex flex-col items-start justify-center mb-32">
-                        {useVerseOfToday && <p className={`font-bold ${selectedFontSize.text}`}>{translateRouteString(chapter.route_string, versionValue)}:{todays_verse.verses.join('-')} ({versionValue}) - ({t("VerseOfTheDay")})</p>}
+                        {useVerseOfToday && <p className={`font-bold ${selectedFontSize.text}`}>{translateRouteString(chapter.route_string, versionValue)}:{todays_verse.verses.length === 1 ? todays_verse.verses.at(0) : `${todays_verse.verses.at(0)}-${todays_verse.verses.at(-1)}`} ({versionValue}) - ({t("VerseOfTheDay")})</p>}
                         <div
                             className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} `}
                         >
