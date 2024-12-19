@@ -23,14 +23,14 @@ export default function ReadFullChapterButton({ chapter, version, selectedFontSi
     function goToFirstChapter() {
         params.set("search", `${translateRouteString(chapter.route_string, version)}`)
         params.set("version", `${version}`)
-        if (verses && verses.length === 1) params.set("verseToHighlight", `${verses}`)
+        if (verses) params.set("verseToHighlight", `${verses[0]}`)
         replace(`/read?${params.toString()}`)
     }
 
     return (
         /* mt-5  p-1*/
         <Button variant={'link'} className={`p-0  ${selectedFontSize.text}`} onClick={() => goToFirstChapter()}>
-            {t("Read full chapter")}
+            {t("Read full chapter")}{verses}
         </Button>
     )
 }

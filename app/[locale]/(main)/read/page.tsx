@@ -88,7 +88,7 @@ export default async function page({
         collectionChapter.find({ 'route_object.version_initials': versionValue, route_object: { $gt: chapter?.route_object } }).sort({ route_object: 1 }).limit(1).toArray()
     ])
 
-    const verses = useVerseOfToday ? todays_verse.verses.map(c => c - 1) : extractBibleVerses(searchValue).map(c => c - 1)
+    const verses = useVerseOfToday ? todays_verse.verses.map(c => c) : extractBibleVerses(searchValue).map(c => c)
 
     const previous_chapter = translateRouteString(previousChapter?.route_string ?? "", versionValue)
     const next_chapter = translateRouteString(nextChapter?.route_string ?? "", versionValue)
