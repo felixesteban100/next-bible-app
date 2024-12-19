@@ -93,8 +93,8 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                 chapter.verses_content.map((c, i) => {
                     const verseNumber = i + 1
                     const isSelected = verseSelected === verseNumber
-                    if (verses.length !== 0 && !verses.includes(i)) return null
-                    const verseRouteString = chapter.verses_routes_string[i]
+                    if (verses.length !== 0 && !verses.includes(verseNumber)) return null
+                    const verseRouteString = chapter.verses_routes_string[verseNumber]
                     // console.log(verseRouteString)
                     return (
                         <span
@@ -130,7 +130,6 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                                 getHighlightedText(c, wordToHightlight) :
                                 chapter.route_object.book_id === 19 && verseNumber === 1 ? `${c.slice(1)}` : c
                             }
-
                         </span>
                     )
                 })
