@@ -1,3 +1,6 @@
+export const DEFAULT_EN_VERSION = "NKJV" // "KJV"
+export const DEFAULT_ES_VERSION = "RV1960"
+
 export const fontSize: SelectedFontSize[] = [
     { text: 'text-xl', firstVerse: "text-3xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
     { text: 'text-2xl', firstVerse: "text-4xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },

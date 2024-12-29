@@ -1,12 +1,10 @@
-import Navbar from '@/components/navbar/Navbar';
 import ReadFullChapterButton from '@/components/ReadFullChapterButton';
 import SearchBibleReference from '@/components/SearchBibleReference';
-import SearchWordsInBibleInput from '@/components/SearchWordsInBibleInput';
 import VersesDisplayer from '@/components/VersesDisplayer';
 
 import { collectionChapter, collectionVersion } from '@/db/mongodb/mongodb';
 import { bibleBooks } from '@/lib/bibleBooks';
-import { fontSize, pageMarginAndWidth } from '@/lib/constants';
+import { DEFAULT_EN_VERSION, DEFAULT_ES_VERSION, fontSize, pageMarginAndWidth } from '@/lib/constants';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next'
 
@@ -26,7 +24,7 @@ export async function generateMetadata(
 export default async function page({ params: { locale }, searchParams: { search, version, fontSizeNumber, continousLine } }: { params: { locale: string }, searchParams: { search: string, version: string, fontSizeNumber: string, continousLine: string } }) {
     unstable_setRequestLocale(locale)
 
-    const versionValue = version ?? "KJV"
+    const versionValue = version ? version : locale === "en" ? DEFAULT_EN_VERSION : locale === "es" ? DEFAULT_ES_VERSION : ""
     const continousLineValue = continousLine === "true"
     const searchValue = search ?? ""
 
@@ -77,8 +75,6 @@ export default async function page({ params: { locale }, searchParams: { search,
 
     return (
         <div>
-            {/* <SearchWordsInBibleInput selectedFontSize={selectedFontSize} search={search} /> */}
-
             <div
                 className={`${pageMarginAndWidth}`}
             >
@@ -112,7 +108,7 @@ export default async function page({ params: { locale }, searchParams: { search,
 
                                 return (
                                     <div key={chapter.route_string} >
-                                        <h2 className={`font-bold ${selectedFontSize.text}`}>{bibleBooks[versionValue as 'KJV' | 'RV1960' | 'NKJV'][chapter.route_object.book_id]} {chapter.route_object.chapter_id}</h2>
+                                        <h2 className={`font-bold ${selectedFontSize.text}`}>{bibleBooks[versionValue][chapter.route_object.book_id]} {chapter.route_object.chapter_id}</h2>
                                         <div
                                             className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} `}
                                         >

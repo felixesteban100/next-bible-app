@@ -9,7 +9,7 @@ import ReadFullChapterButton from "@/components/ReadFullChapterButton";
 import VersesDisplayer from "@/components/VersesDisplayer";
 import { unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next'
-import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_AGAINS_SIN_ROUTE_STRING, DAILY_VERSES_ROUTE_STRING, fontSize, pageMarginAndWidth } from "@/lib/constants";
+import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_AGAINS_SIN_ROUTE_STRING, DAILY_VERSES_ROUTE_STRING, DEFAULT_EN_VERSION, DEFAULT_ES_VERSION, fontSize, pageMarginAndWidth } from "@/lib/constants";
 import { Link } from "next-view-transitions";
 import { Button } from "@/components/ui/button";
 
@@ -58,7 +58,7 @@ export default async function page({
 
     const dailyVerseTypeValue = dailyVerseType ?? ""
     const searchValue = search ?? ""
-    const versionValue = version ? version : language === "en" ? "KJV" : language === "es" ? "RV1960" : ""
+    const versionValue = version ? version : language === "en" ? DEFAULT_EN_VERSION : language === "es" ? DEFAULT_ES_VERSION : ""
     const fontSizeValue = fontSizeNumber ?? "1"
     const continousLineValue = continousLine === "true"
 
