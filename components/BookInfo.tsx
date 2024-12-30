@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useTransitionRouter } from "next-view-transitions";
+import { DEFAULT_EN_VERSION } from "@/lib/constants";
 
 type BookInfoProps = {
     bookInfo: Book;
@@ -37,8 +38,8 @@ export default function BookInfo({ bookInfo, selectedFontSize }: BookInfoProps) 
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
                     {bookInfo.chapters_routes_string.map(c => {
                         return (
-                            <Button variant={'outline'} key={c} onClick={() => goToChapter(`${translateRouteString(c, params.get("version") ?? "KJV")}`)}>
-                                {translateRouteString(c, params.get("version") ?? "KJV")}
+                            <Button variant={'outline'} key={c} onClick={() => goToChapter(`${translateRouteString(c, params.get("version") ?? DEFAULT_EN_VERSION)}`)}>
+                                {translateRouteString(c, params.get("version") ?? DEFAULT_EN_VERSION)}
                             </Button>
                         )
                     })}

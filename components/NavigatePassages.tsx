@@ -22,14 +22,26 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
     const params = new URLSearchParams(searchParams)
     params.set("verseToHighlight", "0")
 
+    function goNext() {
+        params.set("search", next_chapter)
+        push(`/read?${params.toString()}`)
+    }
+
+    function goPrevious() {
+        params.set("search", previous_chapter)
+        push(`/read?${params.toString()}`)
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === "ArrowRight" && next_chapter !== "") goNext()
+        if (event.key === "ArrowLeft" && previous_chapter !== "") goPrevious()
+    })
+
     return (
         <div className={`flex ${alignmentForFlexElements} justify-start ${gapForElements} fixed bottom-0 h-fit mb-10 `}>
             {previous_chapter !== "" ?
                 <Button
-                    onClick={() => {
-                        params.set("search", previous_chapter)
-                        push(`/read?${params.toString()}`)
-                    }}
+                    onClick={() => goPrevious()}
                     type="button"
                     variant={'default'}
                     className={` ${textSize} h-fit flex items-center justify-center`}
@@ -43,10 +55,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
 
             {next_chapter !== "" ?
                 <Button
-                    onClick={() => {
-                        params.set("search", next_chapter)
-                        push(`/read?${params.toString()}`)
-                    }}
+                    onClick={() => goNext()}
                     type="button"
                     variant={'default'}
                     className={`${textSize} h-fit flex items-center justify-center`}
