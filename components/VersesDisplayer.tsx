@@ -54,7 +54,8 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
         if (verseSelected === 0) setVerseToHighlight(firstVerse)
         const newVerseToSelect = verseSelected - 1
         if (newVerseToSelect < firstVerse) {
-            setVerseToHighlight(lastVerse)
+            // setVerseToHighlight(lastVerse)
+            setVerseToHighlight(0)
         } else {
             setVerseToHighlight(newVerseToSelect)
         }
@@ -64,7 +65,8 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
         if (verseSelected === 0) setVerseToHighlight(lastVerse)
         const newVerseToSelect = verseSelected + 1
         if (newVerseToSelect > lastVerse) {
-            setVerseToHighlight(firstVerse)
+            // setVerseToHighlight(firstVerse)
+            setVerseToHighlight(0)
         } else {
             setVerseToHighlight(newVerseToSelect)
         }

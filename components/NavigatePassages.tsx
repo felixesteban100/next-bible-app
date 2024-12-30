@@ -44,7 +44,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                     onClick={() => goPrevious()}
                     type="button"
                     variant={'default'}
-                    className={` ${textSize} h-fit flex items-center justify-center`}
+                    className={`${textSize} h-fit flex items-center justify-center`}
                 >
                     <ChevronLeft className={iconSize} />
                     <span className="hidden lg:flex">{previous_chapter}</span>
@@ -60,8 +60,8 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                     variant={'default'}
                     className={`${textSize} h-fit flex items-center justify-center`}
                 >
-                    <span className="hidden lg:flex">{next_chapter}</span>
                     <ChevronRight className={iconSize} />
+                    <span className="hidden lg:flex">{next_chapter}</span>
                 </Button>
                 :
                 null

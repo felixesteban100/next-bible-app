@@ -6,8 +6,9 @@ import SignedOut from "@/components/auth/SignedOut";
 import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
-// 🔃implement this library to manage the state of the app https://youtu.be/ULVdCzFj9Bo
-// 🔃add the characters that appear in each book to the db
+// ✅ add the ability to go to the next chapter and to the previous chapter using the arrow keys
+// 🔃 implement this library to manage the state of the app https://youtu.be/ULVdCzFj9Bo
+// 🔃 add the characters that appear in each book to the db
 // 🔃 make the links and buttons using useRouter to work on iphone/IOS/safari devices
 // 🔃 add a history
 // 🔃 add the ability to hightlight and saved the highlighted
