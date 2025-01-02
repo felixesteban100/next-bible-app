@@ -1,10 +1,7 @@
 "use client"
 
-import { useKeyPress } from '@/hooks/useKeyPress'
-import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { usePathname, useRouter } from "@/lib/navigation"
-// import { useTransitionRouter } from 'next-view-transitions'
 
 type VersesDisplayerProps = {
     chapter: Chapter,
@@ -16,62 +13,15 @@ type VersesDisplayerProps = {
 
 export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight }: VersesDisplayerProps) {
     const searchParams = useSearchParams()
-    const { replace } = useRouter()/* useTransitionRouter() */
     const params = new URLSearchParams(searchParams)
+    const { replace } = useRouter()
     const pathname = usePathname()
-
-    const firstVerse = verses[0] ?? 1
-    const lastVerse = verses[verses.length - 1] ?? chapter.verses_content.length
-
     const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
 
     function setVerseToHighlight(verse: number) {
         params.set('verseToHighlight', `${verse}`)
         replace(`${pathname}?${params.toString()}`, { scroll: false })
     }
-
-    /* const [verseSelected, setVerseToHighlight] = useState(0)
-
-    useEffect(() => {
-        setVerseToHighlight(0)
-    }, [chapter]) */
-
-    useEffect(() => {
-        const currentVerse = document.getElementById(`${verseSelected}`)
-        if (currentVerse && verseSelected !== 0) {
-            currentVerse.scrollIntoView({
-                behavior: 'smooth',
-                inline: "center",
-                block: "center"
-            })
-        }
-
-    }, [verseSelected])
-
-
-    /* this is struggling to load fast sometimes */
-    useKeyPress(() => {
-        if (verseSelected === 0) setVerseToHighlight(firstVerse)
-        const newVerseToSelect = verseSelected - 1
-        if (newVerseToSelect < firstVerse) {
-            // setVerseToHighlight(lastVerse)
-            setVerseToHighlight(0)
-        } else {
-            setVerseToHighlight(newVerseToSelect)
-        }
-    }, ["ArrowUp"]);
-
-    useKeyPress(() => {
-        if (verseSelected === 0) setVerseToHighlight(lastVerse)
-        const newVerseToSelect = verseSelected + 1
-        if (newVerseToSelect > lastVerse) {
-            // setVerseToHighlight(firstVerse)
-            setVerseToHighlight(0)
-        } else {
-            setVerseToHighlight(newVerseToSelect)
-        }
-    }, ["ArrowDown"]);
-    /* this is struggling to load fast sometimes */
 
     function getHighlightedText(text: string, highlight: string) {
         // Split on highlight term and include term into parts, ignore case
@@ -103,7 +53,6 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                             id={`${verseNumber}`}
                             onClick={() => {
                                 if (!hightlightVerses) return
-
                                 if (isSelected) {
                                     setVerseToHighlight(0)
                                 } else {

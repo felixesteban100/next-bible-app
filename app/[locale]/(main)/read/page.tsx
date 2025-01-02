@@ -151,16 +151,22 @@ export default async function page({
                         <p>{t("Not_existent_reference")} ({searchValue} ({versionValue}))</p>
                 }
 
-                {!useVerseOfToday && <div className={`${verseToHighlightValue === 0 ? "opacity-1" : `opacity-0`} transition-all duration-700 block`}>
-                    <NavigatePassages
-                        next_chapter={next_chapter}
-                        previous_chapter={previous_chapter}
-                        textSize={selectedFontSize.text}
-                        iconSize={selectedFontSize.icon}
-                        gapForElements={selectedFontSize.gap_between_elements}
-                        alignmentForFlexElements={selectedFontSize.aligmentForFlexElements}
-                    />
-                </div>}
+                {(!useVerseOfToday) ?
+                    <div className={`${verseToHighlightValue === 0 ? "opacity-1" : `opacity-0`} transition-all duration-700 block`}>
+                        <NavigatePassages
+                            next_chapter={next_chapter}
+                            previous_chapter={previous_chapter}
+                            textSize={selectedFontSize.text}
+                            iconSize={selectedFontSize.icon}
+                            gapForElements={selectedFontSize.gap_between_elements}
+                            alignmentForFlexElements={selectedFontSize.aligmentForFlexElements}
+                            // new added
+                            verses={verses}
+                            chapter={JSON.parse(JSON.stringify(chapter))}
+                        />
+                    </div>
+                    : null
+                }
             </main>
         </>
     )
