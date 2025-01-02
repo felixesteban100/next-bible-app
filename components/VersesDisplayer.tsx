@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation"
 import { usePathname, useRouter } from "@/lib/navigation"
+import { useEffect, useRef } from "react";
 
 type VersesDisplayerProps = {
     chapter: Chapter,
@@ -17,6 +18,14 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
     const { replace } = useRouter()
     const pathname = usePathname()
     const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
+
+    const verseRef = useRef<HTMLSpanElement | null>(null)
+
+    useEffect(() => {
+        if (verseSelected !== 0 && verseRef.current) {
+            verseRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
+        }
+    }, [verseSelected])
 
     function setVerseToHighlight(verse: number) {
         params.set('verseToHighlight', `${verse}`)
@@ -66,6 +75,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                             // "underline"
                             // "bg-primary text-primary-foreground"
                             className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== 0 ? (isSelected ? "text-foreground" : "text-foreground/15") : ""} ${hightlightVerses ? "hover:underline decoration-dashed" : ""} `}
+                            ref={verseNumber === verseSelected ? verseRef : null}
                         >
                             <span
                                 className={`${hightlightVerses && verseNumber === 1 && `${selectedFontSize.firstVerse} font-bold`}`}
