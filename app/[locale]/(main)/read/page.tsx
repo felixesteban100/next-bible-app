@@ -68,7 +68,8 @@ export default async function page({
     // const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(DAILY_VERSES_ROUTE_STRING)
     const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(dailyVerseTypeValue === "sin" ? DAILY_VERSES_AGAINS_SIN_ROUTE_STRING : DAILY_VERSES_ROUTE_STRING)
 
-    const useVerseOfToday = search === undefined
+    const useVerseOfToday = searchValue === "" || searchValue === "verse of the day"
+    const useBookInfo = /^[a-zA-Z\s]+$/.test(searchValue)
 
     const [t, versions, bookInfo, chapter] = await Promise.all([
         getTranslations(),
@@ -151,7 +152,9 @@ export default async function page({
                         <p>{t("Not_existent_reference")} ({searchValue} ({versionValue}))</p>
                 }
 
-                {(!useVerseOfToday) ?
+                {(useVerseOfToday || useBookInfo) ?
+                    null
+                    :
                     <div className={`${verseToHighlightValue === 0 ? "opacity-1" : `opacity-0`} transition-all duration-700 block`}>
                         <NavigatePassages
                             next_chapter={next_chapter}
@@ -165,7 +168,6 @@ export default async function page({
                             chapter={JSON.parse(JSON.stringify(chapter))}
                         />
                     </div>
-                    : null
                 }
             </main>
         </>
