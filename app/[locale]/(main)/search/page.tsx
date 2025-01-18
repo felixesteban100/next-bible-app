@@ -112,7 +112,13 @@ export default async function page({ params: { locale }, searchParams: { search,
                                         <div
                                             className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} `}
                                         >
-                                            <VersesDisplayer chapter={chapter} selectedFontSize={selectedFontSize} verses={chapter.matchingIndices} hightlightVerses={false} wordToHightlight={search} />
+                                            <VersesDisplayer
+                                                chapter={chapter}
+                                                selectedFontSize={selectedFontSize}
+                                                verses={chapter.matchingIndices.map(c => c + 1)}
+                                                hightlightVerses={false}
+                                                wordToHightlight={search}
+                                            />
                                         </div>
                                         <ReadFullChapterButton
                                             chapter={JSON.parse(JSON.stringify(chapter))}

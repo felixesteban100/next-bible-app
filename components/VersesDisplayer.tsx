@@ -9,7 +9,7 @@ type VersesDisplayerProps = {
     selectedFontSize: SelectedFontSize,
     verses: number[],
     hightlightVerses: boolean;
-    wordToHightlight: string
+    wordToHightlight: string;
 }
 
 export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight }: VersesDisplayerProps) {
@@ -52,7 +52,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
         <>
             {
                 chapter.verses_content.map((c, i) => {
-                    const verseNumber = i // + 1
+                    const verseNumber = i + 1
                     const isSelected = verseSelected === verseNumber
                     if (verses.length !== 0 && !verses.includes(verseNumber)) return null
                     const verseRouteString = chapter.verses_routes_string[verseNumber]
