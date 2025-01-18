@@ -6,6 +6,7 @@ import SignedOut from "@/components/auth/SignedOut";
 import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
+// 🔃 add the ability to search verses even though they are not consecutive
 // ✅ add the ability to go to the next chapter and to the previous chapter using the arrow keys
 // 🔃 implement this library to manage the state of the app https://youtu.be/ULVdCzFj9Bo
 // 🔃 add the characters that appear in each book to the db

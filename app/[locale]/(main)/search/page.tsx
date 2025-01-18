@@ -124,7 +124,6 @@ export default async function page({ params: { locale }, searchParams: { search,
                                 )
                             })}
                         </div>
-
                     </div>
                     :
                     null
