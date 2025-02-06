@@ -38,23 +38,23 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <ViewTransitions>
-      <html lang={locale}>
-        <body>
-          <main>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <NextIntlClientProvider messages={messages}>
-                {children}
-              </NextIntlClientProvider>
-            </ThemeProvider>
-          </main>
-        </body>
-      </html>
-    </ViewTransitions>
+    // <ViewTransitions>
+    <html lang={locale}>
+      <body>
+        <main>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <NextIntlClientProvider messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </ThemeProvider>
+        </main>
+      </body>
+    </html>
+    // </ViewTransitions>
   )
 }

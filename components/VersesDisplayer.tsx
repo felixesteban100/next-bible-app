@@ -15,7 +15,7 @@ type VersesDisplayerProps = {
 export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight }: VersesDisplayerProps) {
     const searchParams = useSearchParams()
     const params = new URLSearchParams(searchParams)
-    const { replace } = useRouter()
+    const { /* replace, */ push } = useRouter()
     const pathname = usePathname()
     const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
 
@@ -29,7 +29,8 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
 
     function setVerseToHighlight(verse: number) {
         params.set('verseToHighlight', `${verse}`)
-        replace(`${pathname}?${params.toString()}`, { scroll: false })
+        // replace(`${pathname}?${params.toString()}`, { scroll: false })
+        push(`${pathname}?${params.toString()}`, { scroll: false })
     }
 
     function getHighlightedText(text: string, highlight: string) {

@@ -2,8 +2,8 @@
 
 import { ReactNode } from 'react'
 import { Button } from '../ui/button'
-import { usePathname } from '@/lib/navigation'
-import { Link } from 'next-view-transitions'
+import { Link, usePathname } from '@/lib/navigation'
+// import { Link } from 'next-view-transitions'
 import { cn } from '@/lib/utils'
 import { useSearchParams } from 'next/navigation'
 import { fontSize } from '@/lib/constants'

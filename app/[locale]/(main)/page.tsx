@@ -1,10 +1,11 @@
 import { TypewriterEffectSmooth } from "@/components/typewriter-effect";
 import { Button } from "@/components/ui/button";
-import { Link } from 'next-view-transitions'
+// import { Link } from 'next-view-transitions'
 // import SignedIn from "@/components/auth/SignedIn";
 import SignedOut from "@/components/auth/SignedOut";
 import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { Link } from "@/lib/navigation";
 
 // 🔃 add the ability to search verses even though they are not consecutive
 // ✅ add the ability to go to the next chapter and to the previous chapter using the arrow keys

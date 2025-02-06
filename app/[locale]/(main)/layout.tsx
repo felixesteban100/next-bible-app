@@ -3,9 +3,10 @@ import Navbar from "@/components/navbar/Navbar";
 import SignedIn from "@/components/auth/SignedIn";
 import SignedOut from "@/components/auth/SignedOut";
 import UserInfo from "@/components/auth/UserInfo";
-import { Link } from "next-view-transitions";
+// import { Link } from "next-view-transitions";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
+import { Link } from "@/lib/navigation";
 
 
 export default async function RootLayout({
@@ -31,7 +32,6 @@ export default async function RootLayout({
           <UserInfo />
         </SignedIn>
       </Navbar>
-
       {children}
     </>
   )

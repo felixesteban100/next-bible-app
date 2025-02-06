@@ -5,12 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { useTransitionRouter } from 'next-view-transitions';
+import { useRouter } from '@/lib/navigation';
+// import { useTransitionRouter } from 'next-view-transitions';
 
 function SearchWordsInBibleInput({ search, selectedFontSize }: { search: string, selectedFontSize: SelectedFontSize }) {
     const [searchValue, setSearchValue] = useState(search)
     const searchParams = useSearchParams()
-    const { push } = useTransitionRouter()
+    // const { push } = useTransitionRouter()
+    const { push } = useRouter()
     const params = new URLSearchParams(searchParams)
 
     const { text, icon } = selectedFontSize

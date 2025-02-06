@@ -3,7 +3,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
-import { useTransitionRouter } from "next-view-transitions";
+// import { useTransitionRouter } from "next-view-transitions";
 import { useCallback, useEffect, useMemo } from "react";
 import { usePathname, useRouter } from "@/lib/navigation"
 
@@ -17,12 +17,13 @@ type NavigatePassageProps = {
     // new added
     verses: number[],
     chapter: Chapter,
+    useShortCuts: boolean
 }
 
-export default function NavigatePassages({ previous_chapter, next_chapter, textSize, iconSize, gapForElements, alignmentForFlexElements, verses, chapter }: NavigatePassageProps) {
+export default function NavigatePassages({ previous_chapter, next_chapter, textSize, iconSize, gapForElements, alignmentForFlexElements, verses, chapter, useShortCuts }: NavigatePassageProps) {
     const searchParams = useSearchParams()
-    const { push } = useTransitionRouter()
-    const { replace } = useRouter()
+    const { push } = useRouter()
+    const { /* replace */ push: pushRouter } = useRouter()
     const pathname = usePathname()
 
     const memoizedParams = useMemo(() => new URLSearchParams(searchParams), [searchParams]);
@@ -53,7 +54,8 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                 } else {
                     memoizedParams.set('verseToHighlight', `${lastVerse}`);
                 }
-                replace(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
+                // replace(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
+                pushRouter(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
                 break;
             case "ArrowDown":
                 if (verseSelected !== 0) {
@@ -61,19 +63,21 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                 } else {
                     memoizedParams.set('verseToHighlight', `${firstVerse}`);
                 }
-                replace(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
+                // replace(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
+                pushRouter(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
                 break;
         }
-    }, [verseSelected, previous_chapter, next_chapter, push, memoizedParams, replace, pathname, firstVerse, lastVerse]);
+    }, [verseSelected, previous_chapter, next_chapter, push, memoizedParams, /* replace */pushRouter, pathname, firstVerse, lastVerse]);
 
     useEffect(() => {
+        if (useShortCuts === false) return
         const keyDownHandler = (event: KeyboardEvent) => handleKeyDown(event.key);
         document.addEventListener('keydown', keyDownHandler);
 
         return () => {
             document.removeEventListener('keydown', keyDownHandler);
         };
-    }, [handleKeyDown]);
+    }, [handleKeyDown, useShortCuts]);
 
     return (
         <div className={`flex ${alignmentForFlexElements} justify-start ${gapForElements} fixed bottom-0 h-fit mb-10 `}>

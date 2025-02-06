@@ -21,7 +21,7 @@ import {
     FormItem,
     FormMessage,
 } from "@/components/ui/form"
-import { usePathname } from "@/lib/navigation"
+import { Link, usePathname, useRouter } from "@/lib/navigation"
 import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl";
 import {
@@ -42,7 +42,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 
-import { useTransitionRouter } from "next-view-transitions";
+// import { useTransitionRouter } from "next-view-transitions";
 import { getChapterNumber } from "@/lib/queriesUtils";
 
 
@@ -62,7 +62,8 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     const iconSize = selectedFontSize.icon
     const gapForElements = selectedFontSize.gap_between_elements
 
-    const { push } = useTransitionRouter()
+    // const { push } = useTransitionRouter()
+    const { push } = useRouter()
     const searchParams = useSearchParams()
     const params = new URLSearchParams(searchParams)
     const pathname = usePathname()
@@ -102,6 +103,10 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     }
 
     function onSubmit(values: z.infer<typeof formSchema>) {
+        push(onSubmitLink(values))
+    }
+
+    function onSubmitLink(values: z.infer<typeof formSchema>) {
         if (omitVerseToHightlight) params.set("verseToHighlight", "0")
 
         params.delete('search')
@@ -110,7 +115,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
         params.delete('version')
         if (values.version !== "") params.set('version', values.version)
 
-        push(`${pathname}?${params.toString()}`)
+        return `${pathname}?${params.toString()}`
     }
 
     function translateBookName(bookNumber: number) {
@@ -198,35 +203,39 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                         </AccordionTrigger>
                                                                         <AccordionContent className="flex flex-col gap-5">
                                                                             <PopoverClose
-                                                                                onClick={() => {
-                                                                                    onSubmit({
+                                                                                type="button"
+                                                                                asChild
+                                                                            >
+                                                                                <Link
+                                                                                    href={onSubmitLink({
                                                                                         search: `${value}`,
                                                                                         version: form.getValues("version") ?? versionParam,
-                                                                                    })
-                                                                                }}
-                                                                                key={key}
-                                                                                type="button"
-                                                                                className={`${textSize} ${((getChapterNumber(searchParam.toLowerCase()) === 0 || getChapterNumber(searchParam.toLowerCase()) === null || getChapterNumber(searchParam.toLowerCase()) === undefined) && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary border-[0.2px] border-primary rounded-lg underline font-bold" : "border-[0.2px] border-foreground rounded-lg"} h-fit p-5`}
-                                                                            >
-                                                                                {t("Read book info")}
+                                                                                    })}
+                                                                                    className={`${textSize} ${((getChapterNumber(searchParam.toLowerCase()) === 0 || getChapterNumber(searchParam.toLowerCase()) === null || getChapterNumber(searchParam.toLowerCase()) === undefined) && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary border-[0.2px] border-primary rounded-lg underline font-bold" : "border-[0.2px] border-foreground rounded-lg"} h-fit p-5`}
+
+                                                                                >
+                                                                                    {t("Read book info")}
+                                                                                </Link>
                                                                             </PopoverClose>
-                                                                            <div>
+                                                                            <div className="grid grid-cols-8 gap-2">
                                                                                 {Array.from(Array(bibleBooksNumberOfChapters[form.getValues("version")][value]), (_, i) => {
                                                                                     const chapterNumber = i + 1
 
                                                                                     return (
                                                                                         <PopoverClose
                                                                                             key={`${value}-${chapterNumber}-chapter`}
-                                                                                            onClick={() => {
-                                                                                                onSubmit({
+                                                                                            className={`${textSize} ${(getChapterNumber(searchParam.toLowerCase()) === chapterNumber && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary border-[0.2px] border-primary" : "hover:bg-accent/50"}  rounded-lg h-fit p-5`}
+                                                                                            type="button"
+                                                                                            asChild
+                                                                                        >
+                                                                                            <Link
+                                                                                                href={onSubmitLink({
                                                                                                     search: `${value} ${chapterNumber}`,
                                                                                                     version: form.getValues("version") ?? versionParam,
-                                                                                                })
-                                                                                            }}
-                                                                                            className={`${textSize} ${(getChapterNumber(searchParam.toLowerCase()) === chapterNumber && searchParam.toLowerCase().includes(value.toLowerCase())) ? "text-primary border-[0.2px] border-primary" : "hover:border"}  rounded-lg h-fit p-5`}
-                                                                                            type="button"
-                                                                                        >
-                                                                                            {chapterNumber}
+                                                                                                })}
+                                                                                            >
+                                                                                                {chapterNumber}
+                                                                                            </Link>
                                                                                         </PopoverClose>
                                                                                     )
                                                                                 })}
@@ -255,7 +264,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                 <Select onValueChange={(e) => {
                                     field.onChange(e)
                                     const newSearch = `${translateBookName(selectedBookNumber)} ${extractNumbersFromReference(searchParam)}`
-                                    if (selectedBookNumber !== null) form.setValue("search", newSearch)
+                                    if (selectedBookNumber !== null) form.setValue("search", newSearch.trim())
                                 }} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger className={`${textSize} h-full py-[0.5rem]`}>

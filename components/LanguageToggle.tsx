@@ -26,7 +26,11 @@ export function LanguageToggle() {
 
     function onLanguageClick(value: "en" | "es") {
         startTransition(() => {
-            router.replace(
+            // router.replace(
+            //     `${removeLangPrefix(pathname)}?${searchParams}`,
+            //     { locale: value, scroll: false },
+            // );
+            router.push(
                 `${removeLangPrefix(pathname)}?${searchParams}`,
                 { locale: value, scroll: false },
             );

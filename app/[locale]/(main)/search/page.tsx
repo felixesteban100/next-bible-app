@@ -5,9 +5,8 @@ import VersesDisplayer from '@/components/VersesDisplayer';
 import { collectionChapter, collectionVersion } from '@/db/mongodb/mongodb';
 import { bibleBooks } from '@/lib/bibleBooks';
 import { DEFAULT_EN_VERSION, DEFAULT_ES_VERSION, fontSize, pageMarginAndWidth } from '@/lib/constants';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next'
-
 
 type Props = {
     searchParams: { [key: string]: string | undefined }
@@ -26,11 +25,13 @@ export default async function page({ params: { locale }, searchParams: { search,
 
     const versionValue = version ? version : locale === "en" ? DEFAULT_EN_VERSION : locale === "es" ? DEFAULT_ES_VERSION : ""
     const continousLineValue = continousLine === "true"
-    const searchValue = search ?? ""
+    const searchValue = (search ?? "").trim()
+
+    const t = await getTranslations()
 
     const selectedFontSize = fontSize[parseInt(fontSizeNumber ?? "0")]
 
-    const regexForSearch = new RegExp(`\\b${search}(?=[\\s.,!?;:]|[a-zA-Z]|$)`, "i")
+    const regexForSearch = new RegExp(`\\b${searchValue}(?=[\\s.,!?;:]|[a-zA-Z]|$)`, "i")
 
     const [chapters, versions] = await Promise.all([
         collectionChapter.aggregate<Chapter>([
@@ -88,7 +89,7 @@ export default async function page({ params: { locale }, searchParams: { search,
             </div>
 
             <main className={`${pageMarginAndWidth} pb-10 p-2 flex flex-col ${selectedFontSize.gap_between_elements}`}>
-                {(search) ?
+                {(searchValue !== "") ?
                     <div className='space-y-8'>
                         <div className='flex flex-col gap-2'>
                             <p className={`${selectedFontSize.text}`}>Results (chapters): {chapters.length}</p>
@@ -132,7 +133,9 @@ export default async function page({ params: { locale }, searchParams: { search,
                         </div>
                     </div>
                     :
-                    null
+                    <div>
+                        <p className='text-3xl'>{t("type_to_search")}</p>
+                    </div>
                 }
             </main>
         </div >

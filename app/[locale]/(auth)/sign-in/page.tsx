@@ -10,9 +10,10 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { Link } from "@/lib/navigation"
 import { BookOpen } from "lucide-react"
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
-import { Link } from "next-view-transitions"
+// import { Link } from "next-view-transitions"
 
 export default async function page({ params: { locale }, searchParams: { lastHref } }: { params: { locale: string }, searchParams: { lastHref?: string } }) {
     unstable_setRequestLocale(locale);

@@ -25,6 +25,8 @@
     "title": "notFound page"
   },
 
+  "type_to_search": "Type word(s) to search",
+
   "VerseOfTheDay": "Verse of the day",
   "Get verse against sin": "Get verse against sin",
   "Get verse of general topics": "Get verse general topic",
@@ -49,6 +51,8 @@
   "returnToMainPage": "Return to home Page",
 
   "continuous_line": "Continuous line",
+
+  "use_shortcuts": "Use Shortcuts arrow keyboard",
 
   "xs": "extra small",
   "sm": "small",

@@ -10,9 +10,9 @@ import VersesDisplayer from "@/components/VersesDisplayer";
 import { unstable_setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next'
 import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_AGAINS_SIN_ROUTE_STRING, DAILY_VERSES_ROUTE_STRING, DEFAULT_EN_VERSION, DEFAULT_ES_VERSION, fontSize, pageMarginAndWidth } from "@/lib/constants";
-import { Link } from "next-view-transitions";
+// import { Link } from "next-view-transitions";
 import { Button } from "@/components/ui/button";
-
+import { Link } from "@/lib/navigation";
 
 type Props = {
     searchParams: { [key: string]: string | undefined }
@@ -26,7 +26,7 @@ export async function generateMetadata(
     }
 }
 
-// in order for tailwind classes to work from afar
+// in order for tailwind classes to work
 // export const fontSize: SelectedFontSize[] = [
 //     { text: 'text-xl', firstVerse: "text-3xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
 //     { text: 'text-2xl', firstVerse: "text-4xl", icon: "h-[3rem] w-auto", gap_between_elements: "gap-5", aligmentForFlexElements: "flex-row" },
@@ -34,10 +34,10 @@ export async function generateMetadata(
 //     { text: 'text-4xl', firstVerse: "text-6xl", icon: "h-[4rem] w-auto", gap_between_elements: "gap-10", aligmentForFlexElements: "flex-row" },
 // ]
 // export const pageMarginAndWidth = "w-[90vw] lg:w-[83vw] mx-auto overflow-hidden max-w-[1700px] pt-5"
-// in order for tailwind classes to work from afar
+// in order for tailwind classes to work 
 
 export default async function page({
-    searchParams: { search, version, fontSizeNumber, continousLine, verseToHighlight, dailyVerseType },
+    searchParams: { search, version, fontSizeNumber, continousLine, verseToHighlight, dailyVerseType, useShortCuts },
     params: { locale },
 }: {
     searchParams: {
@@ -46,7 +46,8 @@ export default async function page({
         fontSizeNumber?: string;
         continousLine?: string;
         verseToHighlight?: string;
-        dailyVerseType?: string
+        dailyVerseType?: string;
+        useShortCuts?: string;
     },
     params: { locale: string }
 }) {
@@ -70,7 +71,6 @@ export default async function page({
 
     const useVerseOfToday = searchValue === "" || searchValue === "verse of the day"
     const useBookInfo = /^(?:[1-3]\s)?[a-zA-Z\s]+$/.test(searchValue);
-
 
     const [t, versions, bookInfo, chapter] = await Promise.all([
         getTranslations(),
@@ -153,7 +153,7 @@ export default async function page({
                         <p>{t("Not_existent_reference")} ({searchValue} ({versionValue}))</p>
                 }
 
-                {(useBookInfo || useVerseOfToday) ?
+                {(useBookInfo || useVerseOfToday || chapter == null) ?
                     null
                     :
                     <div className={`${verseToHighlightValue === 0 ? "opacity-1" : `opacity-0`} transition-all duration-700 block`}>
@@ -167,6 +167,7 @@ export default async function page({
                             // new added
                             verses={verses}
                             chapter={JSON.parse(JSON.stringify(chapter))}
+                            useShortCuts={useShortCuts === "true"}
                         />
                     </div>
                 }

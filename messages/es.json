@@ -25,6 +25,8 @@
     "title": "no encontrado page"
   },
 
+  "type_to_search": "Escribe palabra(s) para buscar",
+
   "VerseOfTheDay": "Versiculo del dia",
   "Get verse against sin": "Obterner verso contra el pecado",
   "Get verse of general topics": "Obtener verso de temas generales",
@@ -49,6 +51,8 @@
   "returnToMainPage": "Regresar a la pagina de inicio",
 
   "continuous_line": "Linea continua",
+
+  "use_shortcuts": "Usar atajos flechas teclado",
 
   "xs": "extra pequeño",
   "sm": "pequeño",
