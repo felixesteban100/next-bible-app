@@ -40,7 +40,7 @@ export default async function PageContent({
     params: { locale: string }
 }) {
     unstable_setRequestLocale(locale);
-    await new Promise(resolve => setTimeout(resolve, 3000)); // Simulate loading
+    // await new Promise(resolve => setTimeout(resolve, 0)); // Simulate loading
 
     const language = locale
 
