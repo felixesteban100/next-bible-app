@@ -42,7 +42,6 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 
-// import { useTransitionRouter } from "next-view-transitions";
 import { getChapterNumber } from "@/lib/queriesUtils";
 
 

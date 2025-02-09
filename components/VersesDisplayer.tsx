@@ -79,7 +79,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                             ref={verseNumber === verseSelected ? verseRef : null}
                         >
                             <span
-                                className={`${hightlightVerses && verseNumber === 1 && `${selectedFontSize.firstVerse} font-bold`}`}
+                                className={`${hightlightVerses && verseNumber === 1 && `${selectedFontSize.firstVerse}`} text-primary font-bold`}
                             >
                                 {!hightlightVerses ? verseNumber
                                     : chapter.route_object.book_id === 19 && verseNumber === 1 ? chapter.verses_content[0][0]

@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/lib/navigation";
-// import { useTransitionRouter } from "next-view-transitions";
 
 type ReadFullChapterButton = {
     chapter: Chapter;

@@ -7,12 +7,10 @@ import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { useTranslations } from "next-intl";
-// import { useTransitionRouter } from "next-view-transitions";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 export default function VerseSizeSelector() {
     const t = useTranslations()
-    // const { push } = useTransitionRouter()
     const { push } = useRouter()
 
     const pathname = usePathname()

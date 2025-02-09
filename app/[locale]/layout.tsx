@@ -3,7 +3,6 @@ import '.././globals.css';
 import { Metadata } from "next";
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from "next-intl";
-import { ViewTransitions } from "next-view-transitions";
 
 // problems with auth.js when using docker maybe this will help: 
 // https://authjs.dev/getting-started/deployment#docker

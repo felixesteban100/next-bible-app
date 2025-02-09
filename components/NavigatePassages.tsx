@@ -3,7 +3,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
-// import { useTransitionRouter } from "next-view-transitions";
 import { useCallback, useEffect, useMemo } from "react";
 import { usePathname, useRouter } from "@/lib/navigation"
 

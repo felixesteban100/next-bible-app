@@ -4,7 +4,6 @@ import { translateRouteString } from "@/lib/queriesUtils";
 import { Button } from "./ui/button";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-// import { useTransitionRouter } from "next-view-transitions";
 import { DEFAULT_EN_VERSION } from "@/lib/constants";
 
 type BookInfoProps = {
