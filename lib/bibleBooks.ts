@@ -139,7 +139,8 @@ export const bibleBooks: { [key: string]: { [key: number]: string } } = {
         65: "Judas",
         66: "Apocalipsis"
     },
-    "ESV": englishBibleBooks
+    "ESV": englishBibleBooks,
+    "NIV": englishBibleBooks,
 }
 
 const englishBibleVersionsBooksNumberOfChapters = {
