@@ -283,5 +283,6 @@ export const bibleBooksNumberOfChapters: { [key: string]: { [key: string]: numbe
         "Judas": 1,
         "Apocalipsis": 22
     },
-    ESV: englishBibleVersionsBooksNumberOfChapters
+    ESV: englishBibleVersionsBooksNumberOfChapters,
+    NIV: englishBibleVersionsBooksNumberOfChapters
 }
