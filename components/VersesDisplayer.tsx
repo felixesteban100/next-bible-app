@@ -87,7 +87,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                                             : verseNumber
                                 }
                             </span>
-                            {" "}
+                            {hightlightVerses && verseNumber === 1 ? null : " "}
                             {!hightlightVerses ?
                                 getHighlightedText(c, wordToHightlight) :
                                 chapter.route_object.book_id === 19 && verseNumber === 1 ? `${c.slice(1)}` : c
