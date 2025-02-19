@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { Link } from "@/lib/navigation";
 
-// 🔃 add the ability to search verses even though they are not consecutive
-// 🔃 make the loading state to happen each time changes version or chapter
+// ✅ add the ability to search verses even though they are not consecutive
+// ✅ make the loading state to happen each time changes version or chapter
 // ✅ add the ability to go to the next chapter and to the previous chapter using the arrow keys
 // 🔃 implement this library to manage the state of the app https://youtu.be/ULVdCzFj9Bo
 // 🔃 add the characters that appear in each book to the db

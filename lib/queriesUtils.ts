@@ -63,52 +63,24 @@ export function getChapterNumber(input: string): number | null {
 }
 
 export function extractBibleVerses(input: string): number[] {
-    // Define a regex pattern to match Bible verse references
-    const versePattern = /(\w+ \d+:\d+(-\d+)?(?:,\s*\d+(-\d+)?)*|\w+ \d+:\d+(\s*and\s*\d+)?(?:,\s*\d+(\s*and\s*\d+)*)*)/g;
-    // const versePattern = /(\w+\s*\d+:\d+(\s*-\s*\d+)?(?:\s*,\s*\d+(\s*-\s*\d+)?)*|\w+\s*\d+:\d+(\s*and\s*\d+)?(?:\s*,\s*\d+(\s*and\s*\d+)*)*)/g;
-    // const versePattern = /:\d+/g;
+    const result: number[] = []
+    const match = input.split(/:\s*/)
+    if (!match[1]) return result
 
-    // Extract all matches from the input string
-    const matches = input.match(versePattern);
-    if (!matches) return [];
-
-    const versesToReturn: number[]/* BibleVerse[] */ = [];
-
-
-    matches.forEach((match) => {
-        // Split each match by commas to handle multiple references
-        const refs = match.split(/,\s*/);
-
-        refs.forEach((ref) => {
-            // Extract the book, chapter, and verses
-            const [_, versePart] = ref.split(/:\s*/);
-            if (versePart) {
-                versesToReturn.push(...extractVerses(versePart))
+    match[1].split(",").forEach((verse) => {
+        if (verse.includes("-")) {
+            const [start, end] = verse.split("-").map(v => parseInt(v, 10))
+            for (let i = start; i <= end; i++) {
+                result.push(i)
             }
-        });
-    });
-
-    return versesToReturn;
-}
-
-function extractVerses(part: string): number[] {
-    const result: number[] = [];
-
-    // Handle single verse or range
-    if (part.includes('-')) {
-        const [start, end] = part.split('-').map(v => parseInt(v, 10));
-        for (let i = start; i <= end; i++) {
-            result.push(i);
+        } else {
+            result.push(parseInt(verse, 10))
         }
-    } else if (part.includes('and')) {
-        const [start, end] = part.split('and').map(v => parseInt(v, 10));
-        result.push(start, end);
-    } else {
-        result.push(parseInt(part, 10));
-    }
+    })
 
-    return result;
+    return result
 }
+
 
 export function translateRouteString(routeString: string, version: string): string {
     // Parse the route string
@@ -139,3 +111,65 @@ export function getDailyItem<T>(array: T[]): T {
     const index = hash % array.length; // Ensure index is within array bounds
     return array[index];
 };
+
+
+
+
+
+
+
+
+
+/* 
+    export function extractBibleVerses(input: string): number[] {
+    // Define a regex pattern to match Bible verse references
+    const versePattern = /(\w+ \d+:\d+(-\d+)?(?:,\s*\d+(-\d+)?)*|\w+ \d+:\d+(\s*and\s*\d+)?(?:,\s*\d+(\s*and\s*\d+)*)*)/g;
+    // const versePattern = /(\w+\s*\d+:\d+(\s*-\s*\d+)?(?:\s*,\s*\d+(\s*-\s*\d+)?)*|\w+\s*\d+:\d+(\s*and\s*\d+)?(?:\s*,\s*\d+(\s*and\s*\d+)*)*)/g;
+    // const versePattern = /:\d+/g;
+
+    // Extract all matches from the input string
+    const matches = input.match(versePattern);
+    if (!matches) return [];
+
+    const versesToReturn: number[] = [];
+
+    //console.log(matches)
+
+    matches.forEach((match) => {
+        // Split each match by commas to handle multiple references
+        const refs = match.split(`,\s*`);
+
+        console.log(refs)
+
+        refs.forEach((ref) => {
+            // Extract the book, chapter, and verses
+            console.log(ref)
+            const [_, versePart] = ref.split(`:\s*`);
+            if (versePart) {
+                versesToReturn.push(...extractVerses(versePart))
+            }
+        });
+    });
+
+    return versesToReturn;
+}
+
+function extractVerses(part: string): number[] {
+    const result: number[] = [];
+
+    // Handle single verse or range
+    if (part.includes('-')) {
+        const [start, end] = part.split('-').map(v => parseInt(v, 10));
+        for (let i = start; i <= end; i++) {
+            result.push(i);
+        }
+    } else if (part.includes('and')) {
+        const [start, end] = part.split('and').map(v => parseInt(v, 10));
+        result.push(start, end);
+    } else {
+        result.push(parseInt(part, 10));
+    }
+
+    return result;
+}
+*/
