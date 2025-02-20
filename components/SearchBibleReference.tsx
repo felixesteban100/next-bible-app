@@ -263,7 +263,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                 <Select onValueChange={(e) => {
                                     field.onChange(e)
                                     const [_, verses] = searchParam.split(/:\s*/)
-                                    const newSearch = `${translateBookName(selectedBookNumber)} ${extractNumbersFromReference(searchParam)}: ${verses}`
+                                    const newSearch = `${translateBookName(selectedBookNumber)} ${extractNumbersFromReference(searchParam)}: ${verses ?? ":" + verses}`
                                     if (selectedBookNumber !== null) form.setValue("search", newSearch.trim())
                                 }} defaultValue={field.value}>
                                     <FormControl>
