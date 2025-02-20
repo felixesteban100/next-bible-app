@@ -81,13 +81,12 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                             <span
                                 className={`${hightlightVerses && verseNumber === 1 && `${selectedFontSize.firstVerse}`} text-primary font-bold`}
                             >
-                                {!hightlightVerses ? verseNumber
+                                {!hightlightVerses ? verseNumber + " "
                                     : chapter.route_object.book_id === 19 && verseNumber === 1 ? chapter.verses_content[0][0]
-                                        : verseNumber === 1 ? chapter.route_object.chapter_id
-                                            : verseNumber
+                                        : verseNumber === 1 ? `${chapter.route_object.chapter_id} `
+                                            : verseNumber + " "
                                 }
                             </span>
-                            {hightlightVerses && verseNumber === chapter.route_object.chapter_id ? null : " "}
                             {!hightlightVerses ?
                                 getHighlightedText(c, wordToHightlight) :
                                 chapter.route_object.book_id === 19 && verseNumber === 1 ? `${c.slice(1)}` : c
