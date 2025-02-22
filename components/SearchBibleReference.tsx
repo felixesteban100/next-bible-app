@@ -147,7 +147,8 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
         if (match) {
             const chapter = match[1];
             const verses = match[2] || ""; // Optional group for verses or verse range
-            return verses ? `${chapter}:${verses}` : chapter;
+            // return verses ? `${chapter}:${verses}` : chapter;
+            return chapter;
         }
 
         return ""; // Return empty string if no match
@@ -263,7 +264,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                 <Select onValueChange={(e) => {
                                     field.onChange(e)
                                     const [_, verses] = searchParam.split(/:\s*/)
-                                    const newSearch = `${translateBookName(selectedBookNumber)} ${extractNumbersFromReference(searchParam)}${verses != undefined ? ": " + verses : ""}`
+                                    const newSearch = `${translateBookName(selectedBookNumber)} ${verses != undefined ? `${extractNumbersFromReference(searchParam)}:${verses}` : extractNumbersFromReference(searchParam)}`
                                     if (selectedBookNumber !== null) form.setValue("search", newSearch.trim())
                                 }} defaultValue={field.value}>
                                     <FormControl>
