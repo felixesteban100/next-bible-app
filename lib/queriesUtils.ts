@@ -4,7 +4,7 @@ function removeAccents(text: string): string {
     return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
-export function extractBibleBook(reference: string, version: string): number | null {
+export function extractBibleBook(reference: string, versionLanguage: string): number | null {
     // // Regular expression to match the book name
     // const regex = /^(\d*\s?[A-Za-z]+(?:\s[A-Za-z]+)*)/;
 
@@ -29,7 +29,7 @@ export function extractBibleBook(reference: string, version: string): number | n
         const bookName = removeAccents(match[1].trim());
 
         // Find the book name in the specified version
-        const bookMap = bibleBooks[version];
+        const bookMap = bibleBooks[versionLanguage];
         if (bookMap) {
             const entry = Object.entries(bookMap).find(([key, value]) => removeAccents(value) === bookName);
 
@@ -82,7 +82,7 @@ export function extractBibleVerses(input: string): number[] {
 }
 
 
-export function translateRouteString(routeString: string, version: string): string {
+export function translateRouteString(routeString: string, versionLanguage: string): string {
     // Parse the route string
     const parts = routeString.split('-');
     if (parts.length !== 3) {
@@ -95,7 +95,7 @@ export function translateRouteString(routeString: string, version: string): stri
     const chapterNumber = parseInt(parts[2], 10);
 
     // Lookup the book name
-    const bookName = bibleBooks[version][bookNumber];
+    const bookName = bibleBooks[versionLanguage][bookNumber];
     if (!bookName) {
         // throw new Error('Invalid book number');
         return ''

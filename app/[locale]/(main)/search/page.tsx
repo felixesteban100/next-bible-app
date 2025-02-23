@@ -74,6 +74,8 @@ export default async function page({ params: { locale }, searchParams: { search,
         collectionVersion.find({}).toArray(),
     ])
 
+    const versionLanguage = versions.find(c => c.initials === versionValue)?.language as "English" | "Spanish"
+
     return (
         <div>
             <div
@@ -109,7 +111,7 @@ export default async function page({ params: { locale }, searchParams: { search,
 
                                 return (
                                     <div key={chapter.route_string} >
-                                        <h2 className={`font-bold ${selectedFontSize.text}`}>{bibleBooks[versionValue][chapter.route_object.book_id]} {chapter.route_object.chapter_id}</h2>
+                                        <h2 className={`font-bold ${selectedFontSize.text}`}>{bibleBooks[versionLanguage][chapter.route_object.book_id]} {chapter.route_object.chapter_id}</h2>
                                         <div
                                             className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} `}
                                         >
@@ -126,6 +128,7 @@ export default async function page({ params: { locale }, searchParams: { search,
                                             version={versionValue}
                                             verses={chapter.matchingIndices.map(c => c + 1)}
                                             selectedFontSize={selectedFontSize}
+                                            versionLanguage={versionLanguage}
                                         />
                                     </div>
                                 )

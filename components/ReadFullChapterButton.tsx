@@ -10,10 +10,11 @@ type ReadFullChapterButton = {
     chapter: Chapter;
     version: string;
     selectedFontSize: SelectedFontSize;
-    verses?: number[]
+    verses?: number[];
+    versionLanguage: "Spanish" | "English";
 }
 
-export default function ReadFullChapterButton({ chapter, version, selectedFontSize, verses }: ReadFullChapterButton) {
+export default function ReadFullChapterButton({ chapter, version, selectedFontSize, verses, versionLanguage }: ReadFullChapterButton) {
     const t = useTranslations()
 
     const searchParams = useSearchParams()
@@ -22,7 +23,7 @@ export default function ReadFullChapterButton({ chapter, version, selectedFontSi
     const params = new URLSearchParams(searchParams)
 
     function goToFirstChapter() {
-        params.set("search", `${translateRouteString(chapter.route_string, version)}`)
+        params.set("search", `${translateRouteString(chapter.route_string, versionLanguage)}`)
         params.set("version", `${version}`)
         if (verses) params.set("verseToHighlight", `${verses[0]}`)
         // replace(`/read?${params.toString()}`)

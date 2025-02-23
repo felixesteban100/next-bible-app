@@ -52,17 +52,20 @@ export default async function PageContent({
     const fontSizeValue = fontSizeNumber ?? "1"
     const continousLineValue = continousLine === "true"
 
-    const route_string_to_query_chapter = `${versionValue}-${extractBibleBook(searchValue, versionValue)}-${getChapterNumber(searchValue)}`
-    const route_string_to_query_book = `${versionValue}-${extractBibleBook(searchValue, versionValue)}`
+    const versions = await collectionVersion.find({}).toArray()
+
+    const versionLanguage = versions.find(c => c.initials === versionValue)?.language as "English" | "Spanish"
+
+    const route_string_to_query_chapter = `${versionValue}-${extractBibleBook(searchValue, versionLanguage)}-${getChapterNumber(searchValue)}`
+    const route_string_to_query_book = `${versionValue}-${extractBibleBook(searchValue, versionLanguage)}`
 
     const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(dailyVerseTypeValue === "sin" ? DAILY_VERSES_AGAINS_SIN_ROUTE_STRING : DAILY_VERSES_ROUTE_STRING)
 
     const useVerseOfToday = searchValue === "" || searchValue === "verse of the day"
     const useBookInfo = /^(?:[1-3]\s)?[a-zA-Z\s]+$/.test(searchValue);
 
-    const [t, versions, bookInfo, chapter] = await Promise.all([
+    const [t, bookInfo, chapter] = await Promise.all([
         getTranslations(),
-        collectionVersion.find({}).toArray(),
         collectionBook.findOne({
             'route_object.version_initials': versionValue,
             route_string: route_string_to_query_book
@@ -80,8 +83,8 @@ export default async function PageContent({
 
     const verses = useVerseOfToday ? todays_verse.verses.map(c => c) : extractBibleVerses(searchValue).map(c => c)
 
-    const previous_chapter = translateRouteString(previousChapter?.route_string ?? "", versionValue)
-    const next_chapter = translateRouteString(nextChapter?.route_string ?? "", versionValue)
+    const previous_chapter = translateRouteString(previousChapter?.route_string ?? "", versionLanguage)
+    const next_chapter = translateRouteString(nextChapter?.route_string ?? "", versionLanguage)
 
     const selectedFontSize: SelectedFontSize = fontSize[parseInt(fontSizeValue)]
 
@@ -99,7 +102,7 @@ export default async function PageContent({
                         searchParam={searchValue}
                         selectedFontSize={selectedFontSize}
                         omitVerseToHightlight={true}
-                        selectedBookNumber={extractBibleBook(searchValue, versionValue)!}
+                        selectedBookNumber={extractBibleBook(searchValue, versionLanguage)!}
                     />
                 </div>
             </div>
@@ -107,7 +110,7 @@ export default async function PageContent({
             <main className={`${pageMarginAndWidth} pb-10 p-2 flex flex-col ${selectedFontSize.gap_between_elements}`}>
                 {chapter ?
                     <div className="flex flex-col items-start justify-center mb-32">
-                        {useVerseOfToday && <p className={`font-bold ${selectedFontSize.text}`}>{translateRouteString(chapter.route_string, versionValue)}:{todays_verse.verses.length === 1 ? todays_verse.verses.at(0) : `${todays_verse.verses.at(0)}-${todays_verse.verses.at(-1)}`} ({versionValue}) - ({t("VerseOfTheDay")})</p>}
+                        {useVerseOfToday && <p className={`font-bold ${selectedFontSize.text}`}>{translateRouteString(chapter.route_string, versionLanguage)}:{todays_verse.verses.length === 1 ? todays_verse.verses.at(0) : `${todays_verse.verses.at(0)}-${todays_verse.verses.at(-1)}`} ({versionValue}) - ({t("VerseOfTheDay")})</p>}
                         <div
                             className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} `}
                         >
@@ -126,6 +129,7 @@ export default async function PageContent({
                                     version={versionValue}
                                     verses={verses}
                                     selectedFontSize={selectedFontSize}
+                                    versionLanguage={versionLanguage}
                                 />
                             }
                             {useVerseOfToday && <Link href={`/read?dailyVerseType=${dailyVerseTypeValue === "sin" ? "" : "sin"}`}>
@@ -136,6 +140,7 @@ export default async function PageContent({
                         <BookInfo
                             bookInfo={JSON.parse(JSON.stringify(bookInfo))}
                             selectedFontSize={selectedFontSize}
+                            versionLanguage={versionLanguage}
                         />
                         :
                         <p>{t("Not_existent_reference")} ({searchValue} ({versionValue}))</p>

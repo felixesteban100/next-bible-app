@@ -3,6 +3,8 @@
 import { useSearchParams } from "next/navigation"
 import { usePathname, useRouter } from "@/lib/navigation"
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
+
 
 type VersesDisplayerProps = {
     chapter: Chapter,
@@ -18,6 +20,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
     const { /* replace, */ push } = useRouter()
     const pathname = usePathname()
     const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
+    const t = useTranslations()
 
     const verseRef = useRef<HTMLSpanElement | null>(null)
 
@@ -48,6 +51,8 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
             </span>
         );
     }
+
+    if (verses.length > 0 && !chapter.verses_content.some((_, verseIndex) => verses.includes(verseIndex))) return <p>{t("Not_existent_reference")}</p>
 
     return (
         <>

@@ -82,6 +82,8 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
         },
     })
 
+    const versionLanguage = versions.find(c => c.initials === form.getValues('version'))?.language as "English" | "Spanish"
+
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -118,9 +120,8 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     }
 
     function translateBookName(bookNumber: number) {
-        // console.log(bookNumber)
         //  as "KJV" | "RV1960" | "NKJV" | "ESV"
-        return bibleBooks[form.getValues('version')][bookNumber] ?? ""
+        return bibleBooks[versions.find(c => c.initials === form.getValues('version'))?.language as "English" | "Spanish"][bookNumber] ?? ""
     }
 
 
@@ -191,7 +192,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                     </div>
                                                     <ScrollArea className="h-[400px] rounded-md p-4">
                                                         <Accordion type="single" collapsible defaultValue={translateBookName(selectedBookNumber)}>
-                                                            {Object.entries(bibleBooks[form.getValues("version") ?? versionParam]).map(([key, value], index) => {
+                                                            {Object.entries(bibleBooks[versionLanguage]).map(([key, value], index) => {
                                                                 const condition = form.getValues("search").toLowerCase().includes(value.toLowerCase())
                                                                 return (
                                                                     <AccordionItem value={value} ref={condition ? divRef : null} key={key}>
@@ -218,7 +219,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                                 </Link>
                                                                             </PopoverClose>
                                                                             <div className="grid grid-cols-8 gap-2">
-                                                                                {Array.from(Array(bibleBooksNumberOfChapters[form.getValues("version")][value]), (_, i) => {
+                                                                                {Array.from(Array(bibleBooksNumberOfChapters[versionLanguage][value]), (_, i) => {
                                                                                     const chapterNumber = i + 1
 
                                                                                     return (
@@ -264,7 +265,9 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                 <Select onValueChange={(e) => {
                                     field.onChange(e)
                                     const [_, verses] = searchParam.split(/:\s*/)
+                                    console.log(selectedBookNumber)
                                     const newSearch = `${translateBookName(selectedBookNumber)} ${verses != undefined ? `${extractNumbersFromReference(searchParam)}:${verses}` : extractNumbersFromReference(searchParam)}`
+                                    console.log("newSearch", newSearch)
                                     if (selectedBookNumber !== null) form.setValue("search", newSearch.trim())
                                 }} defaultValue={field.value}>
                                     <FormControl>
