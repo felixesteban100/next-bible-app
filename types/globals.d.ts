@@ -8,11 +8,10 @@ declare global {
     declare type Book = {
         route_string: string // format: `${VERSION_INITIALS}-${BOOK_ID}`  
         route_object: {
-            version_initials: number,
+            version_language: string,
             book_id: number
         },
-
-        chapters_routes_string: string[]
+        chapters_routes_string_without_version: string[]
         description: string,
         name: string,
         initials: string,

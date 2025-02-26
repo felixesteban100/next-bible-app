@@ -57,7 +57,7 @@ export default async function PageContent({
     const versionLanguage = versions.find(c => c.initials === versionValue)?.language as "English" | "Spanish"
 
     const route_string_to_query_chapter = `${versionValue}-${extractBibleBook(searchValue, versionLanguage)}-${getChapterNumber(searchValue)}`
-    const route_string_to_query_book = `${versionValue}-${extractBibleBook(searchValue, versionLanguage)}`
+    const route_string_to_query_book = `${versionLanguage}-${extractBibleBook(searchValue, versionLanguage)}`
 
     const todays_verse = getDailyItem<DAILY_VERSE_ROUTE_STRING>(dailyVerseTypeValue === "sin" ? DAILY_VERSES_AGAINS_SIN_ROUTE_STRING : DAILY_VERSES_ROUTE_STRING)
 
@@ -67,7 +67,6 @@ export default async function PageContent({
     const [t, bookInfo, chapter] = await Promise.all([
         getTranslations(),
         collectionBook.findOne({
-            'route_object.version_initials': versionValue,
             route_string: route_string_to_query_book
         }),
         useVerseOfToday ? collectionChapter.findOne({ 'route_string': `${versionValue}-${todays_verse.route_string}` }) : collectionChapter.findOne({
@@ -141,6 +140,7 @@ export default async function PageContent({
                             bookInfo={JSON.parse(JSON.stringify(bookInfo))}
                             selectedFontSize={selectedFontSize}
                             versionLanguage={versionLanguage}
+                            version={versionValue}
                         />
                         :
                         <p>{t("Not_existent_reference")} ({searchValue} ({versionValue}))</p>

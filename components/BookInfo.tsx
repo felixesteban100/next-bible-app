@@ -9,10 +9,11 @@ import { DEFAULT_EN_VERSION } from "@/lib/constants";
 type BookInfoProps = {
     bookInfo: Book;
     selectedFontSize: SelectedFontSize;
+    version: string;
     versionLanguage: "Spanish" | "English";
 }
 
-export default function BookInfo({ bookInfo, selectedFontSize, versionLanguage }: BookInfoProps) {
+export default function BookInfo({ bookInfo, selectedFontSize, version, versionLanguage }: BookInfoProps) {
     const t = useTranslations()
 
     const searchParams = useSearchParams()
@@ -37,10 +38,10 @@ export default function BookInfo({ bookInfo, selectedFontSize, versionLanguage }
             <div className="mt-5 space-y-5">
                 <p className="font-bold">{t("chapters")}</p>
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
-                    {bookInfo.chapters_routes_string.map(c => {
+                    {bookInfo.chapters_routes_string_without_version.map(c => {
                         return (
-                            <Button variant={'outline'} key={c} onClick={() => goToChapter(`${translateRouteString(c, versionLanguage)}`)}>
-                                {translateRouteString(c, versionLanguage)}
+                            <Button variant={'outline'} key={c} onClick={() => goToChapter(`${translateRouteString(`${version}${c}`, versionLanguage)}`)}>
+                                {translateRouteString(`${version}${c}`, versionLanguage)}
                             </Button>
                         )
                     })}

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { Link } from "@/lib/navigation";
 
+// 🔃add the ability to filter by book in the search page
 // ✅ add the ability to search verses even though they are not consecutive
 // ✅ make the loading state to happen each time changes version or chapter
 // ✅ add the ability to go to the next chapter and to the previous chapter using the arrow keys
