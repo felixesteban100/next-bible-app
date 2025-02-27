@@ -52,7 +52,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
         );
     }
 
-    if (verses.length > 0 && !chapter.verses_content.some((_, verseIndex) => verses.includes(verseIndex))) return <p>{t("Not_existent_reference")}</p>
+    if (verses.length > 0 && !chapter.verses_content.some((_, verseIndex) => verses.includes(verseIndex + 1))) return <p>{t("Not_existent_reference")} </p>
 
     return (
         <>
