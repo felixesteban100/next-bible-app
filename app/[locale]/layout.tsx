@@ -3,6 +3,7 @@ import '.././globals.css';
 import { Metadata } from "next";
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from "next-intl";
+// import {unstable_ViewTransitions} from 'react';
 
 // problems with auth.js when using docker maybe this will help: 
 // https://authjs.dev/getting-started/deployment#docker
@@ -48,6 +49,7 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <NextIntlClientProvider messages={messages}>
+
               {children}
             </NextIntlClientProvider>
           </ThemeProvider>

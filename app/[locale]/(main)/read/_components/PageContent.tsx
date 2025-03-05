@@ -25,7 +25,7 @@ export async function generateMetadata(
 }
 
 export default async function PageContent({
-    searchParams: { search, version, fontSizeNumber, continousLine, verseToHighlight, dailyVerseType, useShortCuts },
+    searchParams: { search, version, fontSizeNumber, continousLine, verseToHighlight, dailyVerseType, useShortCuts, playVerses },
     params: { locale },
 }: {
     searchParams: {
@@ -36,6 +36,7 @@ export default async function PageContent({
         verseToHighlight?: string;
         dailyVerseType?: string;
         useShortCuts?: string;
+        playVerses?: string;
     },
     params: { locale: string }
 }) {
@@ -51,6 +52,7 @@ export default async function PageContent({
     const versionValue = version ? version : language === "en" ? DEFAULT_EN_VERSION : language === "es" ? DEFAULT_ES_VERSION : ""
     const fontSizeValue = fontSizeNumber ?? "1"
     const continousLineValue = continousLine === "true"
+    const playVersesValue = playVerses === "true"
 
     const versions = await collectionVersion.find({}).toArray()
 
@@ -119,6 +121,7 @@ export default async function PageContent({
                                 verses={verses}
                                 hightlightVerses={!useVerseOfToday}
                                 wordToHightlight=""
+                                usePlayVerses={playVersesValue}
                             />
                         </div>
                         <div className="w-full flex justify-between">

@@ -23,6 +23,9 @@ export default function VerseSizeSelector() {
 
     const continousLineParam = params.get("continousLine") === "true"
     const useShortcuts = params.get("useShortCuts") === "true"
+    const playVersesParam = params.get("playVerses") === "true"
+    const playVersesDurationParam = parseFloat(params.get("playVersesDuration") ?? "1")
+    const verseToHighlight = parseInt(params.get("verseToHighlight") ?? "0")
 
     function changeFontSize(value: number) {
         params.set('fontSizeNumber', value.toString())
@@ -34,10 +37,28 @@ export default function VerseSizeSelector() {
         push(`${pathname}?${params.toString()}`)
     }
 
+    function changePlayVerses(value: boolean) {
+        params.set('playVerses', value.toString())
+        push(`${pathname}?${params.toString()}`)
+    }
+
+    function changePlayVersesDuration(value: number) {
+        params.set('playVersesDuration', value.toString())
+        push(`${pathname}?${params.toString()}`)
+    }
+
     function changeUseShortCuts(value: boolean) {
         params.set('useShortCuts', value.toString())
         push(`${pathname}?${params.toString()}`)
     }
+
+    const versesPlayingSpeed = [
+        { value: 1.5, label: "0.5x" },
+        { value: 1, label: "1x" },
+        { value: 0.7, label: "1.5x" },
+        { value: 0.5, label: "1.75x" },
+        { value: 0, label: "2x" },
+    ]
 
     return (
         <DropdownMenu>
@@ -52,6 +73,15 @@ export default function VerseSizeSelector() {
                     <Switch id="continuous_line" checked={continousLineParam} onCheckedChange={(c) => changeContinousLine(c)} />
                     <Label htmlFor="continuous_line">{t("continuous_line")}</Label>
                 </div>
+                <div className="flex items-center space-x-2 p-5">
+                    <Switch disabled={verseToHighlight !== 0} id="play_verses" checked={playVersesParam} onCheckedChange={(c) => changePlayVerses(c)} />
+                    <Label htmlFor="play_verses">{t("play_verses")}</Label>
+                </div>
+                {versesPlayingSpeed.map(c => (
+                    <DropdownMenuItem disabled={verseToHighlight !== 0} key={c.value} onClick={() => changePlayVersesDuration(c.value)} className="capitalize text-xl">
+                        {c.label} {playVersesDurationParam == c.value && <Check className={`${"text-primary"}`} />}
+                    </DropdownMenuItem>
+                ))}
                 <div className="flex items-center space-x-2 p-5">
                     <Switch id="use_shortcuts" checked={useShortcuts} onCheckedChange={(c) => changeUseShortCuts(c)} />
                     <Label htmlFor="use_shortcuts">{t("use_shortcuts")}</Label>

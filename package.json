@@ -2,6 +2,7 @@
   "name": "next-bible-app",
   "version": "0.1.0",
   "private": true,
+  "types": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -25,6 +26,7 @@
     "framer-motion": "^11.3.21",
     "lucide-react": "^0.397.0",
     "mongodb": "^6.8.0",
+    "motion": "^12.4.10",
     "next": "14.2.4",
     "next-auth": "^5.0.0-beta.19",
     "next-intl": "^3.15.3",
@@ -33,7 +35,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
     "sharp": "^0.33.4",
-    "tailwind-merge": "^2.3.0",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.1",
     "zod": "^3.23.8"
