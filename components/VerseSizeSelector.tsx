@@ -26,6 +26,9 @@ export default function VerseSizeSelector() {
     const playVersesParam = params.get("playVerses") === "true"
     const playVersesDurationParam = parseFloat(params.get("playVersesDuration") ?? "1")
     const verseToHighlight = parseInt(params.get("verseToHighlight") ?? "0")
+    const searchParam = params.get("search") ?? ""
+
+    const disablePlayVerses = pathname === "/search" || verseToHighlight !== 0 || /\d/.test(searchParam) === false
 
     function changeFontSize(value: number) {
         params.set('fontSizeNumber', value.toString())
@@ -74,11 +77,11 @@ export default function VerseSizeSelector() {
                     <Label htmlFor="continuous_line">{t("continuous_line")}</Label>
                 </div>
                 <div className="flex items-center space-x-2 p-5">
-                    <Switch disabled={verseToHighlight !== 0} id="play_verses" checked={playVersesParam} onCheckedChange={(c) => changePlayVerses(c)} />
+                    <Switch disabled={disablePlayVerses} id="play_verses" checked={playVersesParam} onCheckedChange={(c) => changePlayVerses(c)} />
                     <Label htmlFor="play_verses">{t("play_verses")}</Label>
                 </div>
                 {versesPlayingSpeed.map(c => (
-                    <DropdownMenuItem disabled={verseToHighlight !== 0} key={c.value} onClick={() => changePlayVersesDuration(c.value)} className="capitalize text-xl">
+                    <DropdownMenuItem disabled={disablePlayVerses} key={c.value} onClick={() => changePlayVersesDuration(c.value)} className="capitalize text-xl">
                         {c.label} {playVersesDurationParam == c.value && <Check className={`${"text-primary"}`} />}
                     </DropdownMenuItem>
                 ))}

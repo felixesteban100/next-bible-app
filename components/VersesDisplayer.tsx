@@ -71,6 +71,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                     // console.log(verseRouteString)
                     return (
                         <span
+                            key={verseRouteString + i}
                             id={`${verseNumber}`}
                             onClick={() => {
                                 if (!hightlightVerses) return
@@ -80,7 +81,6 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                                     setVerseToHighlight(verseNumber)
                                 }
                             }}
-                            key={verseRouteString}
                             // "underline"
                             // "bg-primary text-primary-foreground"
                             className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== 0 ? (isSelected ? "text-foreground" : "text-foreground/15") : ""} ${hightlightVerses ? "hover:underline decoration-dashed" : ""} `}
