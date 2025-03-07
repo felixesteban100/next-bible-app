@@ -54,10 +54,10 @@ export default async function Home({ params: { locale } }: { params: { locale: s
       <p className="text-5xl block lg:hidden text-center">{words.map(c => (<span key={c.text} className={cn(c.className, " font-semibold")}>{c.text} </span>))}</p>
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 mt-10">
         {/* <SignedIn> */}
-        <Button>
+        <Button asChild>
           <Link href={`/read`}>{t("readNow")}</Link>
         </Button>
-        <Button variant="outline">
+        <Button variant="outline" asChild>
           <Link href={`/search`}>{t("search")}</Link>
         </Button>
         {/* </SignedIn> */}

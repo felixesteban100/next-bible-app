@@ -56,11 +56,11 @@ export default function VerseSizeSelector() {
     }
 
     const versesPlayingSpeed = [
-        { value: 1.5, label: "0.5x" },
+        { value: 0.5, label: "0.5x" },
         { value: 1, label: "1x" },
-        { value: 0.7, label: "1.5x" },
-        { value: 0.5, label: "1.75x" },
-        { value: 0, label: "2x" },
+        { value: 1.5, label: "1.5x" },
+        { value: 1.7, label: "1.75x" },
+        { value: 2, label: "2x" },
     ]
 
     return (
@@ -81,7 +81,7 @@ export default function VerseSizeSelector() {
                     <Label htmlFor="play_verses">{t("play_verses")}</Label>
                 </div>
                 {versesPlayingSpeed.map(c => (
-                    <DropdownMenuItem disabled={disablePlayVerses} key={c.value} onClick={() => changePlayVersesDuration(c.value)} className="capitalize text-xl">
+                    <DropdownMenuItem disabled={disablePlayVerses || playVersesParam === true} key={c.value} onClick={() => changePlayVersesDuration(c.value)} className="capitalize text-xl">
                         {c.label} {playVersesDurationParam == c.value && <Check className={`${"text-primary"}`} />}
                     </DropdownMenuItem>
                 ))}
