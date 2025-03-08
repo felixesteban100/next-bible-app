@@ -45,21 +45,20 @@ export const TextGenerateEffect = ({
                         const hasPeriod = /[.]$/.test(sentence);
                         const hasSemicolon = /[;]$/.test(sentence);
 
-                        console.log(sentence, hasComma, hasPeriod, hasSemicolon)
-
                         const textLength = (sentence).length; // Get the length of each string
                         const howManyWords = (sentence).split(" ").length; // Get the length of each string
                         const delay = estimateReadingTime(textLength, howManyWords, playVersesDurationParam, hasComma, hasPeriod, hasSemicolon)//Math.max(0.2, textLength * 0.05); // Calculate delay based on length, ensuring a minimum delay
                         console.log(sentence, delay)
 
                         animate(
-                            "span",
+                            span,
                             {
                                 opacity: 1,
                             },
                             {
                                 duration: 1,
-                                delay: stagger(delay, { from: 0 }),
+                                // delay: stagger(delay, { from: 0 }),
+                                delay: stagger(delay),
                             }
                         );
                     });
