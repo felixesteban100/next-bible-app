@@ -1,113 +1,93 @@
 "use client";
 
-import { useEffect } from "react";
-import { motion, stagger, useAnimate } from "framer-motion";
+import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
-// import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { useRouter } from "@/lib/navigation"
 
 export const TextGenerateEffect = ({
     words,
-    filter = true,
     selectedFontSize,
     chapter,
     verses,
+    next_chapter,
 }: {
     words: string;
     className?: string;
-    filter?: boolean;
     selectedFontSize: SelectedFontSize;
     chapterIndex: number;
     chapter: Chapter;
     verses: number[];
+    next_chapter: string
 }) => {
-
     const searchParams = useSearchParams()
     const params = new URLSearchParams(searchParams)
     const playVersesDurationParam = parseFloat(params.get("playVersesDuration") ?? "1")
-    const continousLine = params.get("continousLine") === "true"
+    const { push } = useRouter()
 
-    const [scope, animate] = useAnimate();
-    // let wordsArray = words.split(" ");
-    let versesArray = words.split(/\d+/).filter(Boolean);
-    useEffect(() => {
-        const verses = scope.current?.querySelectorAll("#verse");
+    const versesArray = words.split(/\d+/).filter(Boolean);
 
-        if (verses) {
-            verses.forEach((verse: HTMLDivElement) => {
-                const spans = verse.querySelectorAll("span");
+    const delayOfEachVerse = versesArray.map((sentence) => {
+        const commas = (sentence.match(/[,]/g) ?? []).length;
+        const periods = (sentence.match(/[.]/g) ?? []).length;
+        const semicolons = (sentence.match(/[;]/g) ?? []).length;
 
-                // getting closer to the goeal of making it as fast as the reader goes
-
-                if (spans) {
-                    spans.forEach((span: HTMLSpanElement) => {
-                        const sentence = span.textContent ?? "";
-                        const hasComma = /[,]$/.test(sentence);
-                        const hasPeriod = /[.]$/.test(sentence);
-                        const hasSemicolon = /[;]$/.test(sentence);
-
-                        const textLength = (sentence).length; // Get the length of each string
-                        const howManyWords = (sentence).split(" ").length; // Get the length of each string
-                        const delay = estimateReadingTime(textLength, howManyWords, playVersesDurationParam, hasComma, hasPeriod, hasSemicolon)//Math.max(0.2, textLength * 0.05); // Calculate delay based on length, ensuring a minimum delay
-                        console.log(sentence, delay)
-
-                        animate(
-                            span,
-                            {
-                                opacity: 1,
-                            },
-                            {
-                                duration: 1,
-                                // delay: stagger(delay, { from: 0 }),
-                                delay: stagger(delay),
-                            }
-                        );
-                    });
-                }
-            });
-        }
-    }, [scope, animate, playVersesDurationParam]);
-
-    function estimateReadingTime(sentenceLength: number, wordCount: number, speedMultiplier: number = 1, hasComma: boolean = false, hasPeriod: boolean = false, hasSemicolon: boolean = false,): number {
-        if (speedMultiplier < 0.5 || speedMultiplier > 2) {
-            throw new Error("Speed multiplier must be between 0.5x and 2x");
-        }
+        const sentenceLength = sentence.length;
+        const wordCount = sentence.split(" ").length;
 
         const baseTime = wordCount / (250 / 60); // Faster base speed (~250 WPM)
         const avgWordFactor = sentenceLength / (5 * wordCount); // Adjust for longer words
 
-        let readingTime = (baseTime * avgWordFactor) / speedMultiplier; // Lower time for faster reading
+        let readingTime = (baseTime * avgWordFactor) / playVersesDurationParam; // Lower time for faster reading
 
         // If pauses are considered, add a small delay (5-10% of the total time)
-        switch (true) {
-            case hasComma:
-                readingTime *= 1; // 10% extra time
-                break;
 
-            case hasPeriod:
-                readingTime *= 1.7; // 20% extra time
-                break;
+        if (commas > 0) readingTime += commas;
+        if (periods > 0) readingTime += parseFloat(`${periods}.7`);
+        if (semicolons > 0) readingTime += parseFloat(`${semicolons}.5`);
 
-            case hasSemicolon:
-                readingTime *= 1.7; // 30% extra time
-                break;
-        }
+        return readingTime
+    })
 
-        return readingTime;
-    }
+    const [visibleItems, setVisibleItems] = useState<number[]>([]);
+
+    useEffect(() => {
+        const animateSequentially = async () => {
+            for (let i = 0; i < versesArray.length; i++) {
+                setVisibleItems((prev) => [...prev, i + 1]); // Show current item
+                await new Promise((resolve) => setTimeout(resolve, 400 + delayOfEachVerse[i] * 750)); // Wait for animation + delay
+
+                console.log(next_chapter, i === versesArray.length)
+                // if (i === versesArray.length) {
+                //     params.set("search", next_chapter);
+                //     params.set('verseToHighlight', `${0}`);
+                //     push(`/read?${params.toString()}`)
+                // }
+            }
+        };
+
+        animateSequentially();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
-        <div ref={scope} className={`${continousLine ? "space-x-4" : "flex flex-col gap-2"} `}>
-            {versesArray.map((word, i) => {
+        <>
+            {versesArray.map((verse, i) => {
                 const verseNumber = i + 1
                 if (verses.length !== 0 && !verses.includes(verseNumber)) return null
                 const isPsalmsAndVerseNumber1 = chapter.route_object.book_id === 19 && verseNumber === 1
 
-                // const words: string[] = word.split(" ");
-                const words: string[] = word.match(/[^.,;!?]+[.,;!?]?/g) || [];
+                const words: string[] = verse.match(/[^.,;!?]+[.,;!?]?/g) || [];
                 return (
-                    <div id="verse" key={verseNumber} className={`${selectedFontSize.text} inline`}>
+                    <motion.div
+                        key={verseNumber}
+                        id="verse"
+                        className={`${selectedFontSize.text} inline`}
+                        initial={{ opacity: 0.5 }}
+                        animate={visibleItems.includes(verseNumber) ? { opacity: 1 } : {}}
+                        transition={{ duration: 0.5 }}
+                    >
                         <div
-                            // className={`${verseNumber === 1 && selectedFontSize.firstVerse} text-primary font-bold opacity-15`}
                             className={`inline ${verseNumber === 1 && selectedFontSize.firstVerse} text-primary font-bold`}
                         >
                             {isPsalmsAndVerseNumber1 ? chapter.verses_content[0][0]
@@ -116,41 +96,19 @@ export const TextGenerateEffect = ({
                             }
                         </div>
                         {isPsalmsAndVerseNumber1 ? null : " "}
-                        {words.map((word, indexWord) => {
+                        {words.map((sentence, indexWord) => {
                             return (
-                                <motion.span
-                                    key={verseNumber + indexWord}
-                                    className={`leading-relaxed opacity-15`}
+                                <span
+                                    key={verseNumber + indexWord + sentence}
+                                    className={`leading-relaxed`}
                                 >
-                                    {/* {isPsalmsAndVerseNumber1 && indexWord === 1 ? `${word.slice(1)}` : word}{" "} */}
-                                    {isPsalmsAndVerseNumber1 && indexWord === 0 ? `${word.slice(2)}` : word}{/* {"**pause**"} */}
-                                </motion.span>
+                                    {isPsalmsAndVerseNumber1 && indexWord === 0 ? `${sentence.slice(2)}` : sentence}
+                                </span>
                             )
                         })}
-                    </div>
+                    </motion.div>
                 )
-
-                /* return (
-                    <motion.span
-                        id={`${verseNumber}`}
-                        key={word + i}
-                        className={`${selectedFontSize.text} leading-relaxed opacity-15`}
-                        style={{
-                            filter: filter ? "blur(10px)" : "none",
-                        }}
-                    >
-                        <motion.span
-                            className={`${verseNumber === 1 && `${selectedFontSize.firstVerse}`} text-primary font-bold`}
-                        >
-                            {isPsalms ? chapter.verses_content[0][0]
-                                : verseNumber === 1 ? `${chapter.route_object.chapter_id} `
-                                    : verseNumber + " "
-                            }
-                        </motion.span>
-                        {isPsalms ? `${word.slice(2)}` : word}
-                    </motion.span>
-                ); */
             })}
-        </div>
+        </>
     );
 };

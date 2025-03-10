@@ -52,11 +52,12 @@ type SearchBibleReferenceProps = {
     selectedFontSize: SelectedFontSize;
     omitVerseToHightlight?: boolean;
     selectedBookNumber: number;
+    disabled?: boolean;
 }
 
 "gap-10"
 
-function SearchBibleReference({ versions, versionParam, searchParam, selectedFontSize, omitVerseToHightlight, selectedBookNumber }: SearchBibleReferenceProps) {
+function SearchBibleReference({ versions, versionParam, searchParam, selectedFontSize, omitVerseToHightlight, selectedBookNumber, disabled = false }: SearchBibleReferenceProps) {
     const textSize = selectedFontSize.text
     const iconSize = selectedFontSize.icon
     const gapForElements = selectedFontSize.gap_between_elements
@@ -174,7 +175,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                         <Input placeholder={t("enterWord")} className={`${textSize} h-full py-[0.5rem]`} autoComplete="off" {...field} />
                                         :
                                         <div className={`${textSize} h-full w-full flex relative`}>
-                                            <Input placeholder={t("enterPassage")} className={`${textSize} h-full py-[0.5rem]`} autoComplete="off" {...field} />
+                                            <Input disabled={disabled} placeholder={t("enterPassage")} className={`${textSize} h-full py-[0.5rem]`} autoComplete="off" {...field} />
                                             <Popover onOpenChange={() => {
                                                 setTimeout(() => {
                                                     scroolInto()
@@ -262,14 +263,18 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                         name="version"
                         render={({ field }) => (
                             <FormItem className="w-full h-full col-span-4">
-                                <Select onValueChange={(e) => {
-                                    field.onChange(e)
-                                    const [_, verses] = searchParam.split(/:\s*/)
-                                    console.log(selectedBookNumber)
-                                    const newSearch = `${translateBookName(selectedBookNumber)} ${verses != undefined ? `${extractNumbersFromReference(searchParam)}:${verses}` : extractNumbersFromReference(searchParam)}`
-                                    console.log("newSearch", newSearch)
-                                    if (selectedBookNumber !== null) form.setValue("search", newSearch.trim())
-                                }} defaultValue={field.value}>
+                                <Select
+                                    onValueChange={(e) => {
+                                        field.onChange(e)
+                                        const [_, verses] = searchParam.split(/:\s*/)
+                                        console.log(selectedBookNumber)
+                                        const newSearch = `${translateBookName(selectedBookNumber)} ${verses != undefined ? `${extractNumbersFromReference(searchParam)}:${verses}` : extractNumbersFromReference(searchParam)}`
+                                        console.log("newSearch", newSearch)
+                                        if (selectedBookNumber !== null) form.setValue("search", newSearch.trim())
+                                    }}
+                                    defaultValue={field.value}
+                                    disabled={disabled}
+                                >
                                     <FormControl>
                                         <SelectTrigger className={`${textSize} h-full py-[0.5rem]`}>
                                             <SelectValue placeholder={t("selectVersion")} />
@@ -288,7 +293,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                         )}
                     />
 
-                    <Button className={`${textSize} h-full col-span-1 w-[5rem] lg:w-full`} type="submit"><Search className={iconSize} /></Button>
+                    <Button disabled={disabled} className={`${textSize} h-full col-span-1 w-[5rem] lg:w-full`} type="submit"><Search className={iconSize} /></Button>
                 </form>
             </Form>
         </div>

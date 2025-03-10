@@ -45,19 +45,13 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
             <span>
                 {parts.map((part, i) => {
                     return (
-                        <span key={i} className={part.toLowerCase() === highlight.toLowerCase() ? "font-bold bg-primary text-primary-foreground" : ""}>
+                        <span key={part + i} className={part.toLowerCase() === highlight.toLowerCase() ? "font-bold bg-primary text-primary-foreground" : ""}>
                             {part}
                         </span>
                     )
                 })}
             </span>
         );
-    }
-
-    if (verses.length > 0 && !chapter.verses_content.some((_, verseIndex) => verses.includes(verseIndex + 1))) return <p>{t("Not_existent_reference")} </p>
-
-    if (usePlayVerses && hightlightVerses) {
-        return <TextGenerateEffect chapter={chapter} verses={verses} filter={false} words={chapter.verses_content.map((c, i) => `${i + 1} ${c}`).join("")} selectedFontSize={selectedFontSize} chapterIndex={chapter.route_object.chapter_id} />
     }
 
     return (
@@ -71,8 +65,8 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                     // console.log(verseRouteString)
                     return (
                         <span
-                            key={verseRouteString + i}
-                            id={`${verseNumber}`}
+                            key={verseRouteString + verseNumber + c}
+                            // id={`${verseNumber}`}
                             onClick={() => {
                                 if (!hightlightVerses) return
                                 if (isSelected) {

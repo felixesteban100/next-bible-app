@@ -32,7 +32,8 @@ export default function Navbar({ children }: { children?: ReactNode }) {
     return (
         <Suspense fallback={<NavbarSkeleton />}>
             <div
-                className={`${verseToHighlightValue === 0 ? "translate-y-0" : `-translate-y-96 h-0`} transition-all duration-700`}
+            // className={`${verseToHighlightValue === 0 ? "translate-y-0" : `-translate-y-96 `} transition-all duration-700`}
+            // className={`${verseToHighlightValue === 0 ? "opacity-100" : `opacity-15 `} transition-all duration-700`}
             >
                 <div className="bg-secondary/70 backdrop-blur-md p-2 h-fit">
                     <nav className={`flex items-center justify-between ${pageMarginAndWidth} min-h-[4rem] gap-5 py-5`}>
