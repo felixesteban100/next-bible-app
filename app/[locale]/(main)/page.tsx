@@ -7,7 +7,7 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { Link } from "@/lib/navigation";
 
 // 🔃 while I read those versions or after I must fix these ommited verses in newer versions of the bible https://en.wikipedia.org/wiki/List_of_New_Testament_verses_not_included_in_modern_English_translations#:~:text=Mark%209%3A44%20and%209%3A46,-KJV%3A%20"Where%20their&text=Reason%3A%20Both%20verses%2044%20and,Italic%20manuscripts%20and%20the%20Vulgate.
-// 🔃 add the text animation from this video and the ability to change speed https://youtu.be/OTP4hhX_xpM 
+// ✅ add the text animation from this video and the ability to change speed https://youtu.be/OTP4hhX_xpM 
 // 🔃 add the verseOfToday to the database
 // 🔃 add the ability to filter by book in the search page
 // ✅ add the ability to search verses even though they are not consecutive
