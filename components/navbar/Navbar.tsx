@@ -55,7 +55,7 @@ export default function Navbar({ children }: { children?: ReactNode }) {
                                             variant={'ghost'}
                                             aditionalClassNames="w-full"
                                         >
-                                            <SheetClose className="w-full text-2xl flex gap-2 justify-center items-center">
+                                            <SheetClose className=" w-full text-2xl flex gap-2 justify-center items-center">
                                                 <ListStart className="h-full w-auto" />{t("navbar_home")}
                                             </SheetClose>
                                         </ButtonForNavbarLink>
@@ -111,7 +111,7 @@ export default function Navbar({ children }: { children?: ReactNode }) {
                         </div>
                     </nav>
                 </div>
-            </div>
-        </Suspense>
+            </div >
+        </Suspense >
     )
 }
