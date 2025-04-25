@@ -185,7 +185,8 @@ export default async function PageContent({
                             // new added
                             verses={verses}
                             chapter={JSON.parse(JSON.stringify(chapter))}
-                            useShortCuts={useShortCuts === "true"}
+                            // useShortCuts={useShortCuts === "true"}
+                            useShortCuts={(useShortCuts ?? "true") === "false"}
                         />
                     </div>
                 }
