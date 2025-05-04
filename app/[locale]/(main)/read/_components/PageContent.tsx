@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/lib/navigation";
 import { TextGenerateEffect } from "@/components/text-generate-effect";
 import CopyVersesButton from "@/components/CopyVersesButton";
+import { Copy } from "lucide-react";
 
 type Props = {
     searchParams: { [key: string]: string | undefined }
@@ -91,6 +92,8 @@ export default async function PageContent({
 
     const selectedFontSize: SelectedFontSize = fontSize[parseInt(fontSizeValue)]
 
+    const versesToCopy = chapter?.verses_content.map((c, i) => `${i + 1} ${c}`).filter((c, i) => verses.includes(i + 1)) ?? []
+
     return (
         <>
             <div
@@ -117,10 +120,25 @@ export default async function PageContent({
                 className={`${pageMarginAndWidth} pb-10 p-2 flex flex-col ${selectedFontSize.gap_between_elements} `}
             >
                 {chapter ?
-                    <div className="flex flex-col items-start justify-center gap-5 mb-32">
-                        <div className="flex flex-row items-start justify-between w-full">
-                            {useVerseOfToday && <p className={`font-bold ${selectedFontSize.text}`}>{translateRouteString(chapter.route_string, versionLanguage)}:{todays_verse.verses.length === 1 ? todays_verse.verses.at(0) : `${todays_verse.verses.at(0)}-${todays_verse.verses.at(-1)}`} ({versionValue}) - ({t("VerseOfTheDay")})</p>}
-                            <CopyVersesButton verses={chapter.verses_content.map((c, i) => `${i} ${c}`).filter((c, i) => verses.includes(i + 1))} />
+                    <div className="flex flex-col items-start justify-center mb-32">
+                        {useVerseOfToday &&
+                            <div className="flex flex-row items-center justify-between mb-4 w-full">
+                                <p className={`font-bold ${selectedFontSize.text}`}>{translateRouteString(chapter.route_string, versionLanguage)}:{todays_verse.verses.length === 1 ? todays_verse.verses.at(0) : `${todays_verse.verses.at(0)}-${todays_verse.verses.at(-1)}`} ({versionValue}) - ({t("VerseOfTheDay")})</p>
+                                <CopyVersesButton verses={versesToCopy} />
+                            </div>
+                        }
+                        <div className="w-full flex justify-between">
+                            {(verses.length > 0 && chapter && versionValue) &&
+                                <ReadFullChapterButton
+                                    chapter={JSON.parse(JSON.stringify(chapter))}
+                                    version={versionValue}
+                                    verses={verses}
+                                    selectedFontSize={selectedFontSize}
+                                    versionLanguage={versionLanguage}
+                                />
+                            }
+                            {useVerseOfToday && <Link href={`/read?dailyVerseType=${dailyVerseTypeValue === "sin" ? "" : "sin"}`}>
+                                <Button variant={'link'} className={selectedFontSize.text}>{t(dailyVerseTypeValue === "sin" ? "Get verse of general topics" : "Get verse against sin")}</Button></Link>}
                         </div>
                         <div
                             className={`${continousLineValue ? "space-x-4" : "flex flex-col gap-2"} `}
@@ -150,19 +168,7 @@ export default async function PageContent({
                             }
 
                         </div>
-                        <div className="w-full flex justify-between">
-                            {(verses.length > 0 && chapter && versionValue) &&
-                                <ReadFullChapterButton
-                                    chapter={JSON.parse(JSON.stringify(chapter))}
-                                    version={versionValue}
-                                    verses={verses}
-                                    selectedFontSize={selectedFontSize}
-                                    versionLanguage={versionLanguage}
-                                />
-                            }
-                            {useVerseOfToday && <Link href={`/read?dailyVerseType=${dailyVerseTypeValue === "sin" ? "" : "sin"}`}>
-                                <Button variant={'link'} className={selectedFontSize.text}>{t(dailyVerseTypeValue === "sin" ? "Get verse of general topics" : "Get verse against sin")}</Button></Link>}
-                        </div>
+
                     </div>
                     : bookInfo && (getChapterNumber(searchValue) === 0 || getChapterNumber(searchValue) == null) ?
                         <BookInfo
@@ -189,9 +195,11 @@ export default async function PageContent({
                             // new added
                             verses={verses}
                             chapter={JSON.parse(JSON.stringify(chapter))}
+                            versesToCopy={versesToCopy}
                             useShortCuts={useShortCuts === "true"}
                         // useShortCuts={(useShortCuts ?? "true") === "false"} // Make something like this work
                         />
+
                     </div>
                 }
             </main>

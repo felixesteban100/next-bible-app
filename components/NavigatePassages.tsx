@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
 import { usePathname, useRouter } from "@/lib/navigation"
+import CopyVersesButton from "./CopyVersesButton";
 
 type NavigatePassageProps = {
     previous_chapter: string,
@@ -17,9 +18,10 @@ type NavigatePassageProps = {
     verses: number[],
     chapter: Chapter,
     useShortCuts: boolean
+    versesToCopy: string[]
 }
 
-export default function NavigatePassages({ previous_chapter, next_chapter, textSize, iconSize, gapForElements, alignmentForFlexElements, verses, chapter, useShortCuts }: NavigatePassageProps) {
+export default function NavigatePassages({ previous_chapter, next_chapter, textSize, iconSize, gapForElements, alignmentForFlexElements, verses, chapter, useShortCuts, versesToCopy }: NavigatePassageProps) {
     const searchParams = useSearchParams()
     const { push } = useRouter()
     const { /* replace */ push: pushRouter } = useRouter()
@@ -79,7 +81,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
     }, [handleKeyDown, useShortCuts]);
 
     return (
-        <div className={`flex ${alignmentForFlexElements} justify-start ${gapForElements} fixed bottom-0 h-fit mb-10 `}>
+        <div className={`w-[82vw] flex ${alignmentForFlexElements} justify-between ${gapForElements} fixed bottom-0 h-fit mb-10 `}>
             {previous_chapter !== "" ?
                 <Button
                     onClick={() => handleKeyDown("ArrowLeft")}
@@ -93,6 +95,8 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                 :
                 null
             }
+
+            <CopyVersesButton verses={versesToCopy} />
 
             {next_chapter !== "" ?
                 <Button
