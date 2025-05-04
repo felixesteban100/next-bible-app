@@ -568,3 +568,7 @@ export const DAILY_VERSES_AGAINS_SIN_ROUTE_STRING: DAILY_VERSE_ROUTE_STRING[] = 
     { "route_string": "62-3", "verses": [8] },  // 1 John 3:8
     { "route_string": "66-21", "verses": [8] }   // Revelation 21:8
 ]
+
+export const DAILY_VERSES_AGAINST_LUST: DAILY_VERSE_ROUTE_STRING[] = [
+ 
+]

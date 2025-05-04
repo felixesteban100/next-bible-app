@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/lib/navigation";
+import { Copy } from "lucide-react";
 
 type ReadFullChapterButton = {
     chapter: Chapter;
@@ -30,6 +31,8 @@ export default function ReadFullChapterButton({ chapter, version, selectedFontSi
         // replace(`/read?${params.toString()}`)
         push(`/read?${params.toString()}`)
     }
+
+
 
     return (
         /* mt-5  p-1*/
