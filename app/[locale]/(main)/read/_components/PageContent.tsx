@@ -92,7 +92,7 @@ export default async function PageContent({
 
     const selectedFontSize: SelectedFontSize = fontSize[parseInt(fontSizeValue)]
 
-    const versesToCopy = chapter?.verses_content.map((c, i) => `${i + 1} ${c}`).filter((c, i) => verses.includes(i + 1)) ?? []
+    // const versesToCopy = chapter?.verses_content.map((c, i) => `${i + 1} ${c}`).filter((c, i) => verses.includes(i + 1)) ?? []
 
     return (
         <>
@@ -124,7 +124,7 @@ export default async function PageContent({
                         {useVerseOfToday &&
                             <div className="flex flex-row items-center justify-between mb-4 w-full">
                                 <p className={`font-bold ${selectedFontSize.text}`}>{translateRouteString(chapter.route_string, versionLanguage)}:{todays_verse.verses.length === 1 ? todays_verse.verses.at(0) : `${todays_verse.verses.at(0)}-${todays_verse.verses.at(-1)}`} ({versionValue}) - ({t("VerseOfTheDay")})</p>
-                                <CopyVersesButton verses={versesToCopy} />
+                                {/* <CopyVersesButton verses={versesToCopy} /> */}
                             </div>
                         }
                         <div className="w-full flex justify-between">
@@ -195,7 +195,8 @@ export default async function PageContent({
                             // new added
                             verses={verses}
                             chapter={JSON.parse(JSON.stringify(chapter))}
-                            versesToCopy={versesToCopy}
+                            // versesToCopy={versesToCopy}
+                            versesToCopy={chapter.verses_content.map((c, i) => `${i + 1} ${c}`).filter((c, i) => verses.includes(i + 1))}
                             useShortCuts={useShortCuts === "true"}
                         // useShortCuts={(useShortCuts ?? "true") === "false"} // Make something like this work
                         />

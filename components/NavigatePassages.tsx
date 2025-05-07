@@ -80,6 +80,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
         };
     }, [handleKeyDown, useShortCuts]);
 
+
     return (
         <div className={`w-[82vw] flex ${alignmentForFlexElements} justify-between ${gapForElements} fixed bottom-0 h-fit mb-10 `}>
             {previous_chapter !== "" ?
@@ -96,7 +97,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                 null
             }
 
-            <CopyVersesButton verses={versesToCopy} />
+            <CopyVersesButton verses={chapter.verses_content.map((c, i) => `${i + 1} ${c}`).filter((c, i) => verses.length === 0 || verses.includes(i + 1))} />
 
             {next_chapter !== "" ?
                 <Button
