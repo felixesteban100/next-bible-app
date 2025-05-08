@@ -12,8 +12,6 @@ import { DAILY_VERSE_ROUTE_STRING, DAILY_VERSES_AGAINS_SIN_ROUTE_STRING, DAILY_V
 import { Button } from "@/components/ui/button";
 import { Link } from "@/lib/navigation";
 import { TextGenerateEffect } from "@/components/text-generate-effect";
-import CopyVersesButton from "@/components/CopyVersesButton";
-import { Copy } from "lucide-react";
 
 type Props = {
     searchParams: { [key: string]: string | undefined }
@@ -124,7 +122,6 @@ export default async function PageContent({
                         {useVerseOfToday &&
                             <div className="flex flex-row items-center justify-between mb-4 w-full">
                                 <p className={`font-bold ${selectedFontSize.text}`}>{translateRouteString(chapter.route_string, versionLanguage)}:{todays_verse.verses.length === 1 ? todays_verse.verses.at(0) : `${todays_verse.verses.at(0)}-${todays_verse.verses.at(-1)}`} ({versionValue}) - ({t("VerseOfTheDay")})</p>
-                                {/* <CopyVersesButton verses={versesToCopy} /> */}
                             </div>
                         }
                         <div className="w-full flex justify-between">

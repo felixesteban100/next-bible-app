@@ -77,7 +77,8 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                             }}
                             // "underline"
                             // "bg-primary text-primary-foreground"
-                            className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== 0 ? (isSelected ? "" : "opacity-15") : ""} text-foreground  ${hightlightVerses ? "hover:underline decoration-dashed" : ""} `}
+                            // ${hightlightVerses ? "hover:underline decoration-dashed" : ""}
+                            className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== 0 ? (isSelected ? "" : "opacity-15") : ""} text-foreground   `}
                             ref={verseNumber === verseSelected ? verseRef : null}
                         >
 
