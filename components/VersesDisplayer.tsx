@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "@/lib/navigation"
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { TextGenerateEffect } from "./text-generate-effect";
+import { Separator } from "./ui/separator";
 
 
 type VersesDisplayerProps = {
@@ -94,6 +95,20 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                             {!hightlightVerses ?
                                 getHighlightedText(c, wordToHightlight) :
                                 chapter.route_object.book_id === 19 && verseNumber === 1 ? `${c.slice(1)}` : c
+                            }
+                            {
+                                // Show separator if the next verse number is not sequential
+                                (() => {
+                                    const currentIndex = verses.findIndex(v => v === verseNumber);
+                                    if (
+                                        currentIndex !== -1 &&
+                                        currentIndex < verses.length - 1 &&
+                                        verses[currentIndex + 1] !== verseNumber + 1
+                                    ) {
+                                        return <Separator className="h-0.5 my-2" />;
+                                    }
+                                    return null;
+                                })()
                             }
                         </span>
                     )
