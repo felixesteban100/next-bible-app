@@ -46,7 +46,7 @@ export default async function PageContent({
 
     const language = locale
 
-    const verseToHighlightValue = parseInt(verseToHighlight ?? "0")
+    const verseToHighlightValue = verseToHighlight ?? ""
 
     const dailyVerseTypeValue = dailyVerseType ?? ""
     const searchValue = search ?? ""
@@ -96,7 +96,7 @@ export default async function PageContent({
         <>
             <div
                 // className={`${verseToHighlightValue === 0 ? "translate-y-0" : `-translate-y-96 `} transition-all duration-700 -z-10`}
-                className={`${verseToHighlightValue === 0 ? "opacity-100" : `opacity-15 cursor-not-allowed`} transition-all duration-700 -z-10`}
+                className={`${verseToHighlightValue === "" ? "opacity-100" : `opacity-15 cursor-not-allowed`} transition-all duration-700 -z-10`}
             >
                 <div
                     className={`${pageMarginAndWidth}`}
@@ -108,7 +108,7 @@ export default async function PageContent({
                         selectedFontSize={selectedFontSize}
                         omitVerseToHightlight={true}
                         selectedBookNumber={extractBibleBook(searchValue, versionLanguage)!}
-                        disabled={verseToHighlightValue !== 0}
+                        disabled={verseToHighlightValue !== ""}
                     />
                 </div>
             </div>
@@ -181,7 +181,7 @@ export default async function PageContent({
                 {(useBookInfo || useVerseOfToday || chapter == null) ?
                     null
                     :
-                    <div className={`${verseToHighlightValue === 0 ? "opacity-1" : `opacity-0`} transition-all duration-700 block`}>
+                    <div className={`${verseToHighlightValue === "" ? "opacity-1" : `opacity-0`} transition-all duration-700 block`}>
                         <NavigatePassages
                             next_chapter={next_chapter}
                             previous_chapter={previous_chapter}

@@ -27,7 +27,7 @@ export default function ReadFullChapterButton({ chapter, version, selectedFontSi
         params.set("search", `${translateRouteString(chapter.route_string, versionLanguage)}`)
         params.set("version", `${version}`)
         params.set("playVerses", `${false}`)
-        if (verses) params.set("verseToHighlight", `${verses[0]}`)
+        if (verses) params.set("verseToHighlight", `${chapter.route_string}-${verses[0]}`)
         // replace(`/read?${params.toString()}`)
         push(`/read?${params.toString()}`)
     }

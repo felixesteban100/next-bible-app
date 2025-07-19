@@ -53,11 +53,12 @@ type SearchBibleReferenceProps = {
     omitVerseToHightlight?: boolean;
     selectedBookNumber: number;
     disabled?: boolean;
+    chapters?: boolean;
 }
 
 "gap-10"
 
-function SearchBibleReference({ versions, versionParam, searchParam, selectedFontSize, omitVerseToHightlight, selectedBookNumber, disabled = false }: SearchBibleReferenceProps) {
+function SearchBibleReference({ versions, versionParam, searchParam, selectedFontSize, omitVerseToHightlight, selectedBookNumber, disabled = false, chapters = false }: SearchBibleReferenceProps) {
     const textSize = selectedFontSize.text
     const iconSize = selectedFontSize.icon
     const gapForElements = selectedFontSize.gap_between_elements
@@ -109,7 +110,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
     }
 
     function onSubmitLink(values: z.infer<typeof formSchema>) {
-        if (omitVerseToHightlight) params.set("verseToHighlight", "0")
+        if (omitVerseToHightlight) params.set("verseToHighlight", "")
 
         params.delete('search')
         if (values.search !== "") params.set('search', values.search)
@@ -232,7 +233,7 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                                                                         >
                                                                                             <Link
                                                                                                 href={onSubmitLink({
-                                                                                                    search: `${value} ${chapterNumber}`,
+                                                                                                    search: chapters ? `${form.watch().search}${form.watch().search != "" ? "; " : ""}${value} ${chapterNumber}` : `${value} ${chapterNumber}`,
                                                                                                     version: form.getValues("version") ?? versionParam,
                                                                                                 })}
                                                                                             >
@@ -267,9 +268,9 @@ function SearchBibleReference({ versions, versionParam, searchParam, selectedFon
                                     onValueChange={(e) => {
                                         field.onChange(e)
                                         const [_, verses] = searchParam.split(/:\s*/)
-                                        console.log(selectedBookNumber)
+                                        // console.log(selectedBookNumber)
                                         const newSearch = `${translateBookName(selectedBookNumber)} ${verses != undefined ? `${extractNumbersFromReference(searchParam)}:${verses}` : extractNumbersFromReference(searchParam)}`
-                                        console.log("newSearch", newSearch)
+                                        // console.log("newSearch", newSearch)
                                         if (selectedBookNumber !== null) form.setValue("search", newSearch.trim())
                                     }}
                                     defaultValue={field.value}

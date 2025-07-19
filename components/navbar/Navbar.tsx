@@ -27,7 +27,7 @@ export default function Navbar({ children }: { children?: ReactNode }) {
 
     const searchParams = useSearchParams()
     const params = new URLSearchParams(searchParams)
-    const verseToHighlightValue = parseInt(params.get("verseToHighlight") ?? "0")
+    // const verseToHighlightValue = parseInt(params.get("verseToHighlight") ?? "0")
 
     return (
         <Suspense fallback={<NavbarSkeleton />}>
@@ -67,6 +67,16 @@ export default function Navbar({ children }: { children?: ReactNode }) {
                                         >
                                             <SheetClose className="w-full text-2xl flex gap-2 justify-center items-center">
                                                 <BookOpen className="h-full w-auto" />{t("read")}
+                                            </SheetClose>
+                                        </ButtonForNavbarLink>
+
+                                        <ButtonForNavbarLink
+                                            href={'/read_chapters'}
+                                            variant={'ghost'}
+                                            aditionalClassNames="w-full"
+                                        >
+                                            <SheetClose className="w-full text-2xl flex gap-2 justify-center items-center">
+                                                <BookOpen className="h-full w-auto" />{t("read_chapters")}
                                             </SheetClose>
                                         </ButtonForNavbarLink>
 

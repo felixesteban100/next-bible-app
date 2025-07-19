@@ -15,25 +15,26 @@ type VersesDisplayerProps = {
     hightlightVerses: boolean;
     wordToHightlight: string;
     usePlayVerses: boolean;
+    chapters?: boolean;
 }
 
-export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight, usePlayVerses }: VersesDisplayerProps) {
+export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight, usePlayVerses, chapters = false }: VersesDisplayerProps) {
     const searchParams = useSearchParams()
     const params = new URLSearchParams(searchParams)
     const { /* replace, */ push } = useRouter()
     const pathname = usePathname()
-    const verseSelected = parseInt(params.get("verseToHighlight") ?? "0")
+    const verseSelected = params.get("verseToHighlight") ?? ""
     const t = useTranslations()
 
     const verseRef = useRef<HTMLSpanElement | null>(null)
 
     useEffect(() => {
-        if (verseSelected !== 0 && verseRef.current) {
+        if (verseSelected !== "" && verseRef.current) {
             verseRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
         }
     }, [verseSelected])
 
-    function setVerseToHighlight(verse: number) {
+    function setVerseToHighlight(verse: string | number) {
         params.set('verseToHighlight', `${verse}`)
         // replace(`${pathname}?${params.toString()}`, { scroll: false })
         push(`${pathname}?${params.toString()}`, { scroll: false })
@@ -60,7 +61,8 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
             {
                 chapter.verses_content.map((c, i) => {
                     const verseNumber = i + 1
-                    const isSelected = verseSelected === verseNumber
+                    const currentVerse = `${chapter.route_string}-${verseNumber}`
+                    const isSelected = verseSelected === currentVerse
                     if (verses.length !== 0 && !verses.includes(verseNumber)) return null
                     const verseRouteString = chapter.verses_routes_string[verseNumber]
                     // console.log(verseRouteString)
@@ -71,16 +73,16 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                             onClick={() => {
                                 if (!hightlightVerses) return
                                 if (isSelected) {
-                                    setVerseToHighlight(0)
+                                    setVerseToHighlight("")
                                 } else {
-                                    setVerseToHighlight(verseNumber)
+                                    setVerseToHighlight(currentVerse)
                                 }
                             }}
                             // "underline"
                             // "bg-primary text-primary-foreground"
                             // ${hightlightVerses ? "hover:underline decoration-dashed" : ""}
-                            className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== 0 ? (isSelected ? "" : "opacity-15") : ""} text-foreground   `}
-                            ref={verseNumber === verseSelected ? verseRef : null}
+                            className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== "" ? (isSelected ? "" : "opacity-15") : ""} text-foreground   `}
+                            ref={currentVerse === verseSelected ? verseRef : null}
                         >
 
                             <span

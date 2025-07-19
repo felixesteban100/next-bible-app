@@ -85,8 +85,8 @@ function VerseScope({ playVersesDurationParam, word, i, verses, chapter, selecte
             }
         );
     }, [scope, animate, playVersesDurationParam, i]);
-    console.log(word)
-    console.log(i + 2)
+    // console.log(word)
+    // console.log(i + 2)
 
     const verseNumber = i + 1
     if (verses.length !== 0 && !verses.includes(verseNumber)) return null
