@@ -30,8 +30,6 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
     const memoizedParams = useMemo(() => new URLSearchParams(searchParams), [searchParams]);
     const verseSelected = parseInt(memoizedParams.get("verseToHighlight")?.split("-")[3] ?? "0")
 
-    console.log(verseSelected)
-
     const firstVerse = verses[0] ?? 1
     const lastVerse = verses[verses.length - 1] ?? chapter.verses_content.length
 
@@ -54,7 +52,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                 break;
             case "ArrowUp":
                 if (verseSelected !== 0) {
-                    memoizedParams.set('verseToHighlight', `${chapter.route_string}-${verseSelected - 1 < firstVerse ? "0" : verseSelected - 1}`)
+                    memoizedParams.set('verseToHighlight', verseSelected - 1 < firstVerse ? "" : `${chapter.route_string}-${verseSelected - 1}`)
                 } else {
                     memoizedParams.set('verseToHighlight', `${chapter.route_string}-${lastVerse}`);
                 }
@@ -63,7 +61,7 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
                 break;
             case "ArrowDown":
                 if (verseSelected !== 0) {
-                    memoizedParams.set('verseToHighlight', `${chapter.route_string}-${verseSelected + 1 > lastVerse ? "0" : verseSelected + 1}`)
+                    memoizedParams.set('verseToHighlight', verseSelected + 1 > lastVerse ? "" : `${chapter.route_string}-${verseSelected + 1}`)
                 } else {
                     memoizedParams.set('verseToHighlight', `${chapter.route_string}-${firstVerse}`);
                 }
