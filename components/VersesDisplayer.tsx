@@ -3,8 +3,6 @@
 import { useSearchParams } from "next/navigation"
 import { usePathname, useRouter } from "@/lib/navigation"
 import { useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
-import { TextGenerateEffect } from "./text-generate-effect";
 import { Separator } from "./ui/separator";
 
 
@@ -21,22 +19,32 @@ type VersesDisplayerProps = {
 export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight, usePlayVerses, chapters = false }: VersesDisplayerProps) {
     const searchParams = useSearchParams()
     const params = new URLSearchParams(searchParams)
-    const { /* replace, */ push } = useRouter()
+    const { push } = useRouter()
     const pathname = usePathname()
-    const verseSelected = params.get("verseToHighlight") ?? ""
-    const t = useTranslations()
+    const versesSelected: number[] = JSON.parse(params.get("versesToHighlight") ?? "[]")
 
     const verseRef = useRef<HTMLSpanElement | null>(null)
 
     useEffect(() => {
-        if (verseSelected !== "" && verseRef.current) {
+        if (versesSelected.length > 0 && verseRef.current) {
             verseRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
         }
-    }, [verseSelected])
+    }, [versesSelected])
 
-    function setVerseToHighlight(verse: string | number) {
-        params.set('verseToHighlight', `${verse}`)
-        // replace(`${pathname}?${params.toString()}`, { scroll: false })
+    function addToVersesToHighlight(verse: number) {
+        //include verse in the array of verses to highlight
+        versesSelected.push(verse)
+
+        params.set('versesToHighlight', JSON.stringify(versesSelected))
+        push(`${pathname}?${params.toString()}`, { scroll: false })
+    }
+
+    function removeFromVerseToHighlight(verse: number) {
+        const index = versesSelected.indexOf(verse);
+        if (index > -1) {
+            versesSelected.splice(index, 1); // Remove the verse from the array
+        }
+        params.set('versesToHighlight', JSON.stringify(versesSelected))
         push(`${pathname}?${params.toString()}`, { scroll: false })
     }
 
@@ -61,28 +69,23 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
             {
                 chapter.verses_content.map((c, i) => {
                     const verseNumber = i + 1
-                    const currentVerse = `${chapter.route_string}-${verseNumber}`
-                    const isSelected = verseSelected === currentVerse
+                    // const currentVerse = `${chapter.route_string}-${verseNumber}`
+                    const isSelected = versesSelected.includes(verseNumber)
                     if (verses.length !== 0 && !verses.includes(verseNumber)) return null
-                    const verseRouteString = chapter.verses_routes_string[verseNumber]
-                    // console.log(verseRouteString)
+                    const verseRouteString = chapter.verses_routes_string[verseNumber - 1]
                     return (
                         <span
                             key={verseRouteString + verseNumber + c}
-                            // id={`${verseNumber}`}
                             onClick={() => {
                                 if (!hightlightVerses) return
                                 if (isSelected) {
-                                    setVerseToHighlight("")
+                                    removeFromVerseToHighlight(verseNumber)
                                 } else {
-                                    setVerseToHighlight(currentVerse)
+                                    addToVersesToHighlight(verseNumber)
                                 }
                             }}
-                            // "underline"
-                            // "bg-primary text-primary-foreground"
-                            // ${hightlightVerses ? "hover:underline decoration-dashed" : ""}
-                            className={`${selectedFontSize.text} leading-relaxed ${verseSelected !== "" ? (isSelected ? "" : "opacity-15") : ""} text-foreground   `}
-                            ref={currentVerse === verseSelected ? verseRef : null}
+                            className={`${selectedFontSize.text} leading-relaxed ${versesSelected.length > 0 ? (isSelected ? "" : "opacity-15") : ""} text-foreground   `}
+                            ref={verseNumber === versesSelected[0] ? verseRef : null}
                         >
 
                             <span

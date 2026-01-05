@@ -57,7 +57,7 @@ export const TextGenerateEffect = ({
                 setVisibleItems((prev) => [...prev, i + 1]); // Show current item
                 await new Promise((resolve) => setTimeout(resolve, 400 + delayOfEachVerse[i] * 750)); // Wait for animation + delay
 
-                console.log(next_chapter, i === versesArray.length)
+                // console.log(next_chapter, i === versesArray.length)
                 // if (i === versesArray.length) {
                 //     params.set("search", next_chapter);
                 //     params.set('verseToHighlight', `${0}`);
