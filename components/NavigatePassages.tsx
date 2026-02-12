@@ -28,48 +28,47 @@ export default function NavigatePassages({ previous_chapter, next_chapter, textS
     const pathname = usePathname()
 
     const memoizedParams = useMemo(() => new URLSearchParams(searchParams), [searchParams]);
-    const verseSelected = parseInt(memoizedParams.get("verseToHighlight")?.split("-")[3] ?? "0")
+    const versesSelected = JSON.parse(memoizedParams.get("versesToHighlight") ?? "[]")
 
     const firstVerse = verses[0] ?? 1
     const lastVerse = verses[verses.length - 1] ?? chapter.verses_content.length
 
     // when the user presses the arrow keys, the verse selected will change and also the chapter
     const handleKeyDown = useCallback((key: string) => {
+        const verseSelected = versesSelected[0]
         switch (key) {
             case "ArrowLeft":
-                if (verseSelected === 0) {
+                if (verseSelected === undefined) {
                     if (previous_chapter !== "") memoizedParams.set("search", previous_chapter);
-                    memoizedParams.set('verseToHighlight', ``);
+                    memoizedParams.delete('versesToHighlight', ``);
                     push(`/read?${memoizedParams.toString()}`)
                 }
                 break;
             case "ArrowRight":
-                if (verseSelected === 0) {
+                if (verseSelected === undefined) {
                     if (next_chapter !== "") memoizedParams.set("search", next_chapter);
-                    memoizedParams.set('verseToHighlight', ``);
+                    memoizedParams.delete('versesToHighlight', ``);
                     push(`/read?${memoizedParams.toString()}`)
                 }
                 break;
             case "ArrowUp":
-                if (verseSelected !== 0) {
-                    memoizedParams.set('verseToHighlight', verseSelected - 1 < firstVerse ? "" : `${chapter.route_string}-${verseSelected - 1}`)
+                if (verseSelected !== undefined) {
+                    memoizedParams.set('versesToHighlight', verseSelected - 1 < firstVerse ? `[${lastVerse}]` : `[${verseSelected - 1}]`)
                 } else {
-                    memoizedParams.set('verseToHighlight', `${chapter.route_string}-${lastVerse}`);
+                    memoizedParams.set('versesToHighlight', `[${lastVerse}]`);
                 }
-                // replace(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
                 pushRouter(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
                 break;
             case "ArrowDown":
-                if (verseSelected !== 0) {
-                    memoizedParams.set('verseToHighlight', verseSelected + 1 > lastVerse ? "" : `${chapter.route_string}-${verseSelected + 1}`)
+                if (verseSelected !== undefined) {
+                    memoizedParams.set('versesToHighlight', verseSelected + 1 > lastVerse ? `[${firstVerse}]` : `[${verseSelected + 1}]`)
                 } else {
-                    memoizedParams.set('verseToHighlight', `${chapter.route_string}-${firstVerse}`);
+                    memoizedParams.set('versesToHighlight', `[${firstVerse}]`);
                 }
-                // replace(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
                 pushRouter(`${pathname}?${memoizedParams.toString()}`, { scroll: false })
                 break;
         }
-    }, [verseSelected, previous_chapter, next_chapter, push, memoizedParams, /* replace */pushRouter, pathname, firstVerse, lastVerse, chapter.route_string]);
+    }, [versesSelected, previous_chapter, next_chapter, push, memoizedParams, /* replace */pushRouter, pathname, firstVerse, lastVerse/* , chapter.route_string */]);
 
     useEffect(() => {
         if (useShortCuts === false) return
