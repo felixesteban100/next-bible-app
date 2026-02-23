@@ -81,6 +81,26 @@ export function extractBibleVerses(input: string): number[] {
     return result
 }
 
+export function extractVerseGroupBoundaries(input: string): Set<number> {
+    const boundaries = new Set<number>()
+    const match = input.split(/:\s*/)
+    if (!match[1]) return boundaries
+
+    match[1].split(",").forEach((group) => {
+        if (group.includes("-")) {
+            const [, end] = group.split("-").map(v => parseInt(v, 10))
+            boundaries.add(end)
+        } else {
+            boundaries.add(parseInt(group, 10))
+        }
+    })
+
+    // Remove the last group's boundary — no separator needed after the last group
+    const boundariesArray = Array.from(boundaries)
+    boundariesArray.pop()
+    return new Set(boundariesArray)
+}
+
 
 export function translateRouteString(routeString: string, versionLanguage: string): string {
     // Parse the route string

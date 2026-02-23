@@ -14,9 +14,10 @@ type VersesDisplayerProps = {
     wordToHightlight: string;
     usePlayVerses: boolean;
     chapters?: boolean;
+    verseGroupBoundaries?: Set<number>;
 }
 
-export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight, usePlayVerses, chapters = false }: VersesDisplayerProps) {
+export default function VersesDisplayer({ chapter, selectedFontSize, verses, hightlightVerses, wordToHightlight, usePlayVerses, chapters = false, verseGroupBoundaries }: VersesDisplayerProps) {
     const searchParams = useSearchParams()
     const params = new URLSearchParams(searchParams)
     const { push } = useRouter()
@@ -102,6 +103,11 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                                 chapter.route_object.book_id === 19 && verseNumber === 1 ? `${c.slice(1)}` : c
                             }
                             {
+                                verseGroupBoundaries?.has(verseNumber)
+                                    ? <Separator className="h-0.5 my-2" />
+                                    : null
+                            }
+                            {/* {
                                 // Show separator if the next verse number is not sequential
                                 (() => {
                                     const currentIndex = verses.findIndex(v => v === verseNumber);
@@ -114,7 +120,7 @@ export default function VersesDisplayer({ chapter, selectedFontSize, verses, hig
                                     }
                                     return null;
                                 })()
-                            }
+                            } */}
                         </span>
                     )
                 })

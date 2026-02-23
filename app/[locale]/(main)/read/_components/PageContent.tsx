@@ -1,6 +1,6 @@
 import SearchBibleReference from "@/components/SearchBibleReference";
 import { collectionBook, collectionChapter, collectionVersion } from "@/db/mongodb/mongodb";
-import { extractBibleBook, extractBibleVerses, getChapterNumber, getDailyItem, translateRouteString } from "@/lib/queriesUtils";
+import { extractBibleBook, extractBibleVerses, extractVerseGroupBoundaries, getChapterNumber, getDailyItem, translateRouteString } from "@/lib/queriesUtils";
 import { getTranslations, } from "next-intl/server";
 import NavigatePassages from "@/components/NavigatePassages";
 import BookInfo from "@/components/BookInfo";
@@ -161,6 +161,7 @@ export default async function PageContent({
                                             hightlightVerses={!useVerseOfToday}
                                             wordToHightlight=""
                                             usePlayVerses={playVersesValue}
+                                            verseGroupBoundaries={extractVerseGroupBoundaries(searchValue)}
                                         />
                             }
 
